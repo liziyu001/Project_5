@@ -1,0 +1,20 @@
+Run the Server before connecting!!!
+The Server will keep running until being terminated manually.
+ServerName: localhost
+
+Port:4000 Login
+    Input: username + "\n" + password + "\n"
+        ex. "William\n123\n"
+    Return:
+        if the input matches an account information, return: the value of isStudent of the account + "\n"
+            ex. "Student\n" OR "Teacher\n"
+        if the input doesn't match any of account, return: "Fail"
+
+
+Port:4001 Register
+    Input: username + "\n" + password + "\n" + role + "\n"
+        ex. "QWER\n1234\nTeacher" OR "KKK\n123\nStudent"
+    Return:
+        if the register is success, return: "Success"
+        if there is duplicate id or invalid input, return: "Fail"
+    Account.txt will be updated
