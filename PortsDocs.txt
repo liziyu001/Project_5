@@ -1,5 +1,7 @@
 Run the Server before connecting!!!
 The Server will keep running until being terminated manually.
+Please only send and require String from/to the server
+
 ServerName: localhost
 
 Port:4000 Login
