@@ -8,31 +8,32 @@ import java.util.ArrayList;
 
 public class Server extends Thread {
     static Manager m = new Manager();
-    ServerSocket loginService;
+    ServerSocket loginService; //field of services provided by the server
     ServerSocket registerService;
 
 
     public Server() throws IOException {
-        loginService = new ServerSocket(4000);
+        loginService = new ServerSocket(4000); //Initialize the services with port numbers
         registerService = new ServerSocket(4001);
     }
 
     public static void main(String[] args) throws Exception {
-        Server server = new Server();
+        Server server = new Server(); //Initialize the server
 
-        Thread login = new Thread(new Runnable() {
+        Thread login = new Thread(new Runnable() { //thread of a service, simultaneously listening to the port
             @Override
             public void run() {
                 try {
-                    while (true) {
-                        server.login(server.loginService.accept());
+                    while (true) { // 'keep' listening to the port
+                        server.login(server.loginService.accept()); // start the service after receiving connection
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        login.start();
+        login.start(); //start the thread, since simultaneously, no need to join
+
         Thread idCheck = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -49,6 +50,12 @@ public class Server extends Thread {
     }
 
     public void login(Socket loginRequest) throws IOException, InterruptedException {
+        /*
+         * @Description input username and password, return the result of login
+         * @Date 12:27 PM 11/26/2021
+         * @Param [loginRequest]
+         * @return void
+         **/
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(loginRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(loginRequest.getOutputStream());
@@ -80,6 +87,12 @@ public class Server extends Thread {
 
 
     public void register(Socket registerRequest) throws Exception {
+        /*
+         * @Description input username and password, create account based on them
+         * @Date 12:28 PM 11/26/2021
+         * @Param [registerRequest]
+         * @return void
+         **/
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(registerRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(registerRequest.getOutputStream());

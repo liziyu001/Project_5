@@ -9,7 +9,7 @@ Port:4000 Login
         ex. "William\n123\n"
     Return:
         if the input matches an account information, return: the value of isStudent of the account + "\n"
-            ex. "Student\n" OR "Teacher\n"
+            ex. "true\n" OR "false\n"
         if the input doesn't match any of account, return: "Fail"
 
 
