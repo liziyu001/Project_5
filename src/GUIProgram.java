@@ -38,6 +38,7 @@ public class GUIProgram extends JComponent implements Runnable {
     JButton signupButton; // a button to signup
     JButton signInButton;
     JButton createAccountButton;
+    JButton studentOrTeacherButton; // a button which will alternate its text when clicked
 
     // Student-related buttons
     JButton viewCoursesStudentButton;
@@ -106,6 +107,69 @@ public class GUIProgram extends JComponent implements Runnable {
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Username or Password was incorrect", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            if (e.getSource() == createAccountButton) {
+                ArrayList<Account> accounts = manager.getAccountList();
+                String name = usernameFieldSignup.getText();
+                String password = passwordFieldSignup.getText();
+                boolean isStudent = studentOrTeacherButton.getText().equals("Student");
+                boolean valid = true;
+
+                if(name.equals("")){
+                    JOptionPane.showMessageDialog(null, "Please enter a username", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if(name.contains(";")){
+                    JOptionPane.showMessageDialog(null, "Usernames cannot contain semicolons", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if(password.equals("")){
+                    JOptionPane.showMessageDialog(null, "Please enter a password", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if(name.contains(";")){
+                    JOptionPane.showMessageDialog(null, "Passwords cannot contain semicolons", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+
+                for(Account a : accounts){
+                    if(a.getUsername().equals(name)){
+                        JOptionPane.showMessageDialog(null, "Someone already has this username!", "Error", JOptionPane.ERROR_MESSAGE);
+                        valid = false;
+                        break;
+                    }
+                }
+
+                if(valid){
+                    Account a = new Account(name, password, isStudent);
+                    currentAccount = a;
+                    manager.getAccountList().add(a);
+
+                    // TODO FILE UPDATING
+                    manager.updateAccount();
+
+                    if(isStudent){
+                        previousWindow = frame.getContentPane();
+                        frame.setContentPane(studentWindow);
+                        refresh();
+                    }
+                    else{
+                        previousWindow = frame.getContentPane();
+                        frame.setContentPane(teacherWindow);
+                        refresh();
+                    }
+                }
+
+
+            }
+            if (e.getSource() == studentOrTeacherButton){
+                if(studentOrTeacherButton.getText().equals("Student")){
+                    studentOrTeacherButton.setText("Teacher");
+                }
+                else{ // equals "Teacher
+                    studentOrTeacherButton.setText("Student");
                 }
             }
             if (e.getSource() == accountSettingsStudentButton){
@@ -301,6 +365,8 @@ public class GUIProgram extends JComponent implements Runnable {
         signInButton.addActionListener(actionListener);
         createAccountButton = new JButton("Create Account!");
         createAccountButton.addActionListener(actionListener);
+        studentOrTeacherButton = new JButton("Student");
+        studentOrTeacherButton.addActionListener(actionListener);
         signupButton = new JButton("Signup");
         signupButton.addActionListener(actionListener);
         usernameFieldLogin = new JTextField("");
@@ -373,6 +439,7 @@ public class GUIProgram extends JComponent implements Runnable {
         signupPanel.add(passwordFieldSignup);
         signupWindow.add(signupPanel, BorderLayout.CENTER);
         signupWindow.add(createAccountButton, BorderLayout.SOUTH);
+        signupWindow.add(studentOrTeacherButton, BorderLayout.NORTH);
 
         // Layout of the student window
         studentWindow = new Container();
