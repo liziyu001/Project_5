@@ -28,6 +28,8 @@ public class GUIProgram extends JComponent implements Runnable {
     Container teacherWindow;
     // Where the student account settings are stored
     Container studentAccountWindow;
+    // Where the teacher account settings are stored
+    Container teacherAccountWindow;
 
     Container previousWindow;
 
@@ -45,6 +47,16 @@ public class GUIProgram extends JComponent implements Runnable {
     JButton editUsernameStudentButton;
     JButton deleteAccountStudentButton;
     JButton backAccountSettingsStudentButton;
+
+    // Teacher-related buttons
+    JButton viewCoursesTeacherButton;
+    JButton accountSettingsTeacherButton;
+    JButton exitTeacherButton;
+    JButton editPasswordTeacherButton;
+    JButton editUsernameTeacherButton;
+    JButton deleteAccountTeacherButton;
+    JButton backAccountSettingsTeacherButton;
+    
 
 
     JTextField usernameFieldLogin;
@@ -99,6 +111,11 @@ public class GUIProgram extends JComponent implements Runnable {
             if (e.getSource() == accountSettingsStudentButton){
                 previousWindow = frame.getContentPane();
                 frame.setContentPane(studentAccountWindow);
+                refresh();
+            }
+            if (e.getSource() == accountSettingsTeacherButton){
+                previousWindow = frame.getContentPane();
+                frame.setContentPane(teacherAccountWindow);
                 refresh();
             }
 
@@ -156,20 +173,12 @@ public class GUIProgram extends JComponent implements Runnable {
                         JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
                         continue startAgain;
                     }
-                    else{ // their input was valid but we have to check for existing passwords
-                        ArrayList<Account> accounts = manager.getAccountList();
-                        for(Account a : accounts){
-                            if(a.getPassword().equals(newPassword)){
-                                JOptionPane.showMessageDialog(null, "Someone has taken this password!", "Error", JOptionPane.ERROR_MESSAGE);
-                                continue startAgain;
-                            }
-                            else{
-                                currentAccount.setPassword(newPassword);
+                    else{ // their input was valid
 
-                                // TODO FILE EDITING HERE
-                                manager.updateAccount();
-                            }
-                        }
+                        currentAccount.setPassword(newPassword);
+
+                        // TODO FILE EDITING HERE
+                        manager.updateAccount();
                         break;
                     }
 
@@ -183,6 +192,83 @@ public class GUIProgram extends JComponent implements Runnable {
                 refresh();
             }
             if (e.getSource() == backAccountSettingsStudentButton){
+                frame.setContentPane(previousWindow);
+                refresh();
+            }
+
+            if (e.getSource() == editUsernameTeacherButton) {
+                startAgain:
+                while(true){
+                    String newUsername = JOptionPane.showInputDialog(null, "Enter your new username:", "Edit Username", JOptionPane.QUESTION_MESSAGE);
+                    if(newUsername==null){ // user closed the window
+                        frame.setContentPane(previousWindow);
+                        refresh();
+                        break;
+                    }
+                    else if(newUsername.equals("")){ // user entered a blank username
+                        JOptionPane.showMessageDialog(null, "Please enter a username", "Error", JOptionPane.ERROR_MESSAGE);
+                        continue startAgain;
+                    }
+                    else if(newUsername.contains(";")) { // user's newUsername has a ";"
+                        JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
+                        continue startAgain;
+                    }
+                    else{ // their input was valid but we have to check for existing usernames
+                        ArrayList<Account> accounts = manager.getAccountList();
+                        for(Account a : accounts){
+                            if(a.getUsername().equals(newUsername)){
+                                JOptionPane.showMessageDialog(null, "Someone has taken this username!", "Error", JOptionPane.ERROR_MESSAGE);
+                                continue startAgain;
+                            }
+                            else{
+                                currentAccount.setUsername(newUsername);
+
+                                // TODO FILE EDITING HERE
+                                manager.updateAccount();
+                            }
+                        }
+                        break;
+                    }
+
+                }
+
+            }
+            if (e.getSource() == editPasswordTeacherButton) {
+                startAgain:
+                while(true){
+                    String newPassword = JOptionPane.showInputDialog(null, "Enter your new password:", "Edit Username", JOptionPane.QUESTION_MESSAGE);
+                    if(newPassword==null){ // user closed the window
+                        frame.setContentPane(previousWindow);
+                        refresh();
+                        break;
+                    }
+                    else if(newPassword.equals("")){ // user entered a blank password
+                        JOptionPane.showMessageDialog(null, "Please enter a password", "Error", JOptionPane.ERROR_MESSAGE);
+                        continue startAgain;
+                    }
+                    else if(newPassword.contains(";")) { // user's newPassword has a ";"
+                        JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
+                        continue startAgain;
+                    }
+                    else{ // their input was valid
+
+                        currentAccount.setPassword(newPassword);
+
+                        // TODO FILE EDITING HERE
+                        manager.updateAccount();
+                        break;
+                    }
+
+                }
+
+            }
+            if (e.getSource() == deleteAccountTeacherButton){
+                manager.getAccountList().remove(currentAccount);
+                manager.updateAccount();
+                frame.setContentPane(startWindow);
+                refresh();
+            }
+            if (e.getSource() == backAccountSettingsTeacherButton){
                 frame.setContentPane(previousWindow);
                 refresh();
             }
@@ -225,6 +311,7 @@ public class GUIProgram extends JComponent implements Runnable {
         usernameFieldSignup.addActionListener(actionListener);
         passwordFieldSignup = new JTextField("");
         passwordFieldSignup.addActionListener(actionListener);
+        
         viewCoursesStudentButton = new JButton("View Courses");
         viewCoursesStudentButton.addActionListener(actionListener);
         accountSettingsStudentButton = new JButton("Account Settings");
@@ -239,6 +326,21 @@ public class GUIProgram extends JComponent implements Runnable {
         deleteAccountStudentButton.addActionListener(actionListener);
         backAccountSettingsStudentButton = new JButton("Back");
         backAccountSettingsStudentButton.addActionListener(actionListener);
+
+        viewCoursesTeacherButton = new JButton("View Courses");
+        viewCoursesTeacherButton.addActionListener(actionListener);
+        accountSettingsTeacherButton = new JButton("Account Settings");
+        accountSettingsTeacherButton.addActionListener(actionListener);
+        exitTeacherButton = new JButton("Exit");
+        exitTeacherButton.addActionListener(actionListener);
+        editUsernameTeacherButton = new JButton("Edit Username");
+        editUsernameTeacherButton.addActionListener(actionListener);
+        editPasswordTeacherButton = new JButton("Edit Password");
+        editPasswordTeacherButton.addActionListener(actionListener);
+        deleteAccountTeacherButton = new JButton("Delete Account");
+        deleteAccountTeacherButton.addActionListener(actionListener);
+        backAccountSettingsTeacherButton = new JButton("Back");
+        backAccountSettingsTeacherButton.addActionListener(actionListener);
 
         // Layout of the start window
         JPanel panel = new JPanel();
@@ -283,6 +385,17 @@ public class GUIProgram extends JComponent implements Runnable {
         studentPanel.add(exitStudentButton);
         studentWindow.add(studentPanel, BorderLayout.CENTER);
 
+        // Layout of the teacher window
+        teacherWindow = new Container();
+        teacherWindow.setLayout(new BorderLayout());
+
+        JPanel teacherPanel = new JPanel();
+        teacherPanel.setLayout(new GridLayout(3,1));
+        teacherPanel.add(viewCoursesTeacherButton);
+        teacherPanel.add(accountSettingsTeacherButton);
+        teacherPanel.add(exitTeacherButton);
+        teacherWindow.add(teacherPanel, BorderLayout.CENTER);
+
         // Layout of the student account settings window
         studentAccountWindow = new Container();
         studentAccountWindow.setLayout(new BorderLayout());
@@ -294,6 +407,18 @@ public class GUIProgram extends JComponent implements Runnable {
         studentAccountPanel.add(deleteAccountStudentButton);
         studentAccountPanel.add(backAccountSettingsStudentButton);
         studentAccountWindow.add(studentAccountPanel, BorderLayout.CENTER);
+        
+        // Layout of the student account settings window
+        teacherAccountWindow = new Container();
+        teacherAccountWindow.setLayout(new BorderLayout());
+
+        JPanel teacherAccountPanel = new JPanel();
+        teacherAccountPanel.setLayout(new GridLayout(2, 2));
+        teacherAccountPanel.add(editUsernameTeacherButton);
+        teacherAccountPanel.add(editPasswordTeacherButton);
+        teacherAccountPanel.add(deleteAccountTeacherButton);
+        teacherAccountPanel.add(backAccountSettingsTeacherButton);
+        teacherAccountWindow.add(teacherAccountPanel, BorderLayout.CENTER);
 
 
         // Makes the frame visible
