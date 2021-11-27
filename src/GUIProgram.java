@@ -15,6 +15,7 @@ public class GUIProgram extends JComponent implements Runnable {
 
     JFrame frame;
     static Manager manager;
+    Account currentAccount;
 
 
     Container startWindow;
@@ -31,6 +32,9 @@ public class GUIProgram extends JComponent implements Runnable {
     JButton signupButton; // a button to signup
     JButton signInButton;
     JButton createAccountButton;
+    JButton viewCoursesStudentButton;
+    JButton accountSettingsStudentButton;
+    JButton exitStudentButton;
 
     JTextField usernameFieldLogin;
     JTextField passwordFieldLogin;
@@ -46,13 +50,11 @@ public class GUIProgram extends JComponent implements Runnable {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == loginButton) {
                 frame.setContentPane(loginWindow);
-                frame.invalidate();
-                frame.validate();
+                refresh();
             }
             if (e.getSource() == signupButton) {
                 frame.setContentPane(signupWindow);
-                frame.invalidate();
-                frame.validate();
+                refresh();
             }
             if (e.getSource() == signInButton) {
                 ArrayList<Account> accounts = manager.getAccountList();
@@ -61,20 +63,22 @@ public class GUIProgram extends JComponent implements Runnable {
 
                 Container nextWindow = null;
                 for(Account a : accounts){
+                    System.out.println(a.getUsername() + " " + a.getPassword());
                     if(a.getUsername().equals(name) && a.getPassword().equals(password)){
                         if(a.isStudent()){
                             nextWindow = studentWindow;
+                            System.out.println("in here");
                         }
                         else{
                             nextWindow = teacherWindow;
                         }
+                        currentAccount = a;
                         break;
                     }
                 }
                 if(nextWindow!=null){
                     frame.setContentPane(nextWindow);
-                    frame.invalidate();
-                    frame.validate();
+                    refresh();
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Username or Password was incorrect", "Error", JOptionPane.ERROR_MESSAGE);
@@ -119,6 +123,12 @@ public class GUIProgram extends JComponent implements Runnable {
         usernameFieldSignup.addActionListener(actionListener);
         passwordFieldSignup = new JTextField("");
         passwordFieldSignup.addActionListener(actionListener);
+        viewCoursesStudentButton = new JButton("View Courses");
+        viewCoursesStudentButton.addActionListener(actionListener);
+        accountSettingsStudentButton = new JButton("Account Settings");
+        accountSettingsStudentButton.addActionListener(actionListener);
+        exitStudentButton = new JButton("Exit");
+        exitStudentButton.addActionListener(actionListener);
 
         // Layout of the start window
         JPanel panel = new JPanel();
@@ -152,33 +162,34 @@ public class GUIProgram extends JComponent implements Runnable {
         signupWindow.add(signupPanel, BorderLayout.CENTER);
         signupWindow.add(createAccountButton, BorderLayout.SOUTH);
 
+        // Layout of the student window
+        studentWindow = new Container();
+        studentWindow.setLayout(new BorderLayout());
+
+        JPanel studentPanel = new JPanel();
+        studentPanel.setLayout(new GridLayout(3,1));
+        studentPanel.add(viewCoursesStudentButton);
+        studentPanel.add(accountSettingsStudentButton);
+        studentPanel.add(exitStudentButton);
+        studentWindow.add(studentPanel, BorderLayout.CENTER);
+
+
         // Makes the frame visible
         frame.setSize(600, 400);
+        frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        
-        
 
-        //while(stage1.equals(""));
+    }
 
-
-
-        /*
-        usernameFieldLogin = new JTextField("username");
-        usernameFieldLogin.addActionListener(actionListener);
-        passwordFieldLogin = new JTextField("password");
-        passwordFieldLogin.addActionListener(actionListener);
-
-
-        JPanel panel2 = new JPanel();
-        panel2.add(usernameFieldLogin);
-        panel2.add(passwordFieldLogin);
-        content.add(panel2, BorderLayout.CENTER);
-         */
-
-
-
+    /**
+     * Helper method which will refresh the frame, and pack it to best fit all containers.
+     */
+    private void refresh(){
+        frame.invalidate();
+        frame.validate();
+        frame.pack();
     }
 
 }
