@@ -20,3 +20,20 @@ Port:4001 Register
         if the register is success, return: "Success"
         if there is duplicate id or invalid input, return: "Fail"
     Account.txt will be updated
+
+
+Port:4002 Get the Course List as a String
+    Input:None
+    Return: the course list
+        ex. "1. CS180\n2. CS193\n3. MA261\n"
+    The list will be immediately returned after connection
+
+
+Port:4003 Get the Quiz List of a given course as a String
+    Input: Course Name
+        ex. "CS180\n"
+    Return:
+        if the input course was not found in the course list, return: "Given Course is not found\n"
+        if there is no quiz under the input course, return: "No quiz found in this course\n"
+        if proper quiz list is found, return the quiz names as a String.
+            ex. "1. Quiz One\n2. Quiz Two\n3. Quiz Three\n"
