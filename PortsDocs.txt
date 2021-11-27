@@ -37,3 +37,34 @@ Port:4003 Get the Quiz List of a given course as a String
         if there is no quiz under the input course, return: "No quiz found in this course\n"
         if proper quiz list is found, return the quiz names as a String.
             ex. "1. Quiz One\n2. Quiz Two\n3. Quiz Three\n"
+
+
+Port:4004 Create Course
+    Input:A Course Name
+        ex. "CS193\n"
+    Return:
+        if the course is created successfully, return: "Success\n"
+        if there is duplicate course name, return: "Fail\n"
+    Course files will be updated
+
+
+Port:4005 Create Quiz
+    Input:Course name and quiz info, must be in the following format
+    "<Course name>\n<Quiz name>\n<number of questions>\n<prompt of first question>\n<first option>\n<second option>\n<third option>\n<forth option>\n<prompt of second question>...<fourth option>\n"
+        ex. CS193
+            The first Quiz
+            2
+            The first Question prompt
+            The first Choice
+            The second Choice
+            The third Choice
+            The fourth Choice
+            The second Question prompt
+            The first Choice
+            The second Choice
+            The third Choice
+            The fourth Choice
+    return:
+        If the quiz is created successfully, return "Success\n"
+        if any error occurs, return "Fail\n"
+    Related files will be updated

@@ -12,12 +12,22 @@ public class Server extends Thread {
     ServerSocket registerService;
     ServerSocket getCourseService;
     ServerSocket getQuizService;
+    ServerSocket createCourseService;
+    ServerSocket createQuizService;
+    ServerSocket editQuizService;
+    ServerSocket editUsernameService;
+    ServerSocket editPasswordService;
+    ServerSocket deleteAccountService;
+    ServerSocket takeQuizService;
 
     public Server() throws IOException {
         loginService = new ServerSocket(4000); //Initialize the services with port numbers
         registerService = new ServerSocket(4001);
         getCourseService = new ServerSocket(4002);
         getQuizService = new ServerSocket(4003);
+        createCourseService = new ServerSocket(4004);
+        createQuizService = new ServerSocket(4005);
+
     }
 
     public static void main(String[] args) throws Exception {
@@ -78,6 +88,34 @@ public class Server extends Thread {
             }
         });
         getQuiz.start();
+
+        Thread createCourse = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        server.createCourse(server.createCourseService.accept());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        createCourse.start();
+
+        Thread createQUiz = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        server.createQuiz(server.createQuizService.accept());
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+        });
+        createQUiz.start();
     }
 
     public void login(Socket loginRequest) throws IOException, InterruptedException {
@@ -139,17 +177,17 @@ public class Server extends Thread {
             }
             if (!fail) {
                 switch (role) {
-                    case "Teacher" :
+                    case "Teacher":
                         m.getAccountList().add(new Account(id, pwd, false));
                         m.updateAccount();
                         writer.print("Success");
                         break;
-                    case "Student" :
+                    case "Student":
                         m.getAccountList().add(new Account(id, pwd, true));
                         m.updateAccount();
                         writer.print("Success");
                         break;
-                    default :
+                    default:
                         writer.print("Fail");
                 }
 
@@ -214,6 +252,81 @@ public class Server extends Thread {
             if (!found) {
                 writer.println("Given Course is not found");
             }
+            writer.flush();
+            reader.close();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createCourse(Socket createCourseRequest) {
+        /*
+         * @Description input a course name, create a course based on it
+         * @Date 11:45 AM 11/27/2021
+         * @Param [createCourseRequest]
+         * @return void
+         **/
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(createCourseRequest.getInputStream()));
+            PrintWriter writer = new PrintWriter(createCourseRequest.getOutputStream());
+            String name = reader.readLine();
+            Course c = new Course(name);
+            boolean available = true;
+            for (int i = 0; i < m.getCourseList().size(); i++) {  //Check availability
+                if (c.getName().equals(m.getCourseList().get(i).getName())) {
+                    available = false;
+                }
+            }
+            if (available) {
+                m.getCourseList().add(c);
+                m.updateCourse();
+                writer.println("Success");
+            } else {
+                writer.println("Fail");
+            }
+            writer.flush();
+            reader.close();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createQuiz(Socket createQuizRequest) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(createQuizRequest.getInputStream()));
+            PrintWriter writer = new PrintWriter(createQuizRequest.getOutputStream());
+            String courseName = reader.readLine();
+            String quizName = reader.readLine();
+            Course c = null;
+            boolean found = false;
+            for (int i = 0; i < m.getCourseList().size(); i++) {
+                if (m.getCourseList().get(i).getName().equals(courseName)) {
+                    c = m.getCourseList().get(i);
+                    found = true;
+                }
+            }
+            try {
+                int number = Integer.parseInt(reader.readLine());
+                Question[] q = new Question[number];
+                for (int i = 0; i < number; i++) {
+                    String prompt = reader.readLine();
+                    String[] options = new String[4];
+                    options[0] = reader.readLine();
+                    options[1] = reader.readLine();
+                    options[2] = reader.readLine();
+                    options[3] = reader.readLine();
+                    q[i] = new Question(prompt, options);
+                }
+                Quiz quiz = new Quiz(quizName, q);
+                c.getCourseQuiz().add(quiz);
+                m.updateCourse();
+                writer.println("Success");
+            } catch (Exception e) {
+                writer.println("Fail");
+            }
+
             writer.flush();
             reader.close();
             writer.close();
