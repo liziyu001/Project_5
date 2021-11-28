@@ -27,7 +27,9 @@ public class Server extends Thread {
         getQuizService = new ServerSocket(4003);
         createCourseService = new ServerSocket(4004);
         createQuizService = new ServerSocket(4005);
-
+        editUsernameService = new ServerSocket(4006);
+        editPasswordService = new ServerSocket(4007);
+        deleteAccountService = new ServerSocket(4008);
     }
 
     public static void main(String[] args) throws Exception {
@@ -116,6 +118,48 @@ public class Server extends Thread {
             }
         });
         createQUiz.start();
+
+        Thread editID = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        server.editID(server.editUsernameService.accept());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        editID.start();
+
+        Thread editPwd = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        server.editPassword(server.editPasswordService.accept());
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        editPwd.start();
+
+        Thread deleteAccount = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        server.deleteAccount(server.deleteAccountService.accept());
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        deleteAccount.start();
     }
 
     public void login(Socket loginRequest) throws IOException, InterruptedException {
@@ -294,6 +338,12 @@ public class Server extends Thread {
     }
 
     public void createQuiz(Socket createQuizRequest) {
+        /*
+         * @Description input quiz information and create the quiz
+         * @Date 1:01 PM 11/27/2021
+         * @Param [createQuizRequest]
+         * @return void
+         **/
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(createQuizRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(createQuizRequest.getOutputStream());
@@ -330,6 +380,114 @@ public class Server extends Thread {
             writer.flush();
             reader.close();
             writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAccount(Socket deleteAccountRequest) {
+        /*
+         * @Description Input account id and the account will be deleted
+         * @Date 1:23 PM 11/27/2021
+         * @Param [deleteAccountRequest]
+         * @return void
+         **/
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(deleteAccountRequest.getInputStream()));
+            PrintWriter writer = new PrintWriter(deleteAccountRequest.getOutputStream());
+            String id = reader.readLine();
+            boolean found = false;
+            for (int i = 0; i < m.getAccountList().size(); i++) {
+                if (m.getAccountList().get(i).getUsername().equals(id)) {
+                    found = true;
+                    m.getAccountList().remove(i);
+                    m.updateAccount();
+                    break;
+                }
+            }
+            if (found) {
+                writer.println("Success");
+            } else {
+                writer.println("Account not found");
+            }
+            writer.flush();
+            writer.close();
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editID(Socket editIDRequest) {
+        /*
+         * @Description Input an old id and a new id, id will be edited
+         * @Date 1:24 PM 11/27/2021
+         * @Param [editIDRequest]
+         * @return void
+         **/
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(editIDRequest.getInputStream()));
+            PrintWriter writer = new PrintWriter(editIDRequest.getOutputStream());
+            String oldID = reader.readLine();
+            String newID = reader.readLine();
+            boolean found = false;
+            boolean available = true;
+            int index = 0;
+            for (int i = 0; i < m.getAccountList().size(); i++) {
+                if (m.getAccountList().get(i).getUsername().equals(newID)) {
+                    available = false;
+                }
+                if (m.getAccountList().get(i).getUsername().equals(oldID)) {
+                    found = true;
+                    index = i;
+                }
+            }
+            if (found && available) {
+                m.getAccountList().get(index).setUsername(newID);
+                m.updateAccount();
+                writer.println("Success");
+            } else if (found && !available) {
+                writer.println("Duplicate new ID");
+            } else {
+                writer.println("Account not found");
+            }
+            writer.flush();
+            writer.close();
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void editPassword(Socket editPasswordRequest) {
+        /*
+         * @Description Input id and new password, password will be updated
+         * @Date 1:24 PM 11/27/2021
+         * @Param [editPasswordRequest]
+         * @return void
+         **/
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(editPasswordRequest.getInputStream()));
+            PrintWriter writer = new PrintWriter(editPasswordRequest.getOutputStream());
+            String id = reader.readLine();
+            String pwd = reader.readLine();
+            boolean found= false;
+            for (int i = 0; i < m.getAccountList().size(); i++) {
+                if (m.getAccountList().get(i).getUsername().equals(id)) {
+                    found = true;
+                    m.getAccountList().get(i).setPassword(pwd);
+                    m.updateAccount();
+                    break;
+                }
+            }
+            if (found) {
+                writer.println("Success");
+            } else {
+                writer.println("Account not found");
+            }
+            writer.flush();
+            writer.close();
+            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

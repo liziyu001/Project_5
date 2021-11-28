@@ -68,3 +68,31 @@ Port:4005 Create Quiz
         If the quiz is created successfully, return "Success\n"
         if any error occurs, return "Fail\n"
     Related files will be updated
+
+
+Port:4006 Edit username
+    Input: "<old username>\n<new username>\n"
+        ex: "abc\n123\n"
+    return:
+        If the edit is successful, return "Success\n"
+        If the new username is not available, return "Duplicate new ID\n"
+        If the input username is not found, return "Account not found\n"
+    Account file will be updated
+
+
+Port:4007 Edit Password
+    Input: "<username>\n<new Password>\n"
+        ex: "abc\n12345\n"
+    return:
+        If the edit is successful, return "Success\n"
+        If the input username is not found, return "Account not found\n"
+    Account file will be updated
+
+
+Port:4008 Edit username
+    Input: "<username>\n"
+        ex: "abc\n"
+    return:
+        If the deletion is successful, return "Success\n"
+        If the input username is not found, return "Account not found\n"
+    Account will be deleted from the account file
