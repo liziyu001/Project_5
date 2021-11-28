@@ -16,6 +16,14 @@ public class GUIProgram extends JComponent implements Runnable {
     JFrame frame;
     static Manager manager;
     Account currentAccount;
+    ArrayList<Course> courses;
+    Course currentCourse;
+    ArrayList<Quiz> quizzes;
+    Quiz currentQuiz;
+    Question[] questions;
+    Question currentQuestion;
+
+    String[] studentAnswers;
 
 
     Container startWindow;
@@ -30,6 +38,12 @@ public class GUIProgram extends JComponent implements Runnable {
     Container studentAccountWindow;
     // Where the teacher account settings are stored
     Container teacherAccountWindow;
+    // Where the student courses are stored
+    Container studentCoursesWindow;
+    // Where the student views all quizzes
+    Container studentViewQuizzesWindow;
+    // Where the student takes the quiz
+    Container studentQuizWindow;
 
     Container previousWindow;
 
@@ -48,6 +62,12 @@ public class GUIProgram extends JComponent implements Runnable {
     JButton editUsernameStudentButton;
     JButton deleteAccountStudentButton;
     JButton backAccountSettingsStudentButton;
+    JButton viewCourseStudentButton;
+    JButton viewQuizStudentButton;
+    JButton previousQuestionButton;
+    JButton nextQuestionButton;
+    JButton selectAnswerButton;
+    JButton submitQuizButton;
 
     // Teacher-related buttons
     JButton viewCoursesTeacherButton;
@@ -57,14 +77,20 @@ public class GUIProgram extends JComponent implements Runnable {
     JButton editUsernameTeacherButton;
     JButton deleteAccountTeacherButton;
     JButton backAccountSettingsTeacherButton;
-    
-
 
     JTextField usernameFieldLogin;
     JTextField passwordFieldLogin;
 
     JTextField usernameFieldSignup;
     JTextField passwordFieldSignup;
+
+    JLabel questionDisplay;
+    JComboBox<String> answerDisplay;
+
+    JComboBox<String> courseListGUI;
+    JComboBox<String> quizListGUI;
+
+
 
     GUIProgram guiProgram;
 
@@ -180,6 +206,14 @@ public class GUIProgram extends JComponent implements Runnable {
             if (e.getSource() == accountSettingsTeacherButton){
                 previousWindow = frame.getContentPane();
                 frame.setContentPane(teacherAccountWindow);
+                refresh();
+            }
+            if (e.getSource() == exitStudentButton || e.getSource() == exitTeacherButton){
+                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            }
+            if (e.getSource() == viewCoursesStudentButton){
+                previousWindow = frame.getContentPane();
+                frame.setContentPane(studentCoursesWindow);
                 refresh();
             }
 
@@ -337,6 +371,115 @@ public class GUIProgram extends JComponent implements Runnable {
                 refresh();
             }
 
+            if (e.getSource() == viewCourseStudentButton){
+                for(Course c : courses){
+                    if(c.getName().equals(courseListGUI.getSelectedItem())){
+                        currentCourse = c;
+                    }
+                }
+
+                quizzes = currentCourse.getCourseQuiz();
+                quizListGUI.removeAllItems();
+                for(Quiz q : quizzes){
+                    quizListGUI.addItem(q.getName());
+                }
+
+                previousWindow = frame.getContentPane();
+                frame.setContentPane(studentViewQuizzesWindow);
+                refresh();
+            }
+            if (e.getSource() == viewQuizStudentButton){
+                for(Quiz q : quizzes){
+                    if(q.getName().equals(quizListGUI.getSelectedItem())){
+                        currentQuiz = q;
+                    }
+                }
+
+                questions = currentQuiz.getQuestions();
+                studentAnswers = new String[questions.length];
+                answerDisplay.removeAllItems();
+
+                for(int i=0; i<studentAnswers.length; i++){
+                    studentAnswers[i] = "";
+                }
+                currentQuestion = questions[0];
+
+                questionDisplay.setText(currentQuestion.getPrompt());
+                for(String answer : currentQuestion.getAnswerChoices()){
+                    answerDisplay.addItem(answer);
+                }
+
+                previousWindow = frame.getContentPane();
+                frame.setContentPane(studentQuizWindow);
+                refresh();
+            }
+
+            if (e.getSource() == selectAnswerButton){
+                int index = -1;
+                for(int i=0; i<questions.length; i++){
+                    if(questions[i].getPrompt().equals(currentQuestion.getPrompt())){
+                        index = i;
+                        break;
+                    }
+                }
+                studentAnswers[index] = answerDisplay.getSelectedItem().toString();
+            }
+            if (e.getSource() == nextQuestionButton){
+                int index = -1;
+                for(int i=0; i<questions.length; i++){
+                    if(questions[i].getPrompt().equals(currentQuestion.getPrompt())){
+                        index = i;
+                        break;
+                    }
+                }
+                if(index==questions.length-1){
+                    index = 0;
+                }
+                else{
+                    index++;
+                }
+                currentQuestion = questions[index];
+                answerDisplay.removeAllItems();
+                questionDisplay.setText(currentQuestion.getPrompt());
+                for(String answer : currentQuestion.getAnswerChoices()){
+                    answerDisplay.addItem(answer);
+                }
+            }
+            if (e.getSource() == previousQuestionButton){
+                int index = -1;
+                for(int i=0; i<questions.length; i++){
+                    if(questions[i].getPrompt().equals(currentQuestion.getPrompt())){
+                        index = i;
+                        break;
+                    }
+                }
+                if(index==0){
+                    index = questions.length-1;
+                }
+                else{
+                    index--;
+                }
+                currentQuestion = questions[index];
+                answerDisplay.removeAllItems();
+                questionDisplay.setText(currentQuestion.getPrompt());
+                for(String answer : currentQuestion.getAnswerChoices()){
+                    answerDisplay.addItem(answer);
+                }
+            }
+            if (e.getSource() == submitQuizButton){
+                boolean answered = true;
+                for(int i=0; i<studentAnswers.length; i++){
+                    if(studentAnswers[i].equals("")){
+                        JOptionPane.showMessageDialog(null, "Please answer all questions in the quiz!", "Error", JOptionPane.ERROR_MESSAGE);
+                        answered = false;
+                        break;
+                    }
+                }
+                if(answered){
+                    // TODO
+                }
+            }
+
         }
     };
 
@@ -392,6 +535,28 @@ public class GUIProgram extends JComponent implements Runnable {
         deleteAccountStudentButton.addActionListener(actionListener);
         backAccountSettingsStudentButton = new JButton("Back");
         backAccountSettingsStudentButton.addActionListener(actionListener);
+        viewCourseStudentButton = new JButton("View Course");
+        viewCourseStudentButton.addActionListener(actionListener);
+        viewQuizStudentButton = new JButton("View Quiz");
+        viewQuizStudentButton.addActionListener(actionListener);
+        previousQuestionButton = new JButton("Previous Question");
+        previousQuestionButton.addActionListener(actionListener);
+        nextQuestionButton = new JButton("Next Question");
+        nextQuestionButton.addActionListener(actionListener);
+        selectAnswerButton = new JButton("Select Answer");
+        selectAnswerButton.addActionListener(actionListener);
+        submitQuizButton = new JButton("Submit Quiz");
+        submitQuizButton.addActionListener(actionListener);
+
+        courseListGUI = new JComboBox<String>();
+        courseListGUI.addActionListener(actionListener);
+        quizListGUI = new JComboBox<String>();
+        quizListGUI.addActionListener(actionListener);
+        quizListGUI.setEditable(true);
+        questionDisplay = new JLabel();
+        answerDisplay = new JComboBox<String>();
+        answerDisplay.addActionListener(actionListener);
+        answerDisplay.setEditable(true);
 
         viewCoursesTeacherButton = new JButton("View Courses");
         viewCoursesTeacherButton.addActionListener(actionListener);
@@ -486,6 +651,50 @@ public class GUIProgram extends JComponent implements Runnable {
         teacherAccountPanel.add(deleteAccountTeacherButton);
         teacherAccountPanel.add(backAccountSettingsTeacherButton);
         teacherAccountWindow.add(teacherAccountPanel, BorderLayout.CENTER);
+
+        // Layout of the student course selection window
+        studentCoursesWindow = new Container();
+        studentCoursesWindow.setLayout(new BorderLayout());
+
+        courses = manager.getCourseList();
+        String[] names = new String[courses.size()];
+        for(int i=0; i<names.length; i++){
+            names[i] = courses.get(i).getName();
+        }
+        courseListGUI = new JComboBox<String>(names);
+        courseListGUI.setEditable(true);
+
+        JPanel coursesPanel = new JPanel();
+        coursesPanel.setLayout(new GridLayout(2,1));
+        coursesPanel.add(courseListGUI);
+        coursesPanel.add(viewCourseStudentButton);
+        studentCoursesWindow.add(coursesPanel, BorderLayout.CENTER);
+
+        // Layout of the quizzes for a course window
+        studentViewQuizzesWindow = new Container();
+        studentViewQuizzesWindow.setLayout(new BorderLayout());
+
+        JPanel quizzesPanel = new JPanel();
+        quizzesPanel.setLayout(new GridLayout(2,1));
+        quizzesPanel.add(quizListGUI);
+        quizzesPanel.add(viewQuizStudentButton);
+        studentViewQuizzesWindow.add(quizzesPanel, BorderLayout.CENTER);
+
+
+
+        // Layout of the quiz taking window
+        studentQuizWindow = new Container();
+        studentQuizWindow.setLayout(new BorderLayout());
+        
+        JPanel quizOptionsPanel = new JPanel();
+        quizOptionsPanel.setLayout(new FlowLayout());
+        quizOptionsPanel.add(previousQuestionButton);
+        quizOptionsPanel.add(selectAnswerButton);
+        quizOptionsPanel.add(nextQuestionButton);
+        quizOptionsPanel.add(submitQuizButton);
+        studentQuizWindow.add(quizOptionsPanel, BorderLayout.SOUTH);
+        studentQuizWindow.add(questionDisplay, BorderLayout.NORTH);
+        studentQuizWindow.add(answerDisplay, BorderLayout.CENTER);
 
 
         // Makes the frame visible
