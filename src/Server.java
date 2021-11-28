@@ -19,6 +19,8 @@ public class Server extends Thread {
     ServerSocket editPasswordService;
     ServerSocket deleteAccountService;
     ServerSocket takeQuizService;
+    ServerSocket getQuizContentService;
+    ServerSocket deleteQuizService;
 
     public Server() throws IOException {
         loginService = new ServerSocket(4000); //Initialize the services with port numbers
@@ -30,6 +32,9 @@ public class Server extends Thread {
         editUsernameService = new ServerSocket(4006);
         editPasswordService = new ServerSocket(4007);
         deleteAccountService = new ServerSocket(4008);
+        editQuizService = new ServerSocket(4009);
+        getQuizContentService = new ServerSocket(4010);
+        deleteQuizService = new ServerSocket(4011);
     }
 
     public static void main(String[] args) throws Exception {
@@ -140,7 +145,7 @@ public class Server extends Thread {
                     while (true) {
                         server.editPassword(server.editPasswordService.accept());
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -154,12 +159,54 @@ public class Server extends Thread {
                     while (true) {
                         server.deleteAccount(server.deleteAccountService.accept());
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
         deleteAccount.start();
+
+        Thread editQuiz = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        server.editQuiz(server.editQuizService.accept());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        editQuiz.start();
+
+        Thread getQuizContent = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        server.getQuizContent(server.getQuizContentService.accept());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        getQuizContent.start();
+
+        Thread deleteQuiz = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        server.deleteQuiz(server.deleteQuizService.accept());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        deleteQuiz.start();
     }
 
     public void login(Socket loginRequest) throws IOException, InterruptedException {
@@ -471,7 +518,7 @@ public class Server extends Thread {
             PrintWriter writer = new PrintWriter(editPasswordRequest.getOutputStream());
             String id = reader.readLine();
             String pwd = reader.readLine();
-            boolean found= false;
+            boolean found = false;
             for (int i = 0; i < m.getAccountList().size(); i++) {
                 if (m.getAccountList().get(i).getUsername().equals(id)) {
                     found = true;
@@ -484,6 +531,129 @@ public class Server extends Thread {
                 writer.println("Success");
             } else {
                 writer.println("Account not found");
+            }
+            writer.flush();
+            writer.close();
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editQuiz(Socket editQuizRequest) {
+        /*
+         * @Description input course name and target quiz name and quiz info, quiz will be edited
+         * @Date 8:51 PM 11/27/2021
+         * @Param [editQuizRequest]
+         * @return void
+         **/
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(editQuizRequest.getInputStream()));
+            PrintWriter writer = new PrintWriter(editQuizRequest.getOutputStream());
+            String courseName = reader.readLine();
+            String quizName = reader.readLine();
+            Course c = null;
+            boolean found = false;
+            for (int i = 0; i < m.getCourseList().size(); i++) {
+                if (m.getCourseList().get(i).getName().equals(courseName)) {
+                    c = m.getCourseList().get(i);
+                    found = true;
+                }
+            }
+            try {
+                int number = Integer.parseInt(reader.readLine());
+                Question[] q = new Question[number];
+                for (int i = 0; i < number; i++) {
+                    String prompt = reader.readLine();
+                    String[] options = new String[4];
+                    options[0] = reader.readLine();
+                    options[1] = reader.readLine();
+                    options[2] = reader.readLine();
+                    options[3] = reader.readLine();
+                    q[i] = new Question(prompt, options);
+                }
+                for (int i = 0; i < c.getCourseQuiz().size(); i++) {
+                    if (c.getCourseQuiz().get(i).getName().equals(quizName)) {
+                        c.getCourseQuiz().get(i).setQuestions(q);
+                        m.updateCourse();
+                        break;
+                    }
+                }
+                writer.println("Success");
+            } catch (Exception e) {
+                writer.println("Fail");
+            }
+            writer.flush();
+            reader.close();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getQuizContent(Socket getQuizContentRequest) {
+        /*
+         * @Description Input course and quiz name, quiz content will be returned
+         * @Date 8:50 PM 11/27/2021
+         * @Param [getQuizContentRequest]
+         * @return void
+         **/
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(getQuizContentRequest.getInputStream()));
+            PrintWriter writer = new PrintWriter(getQuizContentRequest.getOutputStream());
+            String courseName = reader.readLine();
+            String quizName = reader.readLine();
+            Course c = null;
+            try {
+                for (int i = 0; i < m.getCourseList().size(); i++) {
+                    if (m.getCourseList().get(i).getName().equals(courseName)) {
+                        c = m.getCourseList().get(i);
+                    }
+                }
+                for (int i = 0; i < c.getCourseQuiz().size(); i++) {
+                    if (c.getCourseQuiz().get(i).getName().equals(quizName)) {
+                        writer.print(c.getCourseQuiz().get(i).toString());
+                    }
+                }
+            } catch (Exception e) {
+                writer.println("Course or Quiz not found");
+            }
+            writer.flush();
+            writer.close();
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteQuiz(Socket deleteQuizRequest) {
+        /*
+         * @Description input course name and quiz name, quiz will be deleted
+         * @Date 8:50 PM 11/27/2021
+         * @Param [deleteQuizRequest]
+         * @return void
+         **/
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(deleteQuizRequest.getInputStream()));
+            PrintWriter writer = new PrintWriter(deleteQuizRequest.getOutputStream());
+            String courseName = reader.readLine();
+            String quizName = reader.readLine();
+            Course c = null;
+            try {
+                for (int i = 0; i < m.getCourseList().size(); i++) {
+                    if (m.getCourseList().get(i).getName().equals(courseName)) {
+                        c = m.getCourseList().get(i);
+                    }
+                }
+                for (int i = 0; i < c.getCourseQuiz().size(); i++) {
+                    if (c.getCourseQuiz().get(i).getName().equals(quizName)) {
+                        c.getCourseQuiz().remove(i);
+                        m.updateCourse();
+                        writer.print("Success");
+                    }
+                }
+            } catch (Exception e) {
+                writer.println("Course or Quiz not found");
             }
             writer.flush();
             writer.close();

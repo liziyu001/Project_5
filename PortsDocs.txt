@@ -89,10 +89,44 @@ Port:4007 Edit Password
     Account file will be updated
 
 
-Port:4008 Edit username
+Port:4008 Delete account
     Input: "<username>\n"
         ex: "abc\n"
     return:
         If the deletion is successful, return "Success\n"
         If the input username is not found, return "Account not found\n"
     Account will be deleted from the account file
+
+
+Port:4009 Edit Quiz
+    same as port 4005, except no new quiz will be created(old quiz will be edited).
+    return:
+        If the quiz is created successfully, return "Success\n"
+        if any error occurs, return "Fail\n"
+
+
+Port:4010  get quiz content
+    Input: "<courseName>\n<quizName\n"
+    Return:
+        quiz content
+            ex. The first Quiz
+                The first Question prompt
+                1. The first Choice
+                2. The second Choice
+                3. The third Choice
+                4. The fourth Choice
+                The second Question prompt
+                1. The first Choice
+                2. The second Choice
+                3. The third Choice
+                4. The fourth Choice
+        If given names are not found, return "Course or Quiz not found\n"
+
+
+
+Port:4011 delete quiz
+    Input: "<courseName>\n<quizName\n"
+    return:
+        If the deletion is successful, return "Success\n"
+        If given names are not found, return "Course or Quiz not found\n"
+    Quiz will be deleted from file

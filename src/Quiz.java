@@ -35,4 +35,13 @@ public class Quiz {
             questions[i].displayQuestion();
         }
     }
+
+    @Override
+    public String toString() {
+        String string = name + "\n";
+        for (int i = 0; i < questions.length; i++) {
+            string = string + questions[i].toString();
+        }
+        return string;
+    }
 }

@@ -33,4 +33,13 @@ public class Question {
             System.out.println((i + 1) + ". " + answerChoices[i]);
         }
     }
+
+    @Override
+    public String toString () {
+        String string = prompt + "\n";
+        for (int i = 0; i < 4; i++) {
+            string = string + (i + 1) + ". " + answerChoices[i] + "\n";
+        }
+        return string;
+    }
 }
