@@ -31,7 +31,7 @@ public class ManagementSystem {
                     currentAccount = ac;
                     System.out.println("Successfully login as " + ac.getUsername());
                     break;
-                default :
+                default:
                     System.out.println("Invalid Option");
                     continue loginOption;
             }
@@ -70,17 +70,18 @@ public class ManagementSystem {
                                 System.out.println(currentCourse.listQuiz());
                                 System.out.println("0. Create a new Quiz");
                                 String temp = s.nextLine();
-                                if (temp.equals("0")){
+                                if (temp.equals("0")) {
                                     Quiz q = currentAccount.createQuiz(s);
                                     if (q == null) {
                                         continue Teacher;
                                     } else {
                                         currentCourse.getCourseQuiz().add(q);
-                                        m.updateCourse();//update the file
+                                        //update the file
+                                        m.updateCourse();
                                         System.out.println("Create Quiz Successfully");
                                         continue Teacher;
                                     }
-                                }else {
+                                } else {
                                     currentQuiz = currentCourse.getCourseQuiz().get(Integer.parseInt(temp) - 1);
                                     if (currentQuiz == null) {
                                         System.out.println("Invalid Choice");
@@ -98,15 +99,17 @@ public class ManagementSystem {
                                                 } else {
                                                     int index = currentCourse.getCourseQuiz().indexOf(currentQuiz);
                                                     currentCourse.getCourseQuiz().set(index, q);
-                                                    m.updateCourse();//update the file
+                                                    //update the file
+                                                    m.updateCourse();
                                                     System.out.println("Create Edited Successfully");
                                                     continue Teacher;
                                                 }
-                                            case "0" :
+                                            case "0":
                                                 continue Teacher;
-                                            case "a"://just to make the break statement reachable
+                                            //just to make the break statement reachable
+                                            case "a":
                                                 break;
-                                            default :
+                                            default:
                                                 System.out.println("Invalid Option");
                                                 continue QuizSelection;
                                         }
@@ -120,7 +123,8 @@ public class ManagementSystem {
                     case "2":
                         Course c = currentAccount.createCourse(s);
                         boolean available = true;
-                        for (int i = 0; i < m.getCourseList().size(); i++) {  //Check availability
+                        for (int i = 0; i < m.getCourseList().size(); i++) {  
+                            //Check availability
                             if (c.getName().equals(m.getCourseList().get(i).getName())) {
                                 available = false;
                             }
@@ -131,7 +135,7 @@ public class ManagementSystem {
                             System.out.println("Successfully created course " + c.getName());
                             continue Teacher;
                         } else {
-                            System.out.println("You can 't have two course with the same name");
+                            System.out.println("You can't have two course with the same name");
                             continue Teacher;
                         }
                     case "3":
@@ -149,13 +153,16 @@ public class ManagementSystem {
                                     if (a == null) {
                                         continue AccountOptions;
                                     } else {
-                                        currentAccount = a; //update the copy
-                                        m.getAccountList().set(i, a);//update the manager
-                                        m.updateAccount();//update the file
+                                        //update the copy
+                                        currentAccount = a; 
+                                        //update the manager
+                                        m.getAccountList().set(i, a);
+                                        //update the file
+                                        m.updateAccount();
                                         System.out.println("Edit success");
                                         continue Teacher;
                                     }
-                                case "2" :
+                                case "2":
                                     a = m.editPwd(s, currentAccount);
                                     currentAccount = a;
                                     m.getAccountList().set(i, a);
@@ -172,7 +179,7 @@ public class ManagementSystem {
                             }
                             break;
                         }
-                    case "0" :
+                    case "0":
                         break Teacher;
                 }
                 break;
@@ -184,7 +191,7 @@ public class ManagementSystem {
                 System.out.println("2. Account Setting");
                 System.out.println("0. Exit");
                 switch (s.nextLine()) {
-                    case "1" :
+                    case "1":
                         Course currentCourse;
                         Quiz currentQuiz;
                         CourseSelection:
@@ -193,7 +200,7 @@ public class ManagementSystem {
                             System.out.println(m.listCourses());
                             try {
                                 currentCourse = m.getCourseList().get(Integer.parseInt(s.nextLine()) - 1);
-                            }catch (Exception e) {
+                            } catch (Exception e) {
                                 System.out.println("Invalid Choice");
                                 continue CourseSelection;
                             }
@@ -217,7 +224,7 @@ public class ManagementSystem {
                             System.out.println("Submission Recorded");
                             continue Student;
                         }
-                    case "2" :
+                    case "2":
                         AccountOptions:
                         while (true) {
                             int i = m.getAccountList().indexOf(currentAccount);
@@ -232,13 +239,16 @@ public class ManagementSystem {
                                     if (a == null) {
                                         continue AccountOptions;
                                     } else {
-                                        currentAccount = a; //update the copy
-                                        m.getAccountList().set(i, a);//update the manager
-                                        m.updateAccount();//update the file
+                                        //update the copy
+                                        currentAccount = a; 
+                                        //update the manager
+                                        m.getAccountList().set(i, a);
+                                        //update the file
+                                        m.updateAccount();
                                         System.out.println("Edit success");
                                         continue Student;
                                     }
-                                case "2" :
+                                case "2":
                                     a = m.editPwd(s, currentAccount);
                                     currentAccount = a;
                                     m.getAccountList().set(i, a);
@@ -255,7 +265,7 @@ public class ManagementSystem {
                             }
                             break;
                         }
-                    case "0" :
+                    case "0":
                         break Student;
                 }
                 break;
