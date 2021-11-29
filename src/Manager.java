@@ -55,7 +55,7 @@ public class Manager {
         String id = s.nextLine();
 
         for (int i = 0; i < accountList.size(); i++) {
-            if (accountList.get(i).getUsername().equals(id)){
+            if (accountList.get(i).getUsername().equals(id)) {
                 System.out.println("This id has already be taken, please try again");
                 return null;
             }
@@ -65,12 +65,13 @@ public class Manager {
         String pwd = s.nextLine();
         System.out.println("Your role: 1. Teacher   2. Student");
         switch (s.nextLine()) {
-            case "1" :
+            case "1":
                 return new Account(id, pwd, false);
-            case "2" :
+            case "2":
                 return new Account(id, pwd, true);
-            default :
-                return null; //error handling can be added
+            default:
+                //error handling can be added
+                return null; 
         }
 
     }
@@ -219,7 +220,7 @@ public class Manager {
                     Quiz q = courseList.get(i).getCourseQuiz().get(j);
                     if (q != null) {
                         pr1.println(q.getName() + ":" + q.getQuestions().length);
-                        for (int k = 0; k < q.getQuestions().length; k++) {// for every quiz question
+                        for (int k = 0; k < q.getQuestions().length; k++) { // for every quiz question
                             Question question = q.getQuestions()[k];
                             pr1.println(question.getPrompt());
                             for (int l = 0; l < 4; l++) { // for each option
@@ -256,7 +257,7 @@ public class Manager {
         System.out.println("Enter you User ID"); // ; shouldn't be contained
         String id = s.nextLine();
         for (int i = 0; i < accountList.size(); i++) {
-            if (i != index && accountList.get(i).getUsername().equals(id)){
+            if (i != index && accountList.get(i).getUsername().equals(id)) {
                 System.out.println("This id has already be taken, please try again");
                 return null;
             }
