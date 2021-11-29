@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 public class Server extends Thread {
     static Manager m = new Manager();
-    ServerSocket loginService; //field of services provided by the server
+    //field of services provided by the server
+    ServerSocket loginService; 
     ServerSocket registerService;
     ServerSocket getCourseService;
     ServerSocket getQuizService;
@@ -23,7 +24,8 @@ public class Server extends Thread {
     ServerSocket deleteQuizService;
 
     public Server() throws IOException {
-        loginService = new ServerSocket(4000); //Initialize the services with port numbers
+        //Initialize the services with port numbers
+        loginService = new ServerSocket(4000); 
         registerService = new ServerSocket(4001);
         getCourseService = new ServerSocket(4002);
         getQuizService = new ServerSocket(4003);
@@ -38,21 +40,25 @@ public class Server extends Thread {
     }
 
     public static void main(String[] args) throws Exception {
-        Server server = new Server(); //Initialize the server
+        //Initialize the server
+        Server server = new Server(); 
 
-        Thread login = new Thread(new Runnable() { //thread of a service, simultaneously listening to the port
+        //thread of a service, simultaneously listening to the port
+        Thread login = new Thread(new Runnable() { 
             @Override
             public void run() {
                 try {
                     while (true) { // 'keep' listening to the port
-                        server.login(server.loginService.accept()); // start the service after receiving connection
+                        // start the service after receiving connection
+                        server.login(server.loginService.accept()); 
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        login.start(); //start the thread, since simultaneously, no need to join
+        //start the thread, since simultaneously, no need to join
+        login.start();
 
         Thread idCheck = new Thread(new Runnable() {
             @Override
@@ -330,8 +336,7 @@ public class Server extends Thread {
                 if (m.getCourseList().get(i).getName().equals(courseName)) {
                     found = true;
                     for (int j = 0; j < m.getCourseList().get(i).getCourseQuiz().size(); j++) {
-                        quiz = quiz + (j + 1) + ". "
-                                + m.getCourseList().get(i).getCourseQuiz().get(j).getName() + "\n";
+                        quiz = quiz + (j + 1) + ". " + m.getCourseList().get(i).getCourseQuiz().get(j).getName() + "\n";
                     }
                     if (quiz.isEmpty()) {
                         writer.println("No quiz found in this course");
@@ -364,7 +369,8 @@ public class Server extends Thread {
             String name = reader.readLine();
             Course c = new Course(name);
             boolean available = true;
-            for (int i = 0; i < m.getCourseList().size(); i++) {  //Check availability
+            for (int i = 0; i < m.getCourseList().size(); i++) {  
+                //Check availability
                 if (c.getName().equals(m.getCourseList().get(i).getName())) {
                     available = false;
                 }
