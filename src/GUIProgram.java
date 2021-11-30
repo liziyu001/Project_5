@@ -2,6 +2,10 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +26,7 @@ public class GUIProgram extends JComponent implements Runnable {
     Quiz currentQuiz;
     Question[] questions;
     Question currentQuestion;
-
+    String account;
     String[] studentAnswers;
 
 
@@ -91,7 +95,6 @@ public class GUIProgram extends JComponent implements Runnable {
     JComboBox<String> quizListGUI;
 
 
-
     GUIProgram guiProgram;
 
     /* action listener for buttons */
@@ -110,28 +113,29 @@ public class GUIProgram extends JComponent implements Runnable {
             }
             if (e.getSource() == signInButton) {
                 ArrayList<Account> accounts = manager.getAccountList();
-                String name = usernameFieldLogin.getText();
-                String password = passwordFieldLogin.getText();
-
+                //prepare input for the connection
+                ArrayList<String> in = new ArrayList<String>();
+                in.add(usernameFieldLogin.getText());
+                in.add(passwordFieldLogin.getText());
                 Container nextWindow = null;
-                for(Account a : accounts){
-                    if(a.getUsername().equals(name) && a.getPassword().equals(password)){
-                        if(a.isStudent()){
-                            nextWindow = studentWindow;
-                        }
-                        else{
-                            nextWindow = teacherWindow;
-                        }
-                        currentAccount = a;
-                        break;
+                //receive output(validation result) from the server
+                ArrayList<String> out = connect(in, 4000);
+                System.out.println(out.get(0));
+                if (!out.get(0).equals("Fail")) {
+                    if (out.get(0).equals("true")) {
+                        nextWindow = studentWindow;
+                    } else {
+                        nextWindow = teacherWindow;
                     }
+                    account = in.get(0);
+                    //no need to use Account field(its function will be replaced by server), only store id as server input for other services
                 }
-                if(nextWindow!=null){
+
+                if (nextWindow != null) {
                     previousWindow = frame.getContentPane();
                     frame.setContentPane(nextWindow);
                     refresh();
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Username or Password was incorrect", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -142,33 +146,33 @@ public class GUIProgram extends JComponent implements Runnable {
                 boolean isStudent = studentOrTeacherButton.getText().equals("Student");
                 boolean valid = true;
 
-                if(name.equals("")){
+                if (name.equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter a username", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                if(name.contains(";")){
+                if (name.contains(";")) {
                     JOptionPane.showMessageDialog(null, "Usernames cannot contain semicolons", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                if(password.equals("")){
+                if (password.equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter a password", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                if(name.contains(";")){
+                if (name.contains(";")) {
                     JOptionPane.showMessageDialog(null, "Passwords cannot contain semicolons", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
 
-                for(Account a : accounts){
-                    if(a.getUsername().equals(name)){
+                for (Account a : accounts) {
+                    if (a.getUsername().equals(name)) {
                         JOptionPane.showMessageDialog(null, "Someone already has this username!", "Error", JOptionPane.ERROR_MESSAGE);
                         valid = false;
                         break;
                     }
                 }
 
-                if(valid){
+                if (valid) {
                     Account a = new Account(name, password, isStudent);
                     currentAccount = a;
                     manager.getAccountList().add(a);
@@ -176,12 +180,11 @@ public class GUIProgram extends JComponent implements Runnable {
                     // TODO FILE UPDATING
                     manager.updateAccount();
 
-                    if(isStudent){
+                    if (isStudent) {
                         previousWindow = frame.getContentPane();
                         frame.setContentPane(studentWindow);
                         refresh();
-                    }
-                    else{
+                    } else {
                         previousWindow = frame.getContentPane();
                         frame.setContentPane(teacherWindow);
                         refresh();
@@ -190,28 +193,27 @@ public class GUIProgram extends JComponent implements Runnable {
 
 
             }
-            if (e.getSource() == studentOrTeacherButton){
-                if(studentOrTeacherButton.getText().equals("Student")){
+            if (e.getSource() == studentOrTeacherButton) {
+                if (studentOrTeacherButton.getText().equals("Student")) {
                     studentOrTeacherButton.setText("Teacher");
-                }
-                else{ // equals "Teacher
+                } else { // equals "Teacher
                     studentOrTeacherButton.setText("Student");
                 }
             }
-            if (e.getSource() == accountSettingsStudentButton){
+            if (e.getSource() == accountSettingsStudentButton) {
                 previousWindow = frame.getContentPane();
                 frame.setContentPane(studentAccountWindow);
                 refresh();
             }
-            if (e.getSource() == accountSettingsTeacherButton){
+            if (e.getSource() == accountSettingsTeacherButton) {
                 previousWindow = frame.getContentPane();
                 frame.setContentPane(teacherAccountWindow);
                 refresh();
             }
-            if (e.getSource() == exitStudentButton || e.getSource() == exitTeacherButton){
+            if (e.getSource() == exitStudentButton || e.getSource() == exitTeacherButton) {
                 frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
             }
-            if (e.getSource() == viewCoursesStudentButton){
+            if (e.getSource() == viewCoursesStudentButton) {
                 previousWindow = frame.getContentPane();
                 frame.setContentPane(studentCoursesWindow);
                 refresh();
@@ -219,29 +221,25 @@ public class GUIProgram extends JComponent implements Runnable {
 
             if (e.getSource() == editUsernameStudentButton) {
                 startAgain:
-                while(true){
+                while (true) {
                     String newUsername = JOptionPane.showInputDialog(null, "Enter your new username:", "Edit Username", JOptionPane.QUESTION_MESSAGE);
-                    if(newUsername==null){ // user closed the window
+                    if (newUsername == null) { // user closed the window
                         frame.setContentPane(previousWindow);
                         refresh();
                         break;
-                    }
-                    else if(newUsername.equals("")){ // user entered a blank username
+                    } else if (newUsername.equals("")) { // user entered a blank username
                         JOptionPane.showMessageDialog(null, "Please enter a username", "Error", JOptionPane.ERROR_MESSAGE);
                         continue startAgain;
-                    }
-                    else if(newUsername.contains(";")) { // user's newUsername has a ";"
+                    } else if (newUsername.contains(";")) { // user's newUsername has a ";"
                         JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
                         continue startAgain;
-                    }
-                    else{ // their input was valid but we have to check for existing usernames
+                    } else { // their input was valid but we have to check for existing usernames
                         ArrayList<Account> accounts = manager.getAccountList();
-                        for(Account a : accounts){
-                            if(a.getUsername().equals(newUsername)){
+                        for (Account a : accounts) {
+                            if (a.getUsername().equals(newUsername)) {
                                 JOptionPane.showMessageDialog(null, "Someone has taken this username!", "Error", JOptionPane.ERROR_MESSAGE);
                                 continue startAgain;
-                            }
-                            else{
+                            } else {
                                 currentAccount.setUsername(newUsername);
 
                                 // TODO FILE EDITING HERE
@@ -256,22 +254,19 @@ public class GUIProgram extends JComponent implements Runnable {
             }
             if (e.getSource() == editPasswordStudentButton) {
                 startAgain:
-                while(true){
+                while (true) {
                     String newPassword = JOptionPane.showInputDialog(null, "Enter your new password:", "Edit Username", JOptionPane.QUESTION_MESSAGE);
-                    if(newPassword==null){ // user closed the window
+                    if (newPassword == null) { // user closed the window
                         frame.setContentPane(previousWindow);
                         refresh();
                         break;
-                    }
-                    else if(newPassword.equals("")){ // user entered a blank password
+                    } else if (newPassword.equals("")) { // user entered a blank password
                         JOptionPane.showMessageDialog(null, "Please enter a password", "Error", JOptionPane.ERROR_MESSAGE);
                         continue startAgain;
-                    }
-                    else if(newPassword.contains(";")) { // user's newPassword has a ";"
+                    } else if (newPassword.contains(";")) { // user's newPassword has a ";"
                         JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
                         continue startAgain;
-                    }
-                    else{ // their input was valid
+                    } else { // their input was valid
 
                         currentAccount.setPassword(newPassword);
 
@@ -283,42 +278,38 @@ public class GUIProgram extends JComponent implements Runnable {
                 }
 
             }
-            if (e.getSource() == deleteAccountStudentButton){
+            if (e.getSource() == deleteAccountStudentButton) {
                 manager.getAccountList().remove(currentAccount);
                 manager.updateAccount();
                 frame.setContentPane(startWindow);
                 refresh();
             }
-            if (e.getSource() == backAccountSettingsStudentButton){
+            if (e.getSource() == backAccountSettingsStudentButton) {
                 frame.setContentPane(previousWindow);
                 refresh();
             }
 
             if (e.getSource() == editUsernameTeacherButton) {
                 startAgain:
-                while(true){
+                while (true) {
                     String newUsername = JOptionPane.showInputDialog(null, "Enter your new username:", "Edit Username", JOptionPane.QUESTION_MESSAGE);
-                    if(newUsername==null){ // user closed the window
+                    if (newUsername == null) { // user closed the window
                         frame.setContentPane(previousWindow);
                         refresh();
                         break;
-                    }
-                    else if(newUsername.equals("")){ // user entered a blank username
+                    } else if (newUsername.equals("")) { // user entered a blank username
                         JOptionPane.showMessageDialog(null, "Please enter a username", "Error", JOptionPane.ERROR_MESSAGE);
                         continue startAgain;
-                    }
-                    else if(newUsername.contains(";")) { // user's newUsername has a ";"
+                    } else if (newUsername.contains(";")) { // user's newUsername has a ";"
                         JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
                         continue startAgain;
-                    }
-                    else{ // their input was valid but we have to check for existing usernames
+                    } else { // their input was valid but we have to check for existing usernames
                         ArrayList<Account> accounts = manager.getAccountList();
-                        for(Account a : accounts){
-                            if(a.getUsername().equals(newUsername)){
+                        for (Account a : accounts) {
+                            if (a.getUsername().equals(newUsername)) {
                                 JOptionPane.showMessageDialog(null, "Someone has taken this username!", "Error", JOptionPane.ERROR_MESSAGE);
                                 continue startAgain;
-                            }
-                            else{
+                            } else {
                                 currentAccount.setUsername(newUsername);
 
                                 // TODO FILE EDITING HERE
@@ -333,22 +324,19 @@ public class GUIProgram extends JComponent implements Runnable {
             }
             if (e.getSource() == editPasswordTeacherButton) {
                 startAgain:
-                while(true){
+                while (true) {
                     String newPassword = JOptionPane.showInputDialog(null, "Enter your new password:", "Edit Username", JOptionPane.QUESTION_MESSAGE);
-                    if(newPassword==null){ // user closed the window
+                    if (newPassword == null) { // user closed the window
                         frame.setContentPane(previousWindow);
                         refresh();
                         break;
-                    }
-                    else if(newPassword.equals("")){ // user entered a blank password
+                    } else if (newPassword.equals("")) { // user entered a blank password
                         JOptionPane.showMessageDialog(null, "Please enter a password", "Error", JOptionPane.ERROR_MESSAGE);
                         continue startAgain;
-                    }
-                    else if(newPassword.contains(";")) { // user's newPassword has a ";"
+                    } else if (newPassword.contains(";")) { // user's newPassword has a ";"
                         JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
                         continue startAgain;
-                    }
-                    else{ // their input was valid
+                    } else { // their input was valid
 
                         currentAccount.setPassword(newPassword);
 
@@ -360,27 +348,27 @@ public class GUIProgram extends JComponent implements Runnable {
                 }
 
             }
-            if (e.getSource() == deleteAccountTeacherButton){
+            if (e.getSource() == deleteAccountTeacherButton) {
                 manager.getAccountList().remove(currentAccount);
                 manager.updateAccount();
                 frame.setContentPane(startWindow);
                 refresh();
             }
-            if (e.getSource() == backAccountSettingsTeacherButton){
+            if (e.getSource() == backAccountSettingsTeacherButton) {
                 frame.setContentPane(previousWindow);
                 refresh();
             }
 
-            if (e.getSource() == viewCourseStudentButton){
-                for(Course c : courses){
-                    if(c.getName().equals(courseListGUI.getSelectedItem())){
+            if (e.getSource() == viewCourseStudentButton) {
+                for (Course c : courses) {
+                    if (c.getName().equals(courseListGUI.getSelectedItem())) {
                         currentCourse = c;
                     }
                 }
 
                 quizzes = currentCourse.getCourseQuiz();
                 quizListGUI.removeAllItems();
-                for(Quiz q : quizzes){
+                for (Quiz q : quizzes) {
                     quizListGUI.addItem(q.getName());
                 }
 
@@ -388,9 +376,9 @@ public class GUIProgram extends JComponent implements Runnable {
                 frame.setContentPane(studentViewQuizzesWindow);
                 refresh();
             }
-            if (e.getSource() == viewQuizStudentButton){
-                for(Quiz q : quizzes){
-                    if(q.getName().equals(quizListGUI.getSelectedItem())){
+            if (e.getSource() == viewQuizStudentButton) {
+                for (Quiz q : quizzes) {
+                    if (q.getName().equals(quizListGUI.getSelectedItem())) {
                         currentQuiz = q;
                     }
                 }
@@ -399,13 +387,13 @@ public class GUIProgram extends JComponent implements Runnable {
                 studentAnswers = new String[questions.length];
                 answerDisplay.removeAllItems();
 
-                for(int i=0; i<studentAnswers.length; i++){
+                for (int i = 0; i < studentAnswers.length; i++) {
                     studentAnswers[i] = "";
                 }
                 currentQuestion = questions[0];
 
                 questionDisplay.setText(currentQuestion.getPrompt());
-                for(String answer : currentQuestion.getAnswerChoices()){
+                for (String answer : currentQuestion.getAnswerChoices()) {
                     answerDisplay.addItem(answer);
                 }
 
@@ -414,68 +402,66 @@ public class GUIProgram extends JComponent implements Runnable {
                 refresh();
             }
 
-            if (e.getSource() == selectAnswerButton){
+            if (e.getSource() == selectAnswerButton) {
                 int index = -1;
-                for(int i=0; i<questions.length; i++){
-                    if(questions[i].getPrompt().equals(currentQuestion.getPrompt())){
+                for (int i = 0; i < questions.length; i++) {
+                    if (questions[i].getPrompt().equals(currentQuestion.getPrompt())) {
                         index = i;
                         break;
                     }
                 }
                 studentAnswers[index] = answerDisplay.getSelectedItem().toString();
             }
-            if (e.getSource() == nextQuestionButton){
+            if (e.getSource() == nextQuestionButton) {
                 int index = -1;
-                for(int i=0; i<questions.length; i++){
-                    if(questions[i].getPrompt().equals(currentQuestion.getPrompt())){
+                for (int i = 0; i < questions.length; i++) {
+                    if (questions[i].getPrompt().equals(currentQuestion.getPrompt())) {
                         index = i;
                         break;
                     }
                 }
-                if(index==questions.length-1){
+                if (index == questions.length - 1) {
                     index = 0;
-                }
-                else{
+                } else {
                     index++;
                 }
                 currentQuestion = questions[index];
                 answerDisplay.removeAllItems();
                 questionDisplay.setText(currentQuestion.getPrompt());
-                for(String answer : currentQuestion.getAnswerChoices()){
+                for (String answer : currentQuestion.getAnswerChoices()) {
                     answerDisplay.addItem(answer);
                 }
             }
-            if (e.getSource() == previousQuestionButton){
+            if (e.getSource() == previousQuestionButton) {
                 int index = -1;
-                for(int i=0; i<questions.length; i++){
-                    if(questions[i].getPrompt().equals(currentQuestion.getPrompt())){
+                for (int i = 0; i < questions.length; i++) {
+                    if (questions[i].getPrompt().equals(currentQuestion.getPrompt())) {
                         index = i;
                         break;
                     }
                 }
-                if(index==0){
-                    index = questions.length-1;
-                }
-                else{
+                if (index == 0) {
+                    index = questions.length - 1;
+                } else {
                     index--;
                 }
                 currentQuestion = questions[index];
                 answerDisplay.removeAllItems();
                 questionDisplay.setText(currentQuestion.getPrompt());
-                for(String answer : currentQuestion.getAnswerChoices()){
+                for (String answer : currentQuestion.getAnswerChoices()) {
                     answerDisplay.addItem(answer);
                 }
             }
-            if (e.getSource() == submitQuizButton){
+            if (e.getSource() == submitQuizButton) {
                 boolean answered = true;
-                for(int i=0; i<studentAnswers.length; i++){
-                    if(studentAnswers[i].equals("")){
+                for (int i = 0; i < studentAnswers.length; i++) {
+                    if (studentAnswers[i].equals("")) {
                         JOptionPane.showMessageDialog(null, "Please answer all questions in the quiz!", "Error", JOptionPane.ERROR_MESSAGE);
                         answered = false;
                         break;
                     }
                 }
-                if(answered){
+                if (answered) {
                     // TODO
                 }
             }
@@ -484,7 +470,7 @@ public class GUIProgram extends JComponent implements Runnable {
     };
 
     public GUIProgram() {
-        
+
     }
 
     public static void main(String[] args) {
@@ -520,7 +506,7 @@ public class GUIProgram extends JComponent implements Runnable {
         usernameFieldSignup.addActionListener(actionListener);
         passwordFieldSignup = new JTextField("");
         passwordFieldSignup.addActionListener(actionListener);
-        
+
         viewCoursesStudentButton = new JButton("View Courses");
         viewCoursesStudentButton.addActionListener(actionListener);
         accountSettingsStudentButton = new JButton("Account Settings");
@@ -584,7 +570,7 @@ public class GUIProgram extends JComponent implements Runnable {
         loginWindow.setLayout(new BorderLayout());
 
         JPanel loginPanel = new JPanel();
-        loginPanel.setLayout(new GridLayout(2,2));
+        loginPanel.setLayout(new GridLayout(2, 2));
         loginPanel.add(new JLabel("Username: "));
         loginPanel.add(usernameFieldLogin);
         loginPanel.add(new JLabel("Password: "));
@@ -597,7 +583,7 @@ public class GUIProgram extends JComponent implements Runnable {
         signupWindow.setLayout(new BorderLayout());
 
         JPanel signupPanel = new JPanel();
-        signupPanel.setLayout(new GridLayout(2,2));
+        signupPanel.setLayout(new GridLayout(2, 2));
         signupPanel.add(new JLabel("Username: "));
         signupPanel.add(usernameFieldSignup);
         signupPanel.add(new JLabel("Password: "));
@@ -611,7 +597,7 @@ public class GUIProgram extends JComponent implements Runnable {
         studentWindow.setLayout(new BorderLayout());
 
         JPanel studentPanel = new JPanel();
-        studentPanel.setLayout(new GridLayout(3,1));
+        studentPanel.setLayout(new GridLayout(3, 1));
         studentPanel.add(viewCoursesStudentButton);
         studentPanel.add(accountSettingsStudentButton);
         studentPanel.add(exitStudentButton);
@@ -622,7 +608,7 @@ public class GUIProgram extends JComponent implements Runnable {
         teacherWindow.setLayout(new BorderLayout());
 
         JPanel teacherPanel = new JPanel();
-        teacherPanel.setLayout(new GridLayout(3,1));
+        teacherPanel.setLayout(new GridLayout(3, 1));
         teacherPanel.add(viewCoursesTeacherButton);
         teacherPanel.add(accountSettingsTeacherButton);
         teacherPanel.add(exitTeacherButton);
@@ -639,7 +625,7 @@ public class GUIProgram extends JComponent implements Runnable {
         studentAccountPanel.add(deleteAccountStudentButton);
         studentAccountPanel.add(backAccountSettingsStudentButton);
         studentAccountWindow.add(studentAccountPanel, BorderLayout.CENTER);
-        
+
         // Layout of the student account settings window
         teacherAccountWindow = new Container();
         teacherAccountWindow.setLayout(new BorderLayout());
@@ -658,14 +644,14 @@ public class GUIProgram extends JComponent implements Runnable {
 
         courses = manager.getCourseList();
         String[] names = new String[courses.size()];
-        for(int i=0; i<names.length; i++){
+        for (int i = 0; i < names.length; i++) {
             names[i] = courses.get(i).getName();
         }
         courseListGUI = new JComboBox<String>(names);
         courseListGUI.setEditable(true);
 
         JPanel coursesPanel = new JPanel();
-        coursesPanel.setLayout(new GridLayout(2,1));
+        coursesPanel.setLayout(new GridLayout(2, 1));
         coursesPanel.add(courseListGUI);
         coursesPanel.add(viewCourseStudentButton);
         studentCoursesWindow.add(coursesPanel, BorderLayout.CENTER);
@@ -675,17 +661,16 @@ public class GUIProgram extends JComponent implements Runnable {
         studentViewQuizzesWindow.setLayout(new BorderLayout());
 
         JPanel quizzesPanel = new JPanel();
-        quizzesPanel.setLayout(new GridLayout(2,1));
+        quizzesPanel.setLayout(new GridLayout(2, 1));
         quizzesPanel.add(quizListGUI);
         quizzesPanel.add(viewQuizStudentButton);
         studentViewQuizzesWindow.add(quizzesPanel, BorderLayout.CENTER);
 
 
-
         // Layout of the quiz taking window
         studentQuizWindow = new Container();
         studentQuizWindow.setLayout(new BorderLayout());
-        
+
         JPanel quizOptionsPanel = new JPanel();
         quizOptionsPanel.setLayout(new FlowLayout());
         quizOptionsPanel.add(previousQuestionButton);
@@ -709,10 +694,39 @@ public class GUIProgram extends JComponent implements Runnable {
     /**
      * Helper method which will refresh the frame, and pack it to best fit all containers.
      */
-    private void refresh(){
+    private void refresh() {
         frame.invalidate();
         frame.validate();
         frame.pack();
+    }
+
+
+    public ArrayList<String> connect(ArrayList<String> input, int port) {
+        /*
+         * @Description input a port number and list of input for the server, receive a list of information received
+         * @Date 8:48 PM 11/29/2021
+         * @Param [input, port]
+         * @return java.util.ArrayList<java.lang.String>
+         **/
+        ArrayList<String> result = new ArrayList<String>();
+        try {
+            Socket socket = new Socket("localhost", port);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter writer = new PrintWriter(socket.getOutputStream());
+            for (int i = 0; i < input.size(); i++) {
+                writer.println(input.get(i));
+            }
+            writer.flush();
+            String s1 = reader.readLine();
+            while (s1 != null) {
+                result.add(s1);
+                s1 = reader.readLine();
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
