@@ -196,7 +196,7 @@ public class GUIProgram extends JComponent implements Runnable {
             if (e.getSource() == studentOrTeacherButton) {
                 if (studentOrTeacherButton.getText().equals("Student")) {
                     studentOrTeacherButton.setText("Teacher");
-                } else { // equals "Teacher
+                } else { // equals "Teacher"
                     studentOrTeacherButton.setText("Student");
                 }
             }
@@ -700,14 +700,14 @@ public class GUIProgram extends JComponent implements Runnable {
         frame.pack();
     }
 
-
+    /*
+     * @Description input a port number and list of input for the server, receive a list of information received
+     * @Date 8:48 PM 11/29/2021
+     * @Param [input, port]
+     * @return java.util.ArrayList<java.lang.String>
+     **/
     public ArrayList<String> connect(ArrayList<String> input, int port) {
-        /*
-         * @Description input a port number and list of input for the server, receive a list of information received
-         * @Date 8:48 PM 11/29/2021
-         * @Param [input, port]
-         * @return java.util.ArrayList<java.lang.String>
-         **/
+       
         ArrayList<String> result = new ArrayList<String>();
         try {
             Socket socket = new Socket("localhost", port);
