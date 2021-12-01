@@ -116,7 +116,7 @@ public class Server extends Thread {
         });
         createCourse.start();
 
-        Thread createQUiz = new Thread(new Runnable() {
+        Thread createQuiz = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -128,7 +128,7 @@ public class Server extends Thread {
                 }
             }
         });
-        createQUiz.start();
+        createQuiz.start();
 
         Thread editID = new Thread(new Runnable() {
             @Override
@@ -214,14 +214,15 @@ public class Server extends Thread {
         });
         deleteQuiz.start();
     }
-
+    
+    /*
+     * @Description input username and password, return the result of login
+     * @Date 12:27 PM 11/26/2021
+     * @Param [loginRequest]
+     * @return void
+     **/
     public void login(Socket loginRequest) throws IOException, InterruptedException {
-        /*
-         * @Description input username and password, return the result of login
-         * @Date 12:27 PM 11/26/2021
-         * @Param [loginRequest]
-         * @return void
-         **/
+        
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(loginRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(loginRequest.getOutputStream());
@@ -250,15 +251,15 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
-
+    
+    /*
+     * @Description input username and password, create account based on them
+     * @Date 12:28 PM 11/26/2021
+     * @Param [registerRequest]
+     * @return void
+     **/
     public void register(Socket registerRequest) throws Exception {
-        /*
-         * @Description input username and password, create account based on them
-         * @Date 12:28 PM 11/26/2021
-         * @Param [registerRequest]
-         * @return void
-         **/
+        
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(registerRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(registerRequest.getOutputStream());
@@ -298,13 +299,14 @@ public class Server extends Thread {
         }
     }
 
+    /*
+     * @Description return a course list to the client
+     * @Date 10:03 AM 11/27/2021
+     * @Param [getCourseRequest]
+     * @return void
+     **/
     public void getCourse(Socket getCourseRequest) {
-        /*
-         * @Description return a course list to the client
-         * @Date 10:03 AM 11/27/2021
-         * @Param [getCourseRequest]
-         * @return void
-         **/
+       
         try {
             PrintWriter writer = new PrintWriter(getCourseRequest.getOutputStream());
             String course = "";
@@ -318,14 +320,15 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /*
+     * @Description input a course name, return the quiz list of the course
+     * @Date 10:03 AM 11/27/2021
+     * @Param [getQuizRequest]
+     * @return void
+     **/
     public void getQuiz(Socket getQuizRequest) {
-        /*
-         * @Description input a course name, return the quiz list of the course
-         * @Date 10:03 AM 11/27/2021
-         * @Param [getQuizRequest]
-         * @return void
-         **/
+        
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getQuizRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(getQuizRequest.getOutputStream());
@@ -355,14 +358,15 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /*
+     * @Description input a course name, create a course based on it
+     * @Date 11:45 AM 11/27/2021
+     * @Param [createCourseRequest]
+     * @return void
+     **/
     public void createCourse(Socket createCourseRequest) {
-        /*
-         * @Description input a course name, create a course based on it
-         * @Date 11:45 AM 11/27/2021
-         * @Param [createCourseRequest]
-         * @return void
-         **/
+        
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(createCourseRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(createCourseRequest.getOutputStream());
@@ -389,14 +393,15 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /*
+     * @Description input quiz information and create the quiz
+     * @Date 1:01 PM 11/27/2021
+     * @Param [createQuizRequest]
+     * @return void
+     **/
     public void createQuiz(Socket createQuizRequest) {
-        /*
-         * @Description input quiz information and create the quiz
-         * @Date 1:01 PM 11/27/2021
-         * @Param [createQuizRequest]
-         * @return void
-         **/
+        
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(createQuizRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(createQuizRequest.getOutputStream());
@@ -437,14 +442,15 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /*
+     * @Description Input account id and the account will be deleted
+     * @Date 1:23 PM 11/27/2021
+     * @Param [deleteAccountRequest]
+     * @return void
+     **/
     public void deleteAccount(Socket deleteAccountRequest) {
-        /*
-         * @Description Input account id and the account will be deleted
-         * @Date 1:23 PM 11/27/2021
-         * @Param [deleteAccountRequest]
-         * @return void
-         **/
+       
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(deleteAccountRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(deleteAccountRequest.getOutputStream());
@@ -470,14 +476,15 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /*
+     * @Description Input an old id and a new id, id will be edited
+     * @Date 1:24 PM 11/27/2021
+     * @Param [editIDRequest]
+     * @return void
+     **/
     public void editID(Socket editIDRequest) {
-        /*
-         * @Description Input an old id and a new id, id will be edited
-         * @Date 1:24 PM 11/27/2021
-         * @Param [editIDRequest]
-         * @return void
-         **/
+        
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(editIDRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(editIDRequest.getOutputStream());
@@ -511,14 +518,15 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /*
+     * @Description Input id and new password, password will be updated
+     * @Date 1:24 PM 11/27/2021
+     * @Param [editPasswordRequest]
+     * @return void
+     **/
     private void editPassword(Socket editPasswordRequest) {
-        /*
-         * @Description Input id and new password, password will be updated
-         * @Date 1:24 PM 11/27/2021
-         * @Param [editPasswordRequest]
-         * @return void
-         **/
+        
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(editPasswordRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(editPasswordRequest.getOutputStream());
@@ -545,14 +553,15 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /*
+     * @Description input course name and target quiz name and quiz info, quiz will be edited
+     * @Date 8:51 PM 11/27/2021
+     * @Param [editQuizRequest]
+     * @return void
+     **/
     public void editQuiz(Socket editQuizRequest) {
-        /*
-         * @Description input course name and target quiz name and quiz info, quiz will be edited
-         * @Date 8:51 PM 11/27/2021
-         * @Param [editQuizRequest]
-         * @return void
-         **/
+        
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(editQuizRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(editQuizRequest.getOutputStream());
@@ -596,14 +605,15 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /*
+     * @Description Input course and quiz name, quiz content will be returned
+     * @Date 8:50 PM 11/27/2021
+     * @Param [getQuizContentRequest]
+     * @return void
+     **/
     public void getQuizContent(Socket getQuizContentRequest) {
-        /*
-         * @Description Input course and quiz name, quiz content will be returned
-         * @Date 8:50 PM 11/27/2021
-         * @Param [getQuizContentRequest]
-         * @return void
-         **/
+        
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getQuizContentRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(getQuizContentRequest.getOutputStream());
@@ -631,14 +641,15 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /*
+     * @Description input course name and quiz name, quiz will be deleted
+     * @Date 8:50 PM 11/27/2021
+     * @Param [deleteQuizRequest]
+     * @return void
+     **/
     public void deleteQuiz(Socket deleteQuizRequest) {
-        /*
-         * @Description input course name and quiz name, quiz will be deleted
-         * @Date 8:50 PM 11/27/2021
-         * @Param [deleteQuizRequest]
-         * @return void
-         **/
+        
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(deleteQuizRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(deleteQuizRequest.getOutputStream());
