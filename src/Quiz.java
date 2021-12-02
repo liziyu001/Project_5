@@ -1,3 +1,6 @@
+import java.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Quiz {
@@ -30,6 +33,12 @@ public class Quiz {
     }
 
     public void printString() {
+        /* GUI version
+        JOptionPane.showMessageDialog(null, name, "Name", JOptionPane.PLAIN_MESSAGE);
+        for (int i = 0; i < questions.length; i++) {
+            questions[i].displayQuestion();
+        }
+        */
         System.out.println(name);
         for (int i = 0; i < questions.length; i++) {
             questions[i].displayQuestion();
