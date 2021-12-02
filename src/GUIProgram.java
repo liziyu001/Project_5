@@ -48,6 +48,8 @@ public class GUIProgram extends JComponent implements Runnable {
     Container teacherCoursesWindow;
     // Where the student views all quizzes
     Container studentViewQuizzesWindow;
+    //Where the teacher views all quizzes
+    Container teacherViewQuizzesWindow;
     // Where the student takes the quiz
     Container studentQuizWindow;
 
@@ -87,6 +89,9 @@ public class GUIProgram extends JComponent implements Runnable {
     JButton backLoginWindowButton;
     JButton backSignUpWindowButton;
     JButton viewCourseTeacherButton;
+    JButton addQuizButton;
+    JButton editQuizButton;
+    JButton ViewSubmissionsButton;
     JTextField usernameFieldLogin;
     JTextField passwordFieldLogin;
 
@@ -99,7 +104,7 @@ public class GUIProgram extends JComponent implements Runnable {
     JComboBox<String> courseListGUI;
     JComboBox<String> courseListGUITeacher;
     JComboBox<String> quizListGUI;
-
+    JComboBox<String> quizListGUITeacher;
 
     GUIProgram guiProgram;
 
@@ -413,12 +418,18 @@ public class GUIProgram extends JComponent implements Runnable {
             }
             if (e.getSource() == viewCourseTeacherButton){
                 for (Course c : courses) {
-                    if (c.getName().equals(courseListGUI.getSelectedItem())) {
+                    if (c.getName().equals(courseListGUITeacher.getSelectedItem())) {
                         currentCourse = c;
                     }
                 }
+                quizzes = currentCourse.getCourseQuiz();
+                quizListGUITeacher.removeAllItems();
+                for (Quiz q: quizzes){
+                    quizListGUITeacher.addItem(q.getName());
+                }
                 previousWindow = frame.getContentPane();
-
+                frame.setContentPane(teacherViewQuizzesWindow);
+                refresh();
             }
             if (e.getSource() == createCourseButton){
                 while (true) {
@@ -604,11 +615,21 @@ public class GUIProgram extends JComponent implements Runnable {
         selectAnswerButton.addActionListener(actionListener);
         submitQuizButton = new JButton("Submit Quiz");
         submitQuizButton.addActionListener(actionListener);
+        addQuizButton = new JButton("Create Quiz");
+        addQuizButton.addActionListener(actionListener);
+        editQuizButton = new JButton("Edit Quiz");
+        editQuizButton.addActionListener(actionListener);
+        ViewSubmissionsButton = new JButton("View Submissions");
+        ViewSubmissionsButton.addActionListener(actionListener);
 
         courseListGUI = new JComboBox<String>();
         courseListGUI.addActionListener(actionListener);
+        courseListGUITeacher = new JComboBox<>();
+        courseListGUITeacher.addActionListener(actionListener);
         quizListGUI = new JComboBox<String>();
         quizListGUI.addActionListener(actionListener);
+        quizListGUITeacher = new JComboBox<>();
+        quizListGUITeacher.addActionListener(actionListener);
         quizListGUI.setEditable(true);
         questionDisplay = new JLabel();
         answerDisplay = new JComboBox<String>();
@@ -759,7 +780,7 @@ public class GUIProgram extends JComponent implements Runnable {
         coursesTeacherPanel.add(viewCourseTeacherButton);
         teacherCoursesWindow.add(coursesTeacherPanel, BorderLayout.CENTER);
 
-        // Layout of the quizzes for a course window
+        // Layout of the quizzes for a course window Student
         studentViewQuizzesWindow = new Container();
         studentViewQuizzesWindow.setLayout(new BorderLayout());
 
@@ -769,7 +790,19 @@ public class GUIProgram extends JComponent implements Runnable {
         quizzesPanel.add(viewQuizStudentButton);
         studentViewQuizzesWindow.add(quizzesPanel, BorderLayout.CENTER);
 
+        //Layour of the quizzes for a course window Teacher
+        teacherViewQuizzesWindow = new Container();
+        teacherViewQuizzesWindow.setLayout(new BorderLayout());
 
+        JPanel quizzPanelTeacher = new JPanel();
+        quizzPanelTeacher.setLayout(new GridLayout(2, 1));
+        quizzPanelTeacher.add(quizListGUITeacher);
+        JPanel quizzPanelTeacherSouth = new JPanel();
+        quizzPanelTeacherSouth.add(addQuizButton);
+        quizzPanelTeacherSouth.add(editQuizButton);
+        quizzPanelTeacherSouth.add(ViewSubmissionsButton);
+        teacherViewQuizzesWindow.add(quizzPanelTeacher, BorderLayout.CENTER);
+        teacherViewQuizzesWindow.add(quizzPanelTeacherSouth, BorderLayout.SOUTH);
         // Layout of the quiz taking window
         studentQuizWindow = new Container();
         studentQuizWindow.setLayout(new BorderLayout());
