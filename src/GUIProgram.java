@@ -232,7 +232,7 @@ public class GUIProgram extends JComponent implements Runnable {
                         JOptionPane.showMessageDialog(null, "Please enter a username", "Error", JOptionPane.ERROR_MESSAGE);
                     } else if (newUsername.contains(";")) { // user's newUsername has a ";"
                         JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else if (newUsername.equals(account )) {
+                    } else if (newUsername.equals(account)) {
                         JOptionPane.showMessageDialog(null, "Please enter a different username", "Error", JOptionPane.ERROR_MESSAGE);
                     } else { // their input was valid but we have to check for existing usernames
                         ArrayList<String> in = new ArrayList<>();
@@ -241,11 +241,11 @@ public class GUIProgram extends JComponent implements Runnable {
                         ArrayList<String> out = connect(in, 4006);
                         if (out.get(0).equals("Duplicate new ID")) { //validation is done by the server, use if to chect the result only
                             JOptionPane.showMessageDialog(null, "Someone has taken this username!", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-
-                        if (out.get(0).equals("Success")) {
+                        } else if (out.get(0).equals("Success")) {
                             JOptionPane.showMessageDialog(null, "Editing success", "Success", JOptionPane.INFORMATION_MESSAGE);
                             account = newUsername;
+                        } else if (out.get(0).equals("Account not found")) {
+                            JOptionPane.showMessageDialog(null, "There was a problem accessing this account's info", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                         break;
                     }
@@ -317,6 +317,7 @@ public class GUIProgram extends JComponent implements Runnable {
                                 manager.updateAccount();
                             }
                         }
+
                         break;
                     }
 
