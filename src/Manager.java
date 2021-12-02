@@ -1,5 +1,3 @@
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -192,6 +190,7 @@ public class Manager {
                         + accountList.get(i).getPassword() + ";" +
                         accountList.get(i).isStudent();
                 pr.println(info);
+                System.out.println("updated");
             }
             pr.close();
         } catch (IOException e) {

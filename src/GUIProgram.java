@@ -127,8 +127,10 @@ public class GUIProgram extends JComponent implements Runnable {
                     } else {
                         nextWindow = teacherWindow;
                     }
+                    currentAccount = new Account(in.get(0), in.get(1), Boolean.parseBoolean(out.get(0)));
                     account = in.get(0);
                     //no need to use Account field(its function will be replaced by server), only store id as server input for other services
+                    // ^^ not sure abt this, need currentAccount to have a value - Manas
                 }
 
                 if (nextWindow != null) {
@@ -220,7 +222,6 @@ public class GUIProgram extends JComponent implements Runnable {
             }
 
             if (e.getSource() == editUsernameStudentButton) {
-                startAgain:
                 while (true) {
                     String newUsername = JOptionPane.showInputDialog(null, "Enter your new username:", "Edit Username", JOptionPane.QUESTION_MESSAGE);
                     if (newUsername == null) { // user closed the window
@@ -229,22 +230,26 @@ public class GUIProgram extends JComponent implements Runnable {
                         break;
                     } else if (newUsername.equals("")) { // user entered a blank username
                         JOptionPane.showMessageDialog(null, "Please enter a username", "Error", JOptionPane.ERROR_MESSAGE);
-                        continue startAgain;
                     } else if (newUsername.contains(";")) { // user's newUsername has a ";"
                         JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
-                        continue startAgain;
+                    } else if (newUsername.equals(currentAccount.getUsername())){
+                        JOptionPane.showMessageDialog(null, "Please enter a different username", "Error", JOptionPane.ERROR_MESSAGE);
                     } else { // their input was valid but we have to check for existing usernames
                         ArrayList<Account> accounts = manager.getAccountList();
+                        boolean taken = false;
                         for (Account a : accounts) {
                             if (a.getUsername().equals(newUsername)) {
+                                taken = true;
                                 JOptionPane.showMessageDialog(null, "Someone has taken this username!", "Error", JOptionPane.ERROR_MESSAGE);
-                                continue startAgain;
-                            } else {
-                                currentAccount.setUsername(newUsername);
-
-                                // TODO FILE EDITING HERE
-                                manager.updateAccount();
                             }
+                        }
+                        if (!taken) {
+                            ArrayList<String> in = new ArrayList<>();
+                            in.add(currentAccount.getUsername());
+                            in.add(newUsername);
+                            ArrayList<String> out = connect(in, 4006);
+                            System.out.println(out);
+                            currentAccount.setUsername(newUsername);
                         }
                         break;
                     }
@@ -271,7 +276,7 @@ public class GUIProgram extends JComponent implements Runnable {
                         currentAccount.setPassword(newPassword);
 
                         // TODO FILE EDITING HERE
-                        manager.updateAccount();
+                        //connect()
                         break;
                     }
 
