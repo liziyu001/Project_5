@@ -284,10 +284,19 @@ public class GUIProgram extends JComponent implements Runnable {
 
             }
             if (e.getSource() == deleteAccountStudentButton) {
-                manager.getAccountList().remove(currentAccount);
-                manager.updateAccount();
-                frame.setContentPane(startWindow);
-                refresh();
+               ArrayList<Account> accounts = manager.getAccountList();
+
+
+
+
+               accounts.remove(currentAccount);
+               manager.setAccountList(accounts);
+               frame.setContentPane(startWindow);
+               refresh();
+//                manager.getAccountList().remove(currentAccount);
+//                manager.updateAccount();
+//                frame.setContentPane(startWindow);
+//                refresh();
             }
             if (e.getSource() == backAccountSettingsStudentButton) {
                 frame.setContentPane(previousWindow);
@@ -354,10 +363,19 @@ public class GUIProgram extends JComponent implements Runnable {
 
             }
             if (e.getSource() == deleteAccountTeacherButton) {
-                manager.getAccountList().remove(currentAccount);
-                manager.updateAccount();
-                frame.setContentPane(startWindow);
-                refresh();
+                ArrayList<String> in = new ArrayList<>();
+                in.add(account);
+                ArrayList<String> out = connect(in, 4008);
+                if (out.get(0).equals("Success")) {
+                    JOptionPane.showMessageDialog(null, "Deleting success", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    currentAccount=null;
+                    frame.setContentPane(startWindow);
+                    refresh();
+                } else if (out.get(0).equals("Account not found")) {
+                    JOptionPane.showMessageDialog(null, "There was a problem accessing this account's info", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+
             }
             if (e.getSource() == backAccountSettingsTeacherButton) {
                 frame.setContentPane(previousWindow);
