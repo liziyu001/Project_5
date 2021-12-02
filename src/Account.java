@@ -1,3 +1,6 @@
+import java.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,11 +21,32 @@ public class Account {
     }
 
     public Course createCourse(Scanner s) {
+        /* GUI version 
+        name = JOptionPane.showInputDialog(null, "Enter the name of the course", "Course Name", JOptionPane.QUESTION_MESSAGE);
+        return new Course(name);
+        */
         System.out.println("Enter the name of the course");
         return new Course(s.nextLine());
     }
 
     public Quiz createQuiz(Scanner s) {
+        /* GUI version 
+        JOptionPane.showInputDialog(null, "Enter the Name of the Quiz", "Quiz Name", JOptionPane.QUESTION_MESSAGE);
+        int number = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the number of questions in the quiz", "Questions", JOptionPane.QUESTION_MESSAGE));
+        Question[] q = new Question[number];
+        for (int i = 0; i < number; i++) {
+            String prompt = JOptionPane.showInputDialog(null, "Enter the prompt of the Question", "Question Prompt", JOptionPane.QUESTION_MESSAGE);
+            String[] options = new String[4];
+            options[0] = JOptionPane.showInputDialog(null, "Enter the First Option prompt", "First Prompt", JOptionPane.QUESTION_MESSAGE);
+            options[1] = JOptionPane.showInputDialog(null, "Enter the Second Option prompt", "Second Prompt", JOptionPane.QUESTION_MESSAGE);
+            options[2] = JOptionPane.showInputDialog(null, "Enter the Third Option prompt", "Third Prompt", JOptionPane.QUESTION_MESSAGE);
+            options[3] = JOptionPane.showInputDialog(null, "Enter the Fourth Option prompt", "Fourth Prompt", JOptionPane.QUESTION_MESSAGE);
+            q[i] = new Question(prompt, options);
+            JOptionPane.showMessageDialog(null, "Question " + (i + 1) + " has been created", "Question Created", JOptionPane.INFORMATION_MESSAGE);
+        }
+        JOptionPane.showMessageDialog(null, "Created Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        return new Quiz(name, q);
+        */
         System.out.println("Enter the Name of the Quiz");
         String name = s.nextLine();
         System.out.println("Enter the number of questions in the quiz");
@@ -44,6 +68,7 @@ public class Account {
             System.out.println("Question " + (i + 1) + " has been created");
         }
         System.out.println("Created Successfully");
+        
         return new Quiz(name, q);
     }
 
