@@ -6,14 +6,14 @@ public class Manager {
     private ArrayList<Course> courseList;
     private ArrayList<Account> accountList;
     private ArrayList<Submission> submissionList;
-
+    
+    /*
+     * @Description Initialize Manager by reading from Account and Course File
+     * @Date 4:36 PM 11/18/2021
+     * @Param []
+     * @return 
+     **/
     public Manager() {
-        /*
-         * @Description Initialize Manager by reading from Account and Course File
-         * @Date 4:36 PM 11/18/2021
-         * @Param []
-         * @return 
-         **/
         courseList = readCourses();
         accountList = readAccounts();
         submissionList = new ArrayList<Submission>();
@@ -41,14 +41,14 @@ public class Manager {
         updateCourse();
     }
 
-
+    /*
+     * @Description ask information; return corresponding account; return null if duplicate id
+     * @Date 4:20 PM 11/18/2021
+     * @Param [s]
+     * @return Account
+     **/
     public Account createAccount(Scanner s) {
-        /*
-         * @Description ask information; return corresponding account; return null if duplicate id
-         * @Date 4:20 PM 11/18/2021
-         * @Param [s]
-         * @return Account
-         **/
+        
         System.out.println("Enter you User ID"); // ; shouldn't be contained
         String id = s.nextLine();
 
@@ -73,14 +73,14 @@ public class Manager {
         }
 
     }
-
+    
+    /*
+     * @Description ask information; return corresponding account; return null if not found
+     * @Date 4:19 PM 11/18/2021
+     * @Param [s]
+     * @return Account
+     **/
     public Account login(Scanner s) { // ; shouldn't be contained
-        /*
-         * @Description ask information; return corresponding account; return null if not found
-         * @Date 4:19 PM 11/18/2021
-         * @Param [s]
-         * @return Account
-         **/
         System.out.println("Enter you id");
         String id = s.nextLine();
         System.out.println("Enter you password");
@@ -98,14 +98,15 @@ public class Manager {
         System.out.println("Your id hasn't been created");
         return null;
     }
-
+    
+    /*
+     * @Description read from Account.txt and return a list of existed accounts
+     * @Date 4:42 PM 11/18/2021
+     * @Param []
+     * @return java.util.ArrayList<Account>
+     **/
     public ArrayList<Account> readAccounts() {
-        /*
-         * @Description read from Account.txt and return a list of existed accounts
-         * @Date 4:42 PM 11/18/2021
-         * @Param []
-         * @return java.util.ArrayList<Account>
-         **/
+    
         ArrayList<Account> accounts = new ArrayList<>();
         try {
             File file = new File("Account.txt");
@@ -123,14 +124,15 @@ public class Manager {
         }
         return accounts;
     }
-
-    public ArrayList<Course> readCourses () {
-        /*
-         * @Description read from Course.txt and related course file and return a list of existed courses
-         * @Date 5:04 PM 11/18/2021
-         * @Param []
-         * @return java.util.ArrayList<Course>
-         **/
+    
+    /*
+     * @Description read from Course.txt and related course file and return a list of existed courses
+     * @Date 5:04 PM 11/18/2021
+     * @Param []
+     * @return java.util.ArrayList<Course>
+     **/
+    public ArrayList<Course> readCourses() {
+        
         ArrayList<String> coursePaths = new ArrayList<String>();
         ArrayList<Course> courses = new ArrayList<Course>();
         try {
@@ -173,14 +175,15 @@ public class Manager {
         }
         return courses;
     }
-
-    public void updateAccount () {
-        /*
-         * @Description Update the current AccountList to files
-         * @Date 3:25 PM 11/20/2021
-         * @Param []
-         * @return void
-         **/
+    
+    /*
+     * @Description Update the current AccountList to files
+     * @Date 3:25 PM 11/20/2021
+     * @Param []
+     * @return void
+     **/
+    public void updateAccount() {
+        
         try {
             File f = new File("Account.txt");
             FileOutputStream fos = new FileOutputStream(f, false);
@@ -197,14 +200,15 @@ public class Manager {
             e.printStackTrace();
         }
     }
-
-    public void updateCourse () {
-        /*
-         * @Description Update the current courseList to files
-         * @Date 3:25 PM 11/20/2021
-         * @Param []
-         * @return void
-         **/
+    
+    /*
+     * @Description Update the current courseList to files
+     * @Date 3:25 PM 11/20/2021
+     * @Param []
+     * @return void
+     **/
+    public void updateCourse() {
+        
         try {
             File f = new File("Courses.txt");
             FileOutputStream fos = new FileOutputStream(f, false);
@@ -236,14 +240,14 @@ public class Manager {
             e.printStackTrace();
         }
     }
-
-    public String listCourses () {
-        /*
-         * @Description return a list of existed course for user to choose
-         * @Date 4:23 PM 11/20/2021
-         * @Param []
-         * @return java.lang.String
-         **/
+    
+    /*
+     * @Description return a list of existed course for user to choose
+     * @Date 4:23 PM 11/20/2021
+     * @Param []
+     * @return java.lang.String
+     **/
+    public String listCourses() {
         String s = "";
         for (int i = 0; i < courseList.size(); i++) {
             s = s + (i + 1) + ". " + courseList.get(i).getName() + "\n";
@@ -252,7 +256,7 @@ public class Manager {
         return s;
     }
 
-    public Account editID (Scanner s, Account ac, int index) {
+    public Account editID(Scanner s, Account ac, int index) {
         System.out.println("Enter you User ID"); // ; shouldn't be contained
         String id = s.nextLine();
         for (int i = 0; i < accountList.size(); i++) {
@@ -265,7 +269,7 @@ public class Manager {
         return ac;
     }
 
-    public Account editPwd (Scanner s, Account ac) {
+    public Account editPwd(Scanner s, Account ac) {
         System.out.println("Enter you new Password"); // ; shouldn't be contained
         String pwd = s.nextLine();
         ac.setPassword(pwd);
