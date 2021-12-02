@@ -244,6 +244,7 @@ public class GUIProgram extends JComponent implements Runnable {
                         } else if (out.get(0).equals("Success")) {
                             JOptionPane.showMessageDialog(null, "Editing success", "Success", JOptionPane.INFORMATION_MESSAGE);
                             account = newUsername;
+                            currentAccount.setUsername(account);
                         } else if (out.get(0).equals("Account not found")) {
                             JOptionPane.showMessageDialog(null, "There was a problem accessing this account's info", "Error", JOptionPane.ERROR_MESSAGE);
                         }
@@ -254,7 +255,6 @@ public class GUIProgram extends JComponent implements Runnable {
 
             }
             if (e.getSource() == editPasswordStudentButton) {
-                startAgain:
                 while (true) {
                     String newPassword = JOptionPane.showInputDialog(null, "Enter your new password:", "Edit Username", JOptionPane.QUESTION_MESSAGE);
                     if (newPassword == null) { // user closed the window
@@ -263,16 +263,19 @@ public class GUIProgram extends JComponent implements Runnable {
                         break;
                     } else if (newPassword.equals("")) { // user entered a blank password
                         JOptionPane.showMessageDialog(null, "Please enter a password", "Error", JOptionPane.ERROR_MESSAGE);
-                        continue startAgain;
                     } else if (newPassword.contains(";")) { // user's newPassword has a ";"
-                        JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
-                        continue startAgain;
+                        JOptionPane.showMessageDialog(null, "Password cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
                     } else { // their input was valid
-
-                        currentAccount.setPassword(newPassword);
-
-                        // TODO FILE EDITING HERE
-                        //connect()
+                        ArrayList<String> in = new ArrayList<>();
+                        in.add(account);
+                        in.add(newPassword);
+                        ArrayList<String> out = connect(in, 4007);
+                        if (out.get(0).equals("Success")) {
+                            JOptionPane.showMessageDialog(null, "Editing success", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            currentAccount.setPassword(newPassword);
+                        } else if (out.get(0).equals("Account not found")) {
+                            JOptionPane.showMessageDialog(null, "There was a problem accessing this account's info", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                         break;
                     }
 
@@ -291,7 +294,6 @@ public class GUIProgram extends JComponent implements Runnable {
             }
 
             if (e.getSource() == editUsernameTeacherButton) {
-                startAgain:
                 while (true) {
                     String newUsername = JOptionPane.showInputDialog(null, "Enter your new username:", "Edit Username", JOptionPane.QUESTION_MESSAGE);
                     if (newUsername == null) { // user closed the window
@@ -300,24 +302,22 @@ public class GUIProgram extends JComponent implements Runnable {
                         break;
                     } else if (newUsername.equals("")) { // user entered a blank username
                         JOptionPane.showMessageDialog(null, "Please enter a username", "Error", JOptionPane.ERROR_MESSAGE);
-                        continue startAgain;
                     } else if (newUsername.contains(";")) { // user's newUsername has a ";"
                         JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
-                        continue startAgain;
                     } else { // their input was valid but we have to check for existing usernames
-                        ArrayList<Account> accounts = manager.getAccountList();
-                        for (Account a : accounts) {
-                            if (a.getUsername().equals(newUsername)) {
-                                JOptionPane.showMessageDialog(null, "Someone has taken this username!", "Error", JOptionPane.ERROR_MESSAGE);
-                                continue startAgain;
-                            } else {
-                                currentAccount.setUsername(newUsername);
-
-                                // TODO FILE EDITING HERE
-                                manager.updateAccount();
-                            }
+                        ArrayList<String> in = new ArrayList<>();
+                        in.add(account);
+                        in.add(newUsername);
+                        ArrayList<String> out = connect(in, 4006);
+                        if (out.get(0).equals("Duplicate new ID")) { //validation is done by the server, use if to chect the result only
+                            JOptionPane.showMessageDialog(null, "Someone has taken this username!", "Error", JOptionPane.ERROR_MESSAGE);
+                        } else if (out.get(0).equals("Success")) {
+                            JOptionPane.showMessageDialog(null, "Editing success", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            account = newUsername;
+                            currentAccount.setUsername(account);
+                        } else if (out.get(0).equals("Account not found")) {
+                            JOptionPane.showMessageDialog(null, "There was a problem accessing this account's info", "Error", JOptionPane.ERROR_MESSAGE);
                         }
-
                         break;
                     }
 
@@ -325,7 +325,6 @@ public class GUIProgram extends JComponent implements Runnable {
 
             }
             if (e.getSource() == editPasswordTeacherButton) {
-                startAgain:
                 while (true) {
                     String newPassword = JOptionPane.showInputDialog(null, "Enter your new password:", "Edit Username", JOptionPane.QUESTION_MESSAGE);
                     if (newPassword == null) { // user closed the window
@@ -334,16 +333,19 @@ public class GUIProgram extends JComponent implements Runnable {
                         break;
                     } else if (newPassword.equals("")) { // user entered a blank password
                         JOptionPane.showMessageDialog(null, "Please enter a password", "Error", JOptionPane.ERROR_MESSAGE);
-                        continue startAgain;
                     } else if (newPassword.contains(";")) { // user's newPassword has a ";"
-                        JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
-                        continue startAgain;
+                        JOptionPane.showMessageDialog(null, "Password cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
                     } else { // their input was valid
-
-                        currentAccount.setPassword(newPassword);
-
-                        // TODO FILE EDITING HERE
-                        manager.updateAccount();
+                        ArrayList<String> in = new ArrayList<>();
+                        in.add(account);
+                        in.add(newPassword);
+                        ArrayList<String> out = connect(in, 4007);
+                        if (out.get(0).equals("Success")) {
+                            JOptionPane.showMessageDialog(null, "Editing success", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            currentAccount.setPassword(newPassword);
+                        } else if (out.get(0).equals("Account not found")) {
+                            JOptionPane.showMessageDialog(null, "There was a problem accessing this account's info", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                         break;
                     }
 
