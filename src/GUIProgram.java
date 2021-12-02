@@ -97,6 +97,7 @@ public class GUIProgram extends JComponent implements Runnable {
     JComboBox<String> answerDisplay;
 
     JComboBox<String> courseListGUI;
+    JComboBox<String> courseListGUITeacher;
     JComboBox<String> quizListGUI;
 
 
@@ -409,6 +410,15 @@ public class GUIProgram extends JComponent implements Runnable {
                 previousWindow = frame.getContentPane();
                 frame.setContentPane(studentViewQuizzesWindow);
                 refresh();
+            }
+            if (e.getSource() == viewCourseTeacherButton){
+                for (Course c : courses) {
+                    if (c.getName().equals(courseListGUI.getSelectedItem())) {
+                        currentCourse = c;
+                    }
+                }
+                previousWindow = frame.getContentPane();
+
             }
             if (e.getSource() == createCourseButton){
                 while (true) {
@@ -735,9 +745,17 @@ public class GUIProgram extends JComponent implements Runnable {
         //Layout of the teacher course selection Window
         teacherCoursesWindow =  new Container();
         teacherCoursesWindow.setLayout(new BorderLayout());
+
+        String[] namesTeacher = new String[courses.size()];
+        for (int i =0; i<namesTeacher.length; i++){
+            namesTeacher[i] = courses.get(i).getName();
+        }
+        courseListGUITeacher = new JComboBox<String>(namesTeacher);
+        courseListGUITeacher.setEditable(true);
+
         JPanel coursesTeacherPanel = new JPanel();
         coursesTeacherPanel.setLayout(new GridLayout(2, 1));
-        coursesTeacherPanel.add(courseListGUI);
+        coursesTeacherPanel.add(courseListGUITeacher);
         coursesTeacherPanel.add(viewCourseTeacherButton);
         teacherCoursesWindow.add(coursesTeacherPanel, BorderLayout.CENTER);
 
