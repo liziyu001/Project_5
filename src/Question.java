@@ -1,3 +1,6 @@
+import java.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Question {
@@ -28,6 +31,12 @@ public class Question {
     }
 
     public void displayQuestion() {
+        /* GUI version 
+        JOptionPane.showMessageDialog(null, prompt, "Prompt", JOptionPane.QUESTION_MESSAGE);
+        for (int i = 0; i < 4; i++) {
+            JOptionPane.showMessageDialog(null, (i + 1) + ". " + answerChoices[i], "Answer Choices", JOptionPane.INFORMATION_MESSAGE);
+        }
+        */
         System.out.println(prompt);
         for (int i = 0; i < 4; i++) {
             System.out.println((i + 1) + ". " + answerChoices[i]);
