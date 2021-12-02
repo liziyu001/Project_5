@@ -81,7 +81,8 @@ public class GUIProgram extends JComponent implements Runnable {
     JButton editUsernameTeacherButton;
     JButton deleteAccountTeacherButton;
     JButton backAccountSettingsTeacherButton;
-
+    JButton backLoginWindowButton;
+    JButton backSignUpWindowButton;
     JTextField usernameFieldLogin;
     JTextField passwordFieldLogin;
 
@@ -362,7 +363,14 @@ public class GUIProgram extends JComponent implements Runnable {
                 frame.setContentPane(previousWindow);
                 refresh();
             }
-
+            if (e.getSource() == backLoginWindowButton){
+                frame.setContentPane(previousWindow);
+                refresh();
+            }
+            if (e.getSource() == backSignUpWindowButton){
+                frame.setContentPane(previousWindow);
+                refresh();
+            }
             if (e.getSource() == viewCourseStudentButton) {
                 for (Course c : courses) {
                     if (c.getName().equals(courseListGUI.getSelectedItem())) {
@@ -563,6 +571,10 @@ public class GUIProgram extends JComponent implements Runnable {
         backAccountSettingsTeacherButton = new JButton("Back");
         backAccountSettingsTeacherButton.addActionListener(actionListener);
 
+        backLoginWindowButton = new JButton("Back");
+        backLoginWindowButton.addActionListener(actionListener);
+        backSignUpWindowButton = new JButton("Back");
+        backSignUpWindowButton.addActionListener(actionListener);
         // Layout of the start window
         JPanel panel = new JPanel();
         panel.add(loginButton);
@@ -579,8 +591,11 @@ public class GUIProgram extends JComponent implements Runnable {
         loginPanel.add(usernameFieldLogin);
         loginPanel.add(new JLabel("Password: "));
         loginPanel.add(passwordFieldLogin);
+        JPanel loginButtons = new JPanel();
+        loginButtons.add(signInButton);
+        loginButtons.add(backLoginWindowButton);
         loginWindow.add(loginPanel, BorderLayout.CENTER);
-        loginWindow.add(signInButton, BorderLayout.SOUTH);
+        loginWindow.add(loginButtons, BorderLayout.SOUTH);
 
         // Layout of the signup window
         signupWindow = new Container();
@@ -593,7 +608,10 @@ public class GUIProgram extends JComponent implements Runnable {
         signupPanel.add(new JLabel("Password: "));
         signupPanel.add(passwordFieldSignup);
         signupWindow.add(signupPanel, BorderLayout.CENTER);
-        signupWindow.add(createAccountButton, BorderLayout.SOUTH);
+        JPanel sinupButtons = new JPanel();
+        sinupButtons.add(createAccountButton);
+        sinupButtons.add(backSignUpWindowButton);
+        signupWindow.add(sinupButtons, BorderLayout.SOUTH);
         signupWindow.add(studentOrTeacherButton, BorderLayout.NORTH);
 
         // Layout of the student window

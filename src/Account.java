@@ -1,7 +1,7 @@
-import java.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -108,8 +108,8 @@ public class Account {
         sub.setSubGrades(subScore);
         sub.setGraded(true);
         int total = 0;
-        for (int i = 0; i < subScore.length; i++) {
-            i = i + subScore[i];
+        for (int j : subScore) {
+            total += j;
         }
         sub.setTotalGrades(total);
         return sub;

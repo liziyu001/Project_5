@@ -1,8 +1,3 @@
-import java.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
-
 public class Quiz {
     private String name;
     private Question[] questions;
