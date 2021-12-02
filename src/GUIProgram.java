@@ -44,6 +44,8 @@ public class GUIProgram extends JComponent implements Runnable {
     Container teacherAccountWindow;
     // Where the student courses are stored
     Container studentCoursesWindow;
+    //Where the teacher course are stored
+    Container teacherCoursesWindow;
     // Where the student views all quizzes
     Container studentViewQuizzesWindow;
     // Where the student takes the quiz
@@ -84,6 +86,7 @@ public class GUIProgram extends JComponent implements Runnable {
     JButton backAccountSettingsTeacherButton;
     JButton backLoginWindowButton;
     JButton backSignUpWindowButton;
+    JButton viewCourseTeacherButton;
     JTextField usernameFieldLogin;
     JTextField passwordFieldLogin;
 
@@ -222,7 +225,11 @@ public class GUIProgram extends JComponent implements Runnable {
                 frame.setContentPane(studentCoursesWindow);
                 refresh();
             }
-
+            if (e.getSource() == viewCoursesTeacherButton){
+                previousWindow = frame.getContentPane();
+                frame.setContentPane(teacherCoursesWindow);
+                refresh();
+            }
             if (e.getSource() == editUsernameStudentButton) {
                 while (true) {
                     String newUsername = JOptionPane.showInputDialog(null, "Enter your new username:", "Edit Username", JOptionPane.QUESTION_MESSAGE);
@@ -600,6 +607,8 @@ public class GUIProgram extends JComponent implements Runnable {
 
         viewCoursesTeacherButton = new JButton("View Courses");
         viewCoursesTeacherButton.addActionListener(actionListener);
+        viewCourseTeacherButton = new JButton("View Info About the Course");
+        viewCourseTeacherButton.addActionListener(actionListener);
         createCourseButton = new JButton("Create course");
         createCourseButton.addActionListener(actionListener);
         accountSettingsTeacherButton = new JButton("Account Settings");
@@ -722,6 +731,15 @@ public class GUIProgram extends JComponent implements Runnable {
         coursesPanel.add(courseListGUI);
         coursesPanel.add(viewCourseStudentButton);
         studentCoursesWindow.add(coursesPanel, BorderLayout.CENTER);
+
+        //Layout of the teacher course selection Window
+        teacherCoursesWindow =  new Container();
+        teacherCoursesWindow.setLayout(new BorderLayout());
+        JPanel coursesTeacherPanel = new JPanel();
+        coursesTeacherPanel.setLayout(new GridLayout(2, 1));
+        coursesTeacherPanel.add(courseListGUI);
+        coursesTeacherPanel.add(viewCourseTeacherButton);
+        teacherCoursesWindow.add(coursesTeacherPanel, BorderLayout.CENTER);
 
         // Layout of the quizzes for a course window
         studentViewQuizzesWindow = new Container();
