@@ -76,6 +76,7 @@ public class GUIProgram extends JComponent implements Runnable {
     // Teacher-related buttons
     JButton viewCoursesTeacherButton;
     JButton accountSettingsTeacherButton;
+    JButton createCourseButton;
     JButton exitTeacherButton;
     JButton editPasswordTeacherButton;
     JButton editUsernameTeacherButton;
@@ -402,6 +403,33 @@ public class GUIProgram extends JComponent implements Runnable {
                 frame.setContentPane(studentViewQuizzesWindow);
                 refresh();
             }
+            if (e.getSource() == createCourseButton){
+                while (true) {
+                    String newCourse = JOptionPane.showInputDialog(null, "Enter name of the Course:", "New Course", JOptionPane.QUESTION_MESSAGE);
+                    if (newCourse == null) { // user closed the window
+                        frame.setContentPane(previousWindow);
+                        refresh();
+                        break;
+                    } else if (newCourse.equals("")) { // user entered a blank password
+                        JOptionPane.showMessageDialog(null, "Please enter a password", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else if (newCourse.contains(";")) { // user's newPassword has a ";"
+                        JOptionPane.showMessageDialog(null, "Password cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else { // their input was valid
+                        ArrayList<String> in = new ArrayList<>();
+                        in.add(newCourse);
+
+                        ArrayList<String> out = connect(in, 4004);
+                        if (out.get(0).equals("Success")) {
+                            JOptionPane.showMessageDialog(null, "Creating course success", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                        } else if (out.get(0).equals("Account not found")) {
+                            JOptionPane.showMessageDialog(null, "There was a problem adding course ", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                        break;
+                    }
+
+                }
+            }
             if (e.getSource() == viewQuizStudentButton) {
                 for (Quiz q : quizzes) {
                     if (q.getName().equals(quizListGUI.getSelectedItem())) {
@@ -572,6 +600,8 @@ public class GUIProgram extends JComponent implements Runnable {
 
         viewCoursesTeacherButton = new JButton("View Courses");
         viewCoursesTeacherButton.addActionListener(actionListener);
+        createCourseButton = new JButton("Create course");
+        createCourseButton.addActionListener(actionListener);
         accountSettingsTeacherButton = new JButton("Account Settings");
         accountSettingsTeacherButton.addActionListener(actionListener);
         exitTeacherButton = new JButton("Exit");
@@ -646,6 +676,7 @@ public class GUIProgram extends JComponent implements Runnable {
         JPanel teacherPanel = new JPanel();
         teacherPanel.setLayout(new GridLayout(3, 1));
         teacherPanel.add(viewCoursesTeacherButton);
+        teacherPanel.add(createCourseButton);
         teacherPanel.add(accountSettingsTeacherButton);
         teacherPanel.add(exitTeacherButton);
         teacherWindow.add(teacherPanel, BorderLayout.CENTER);
@@ -662,7 +693,7 @@ public class GUIProgram extends JComponent implements Runnable {
         studentAccountPanel.add(backAccountSettingsStudentButton);
         studentAccountWindow.add(studentAccountPanel, BorderLayout.CENTER);
 
-        // Layout of the student account settings window
+        // Layout of the teacher account settings window
         teacherAccountWindow = new Container();
         teacherAccountWindow.setLayout(new BorderLayout());
 
