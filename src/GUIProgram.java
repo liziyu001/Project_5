@@ -407,7 +407,7 @@ public class GUIProgram extends JComponent implements Runnable {
                 while (true) {
                     String newCourse = JOptionPane.showInputDialog(null, "Enter name of the Course:", "New Course", JOptionPane.QUESTION_MESSAGE);
                     if (newCourse == null) { // user closed the window
-                        frame.setContentPane(previousWindow);
+                        frame.setContentPane(teacherWindow);
                         refresh();
                         break;
                     } else if (newCourse.equals("")) { // user entered a blank password
