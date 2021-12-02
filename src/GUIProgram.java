@@ -232,7 +232,7 @@ public class GUIProgram extends JComponent implements Runnable {
                         JOptionPane.showMessageDialog(null, "Please enter a username", "Error", JOptionPane.ERROR_MESSAGE);
                     } else if (newUsername.contains(";")) { // user's newUsername has a ";"
                         JOptionPane.showMessageDialog(null, "Username cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else if (newUsername.equals(account)) {
+                    } else if (newUsername.equals(account )) {
                         JOptionPane.showMessageDialog(null, "Please enter a different username", "Error", JOptionPane.ERROR_MESSAGE);
                     } else { // their input was valid but we have to check for existing usernames
                         ArrayList<String> in = new ArrayList<>();
