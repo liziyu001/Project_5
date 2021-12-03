@@ -1,3 +1,6 @@
+import java.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -48,13 +51,32 @@ public class Manager {
      * @return Account
      **/
     public Account createAccount(Scanner s) {
-        
-        System.out.println("Enter you User ID"); // ; shouldn't be contained
+        /* GUI version
+        String id = JOptionPane.showInputDialog(null, "Enter your User ID", "User ID", JOptionPane.QUESTION_MESSAGE);
+        for (int i = 0; i < accountList.size(); i++) {
+            if (accountList.get(i).getUsername.equals(id)) {
+                JOptionPane.showMessageDialog(null, "This id has already been taken, please try again", "ID already taken", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+        }
+        String pwd = JOptionPane.showInputDialog(null, "Enter your Password", "Password", JOptionPane.QUESTION_MESSAGE);
+        String role = JOptionPane.showInputDialog(null, "Your role: 1. Teacher   2. Student", "Role", JOptionPane.INFORMATION_MESSAGE);
+        switch(role)) {
+            case "1":
+                return new Account(id, pwd, false);
+            case "2":
+                return new Account(id, pwd, true);
+            default:
+                //error handling can be added
+                return null; 
+        }
+        */
+        System.out.println("Enter your User ID"); // ; shouldn't be contained
         String id = s.nextLine();
 
         for (int i = 0; i < accountList.size(); i++) {
             if (accountList.get(i).getUsername().equals(id)) {
-                System.out.println("This id has already be taken, please try again");
+                System.out.println("This id has already been taken, please try again");
                 return null;
             }
 
@@ -81,6 +103,22 @@ public class Manager {
      * @return Account
      **/
     public Account login(Scanner s) { // ; shouldn't be contained
+        /* GUI version
+        String id = JOptionPane.showInputDialog(null, "Enter your User ID", "User ID", JOptionPane.QUESTION_MESSAGE);
+        String pwd = JOptionPane.showInputDialog(null, "Enter your Password", "Password", JOptionPane.QUESTION_MESSAGE);
+        for (int i = 0; i < accountList.size(); i++) {
+            if (accountList.get(i).getUsername().equals(id)) {
+                if (accountList.get(i).getPassword().equals(pwd)) {
+                    return accountList.get(i);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Password not correct", "Invalid Password", JOptionPane.ERROR_MESSAGE);
+                    return null;
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Your id hasn't been created", "Couldn't Create ID", JOptionPane.ERROR_MESSAGE);
+        return null;
+        */
         System.out.println("Enter you id");
         String id = s.nextLine();
         System.out.println("Enter you password");
@@ -183,7 +221,23 @@ public class Manager {
      * @return void
      **/
     public void updateAccount() {
-        
+        /* GUI version
+        try {
+            File f = new File("Account.txt");
+            FileOutputStream fos = new FileOutputStream(f, false);
+            PrintWriter pr = new PrintWriter(fos);
+            for (int i = 0; i < accountList.size(); i++) {
+                String info = accountList.get(i).getUsername() + ";"
+                        + accountList.get(i).getPassword() + ";" +
+                        accountList.get(i).isStudent();
+                pr.println(info);
+                JOptionPane.showMessageDialog(null, "updated", "Account Updated", JOptionPane.INFORMATION_MESSAGE);
+            }
+            pr.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
         try {
             File f = new File("Account.txt");
             FileOutputStream fos = new FileOutputStream(f, false);
@@ -208,7 +262,38 @@ public class Manager {
      * @return void
      **/
     public void updateCourse() {
-        
+        /* GUI version
+         try {
+            File f = new File("Courses.txt");
+            FileOutputStream fos = new FileOutputStream(f, false);
+            PrintWriter pr = new PrintWriter(fos);
+            for (int i = 0; i < courseList.size(); i++) { //for every course
+                String path = courseList.get(i).getName() + ".txt";
+                pr.println(path); //update the Course.txt
+                File f1 = new File(path);
+                FileOutputStream fos1 = new FileOutputStream(f1);
+                PrintWriter pr1 = new PrintWriter(fos1);
+                for (int j = 0; j < courseList.get(i).getCourseQuiz().size(); j++) { // for every course quiz
+                    Quiz q = courseList.get(i).getCourseQuiz().get(j);
+                    if (q != null) {
+                        pr1.println(q.getName() + ":" + q.getQuestions().length);
+                        for (int k = 0; k < q.getQuestions().length; k++) { // for every quiz question
+                            Question question = q.getQuestions()[k];
+                            pr1.println(question.getPrompt());
+                            for (int l = 0; l < 4; l++) { // for each option
+                                pr1.println(question.getAnswerChoices()[l]);
+                            }
+                        }
+                    }
+                }
+                pr1.close();
+            }
+            pr.close();
+            JOptionPane.showMessageDialog(null, "\n", "", JOptionPane.PLAIN_MESSAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
         try {
             File f = new File("Courses.txt");
             FileOutputStream fos = new FileOutputStream(f, false);
@@ -252,16 +337,27 @@ public class Manager {
         for (int i = 0; i < courseList.size(); i++) {
             s = s + (i + 1) + ". " + courseList.get(i).getName() + "\n";
         }
-        s = s.substring(0,s.length() - 1);
+        s = s.substring(0, s.length() - 1);
         return s;
     }
 
     public Account editID(Scanner s, Account ac, int index) {
-        System.out.println("Enter you User ID"); // ; shouldn't be contained
+        /* GUI version
+        String id = JOptionPane.showInputDialog(null, "Enter your User ID", "User ID", JOptionPane.QUESTION_MESSAGE);
+        for (int i = 0; i < accountList.size(); i++) {
+            if (i != index && accountList.get(i).getUsername().equals(id)) {
+                JOptionPane.showMessageDialog(null, "This id has already been taken, please try again", "ID Already Taken", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+        }
+        ac.setUsername(id);
+        return ac;
+        */
+        System.out.println("Enter your User ID"); // ; shouldn't be contained
         String id = s.nextLine();
         for (int i = 0; i < accountList.size(); i++) {
             if (i != index && accountList.get(i).getUsername().equals(id)) {
-                System.out.println("This id has already be taken, please try again");
+                System.out.println("This id has already been taken, please try again");
                 return null;
             }
         }
@@ -270,7 +366,12 @@ public class Manager {
     }
 
     public Account editPwd(Scanner s, Account ac) {
-        System.out.println("Enter you new Password"); // ; shouldn't be contained
+        /* GUI version
+        String pwd = JOptionPane.showInputDialog(null, "Enter your new Password", "Password", JOptionPane.QUESTION_MESSAGE);
+        ac.setPassword(pwd);
+        return ac;
+        */
+        System.out.println("Enter your new Password"); // ; shouldn't be contained
         String pwd = s.nextLine();
         ac.setPassword(pwd);
         return ac;
