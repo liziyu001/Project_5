@@ -567,6 +567,7 @@ public class Server extends Thread {
             PrintWriter writer = new PrintWriter(editQuizRequest.getOutputStream());
             String courseName = reader.readLine();
             String quizName = reader.readLine();
+            String newQuizName = reader.readLine();
             Course c = null;
             boolean found = false;
             for (int i = 0; i < m.getCourseList().size(); i++) {
@@ -587,11 +588,23 @@ public class Server extends Thread {
                     options[3] = reader.readLine();
                     q[i] = new Question(prompt, options);
                 }
+                boolean isSame = false;
                 for (int i = 0; i < c.getCourseQuiz().size(); i++) {
-                    if (c.getCourseQuiz().get(i).getName().equals(quizName)) {
+                    if (c.getCourseQuiz().get(i).getName().equals(newQuizName)) {
+                        isSame = true;
                         c.getCourseQuiz().get(i).setQuestions(q);
                         m.updateCourse();
                         break;
+                    }
+                }
+                if (!isSame){
+                    for (int i =0; i<c.getCourseQuiz().size(); i++){
+                        if (c.getCourseQuiz().get(i).getName().equals(quizName)){
+                            Quiz quiz = new Quiz(newQuizName, q);
+                            c.getCourseQuiz().set(i, quiz);
+                            m.updateCourse();
+                            break;
+                        }
                     }
                 }
                 writer.println("Success");

@@ -506,6 +506,82 @@ public class GUIProgram extends JComponent implements Runnable {
                     }
                 }
             }
+            if(e.getSource() == editQuizButton){
+                for (Course c : courses){
+                    if (c.getName().equals(courseListGUITeacher.getSelectedItem())){
+                        currentCourse = c;
+                    }
+                }
+                for (Quiz q : quizzes){
+                    if (q.getName().equals(quizListGUITeacher.getSelectedItem())){
+                        currentQuiz = q;
+                    }
+                }
+                ArrayList<String> in = new ArrayList<>();
+                in.add(currentCourse.getName());
+                in.add(currentQuiz.getName());
+                while(true){
+                    String quizName = (String) JOptionPane.showInputDialog(null, "Enter the new name of the Quiz:", "Edit Quiz", JOptionPane.QUESTION_MESSAGE, null, null, currentQuiz.getName());
+                    if (quizName == null) {
+                        frame.setContentPane(teacherViewQuizzesWindow);
+                        refresh();
+                        break;
+                    } else if (quizName.equals("")) { // user entered a blank password
+                        JOptionPane.showMessageDialog(null, "Please enter a password", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else if (quizName.contains(";")) { // user's newPassword has a ";"
+                        JOptionPane.showMessageDialog(null, "Password cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else{
+                        String numOfQuestions = (String) JOptionPane.showInputDialog(null, "Enter new amount of questions", "Edit Quiz", JOptionPane.QUESTION_MESSAGE, null, null, currentQuiz.getQuestions().length);
+                        if (numOfQuestions == null){
+                            frame.setContentPane(teacherViewQuizzesWindow);
+                            refresh();
+                            break;
+                        }
+                        else {
+                            try{
+                                in.add(quizName);
+                                int numberOfQuestions = Integer.parseInt(numOfQuestions);
+                                in.add(numOfQuestions);
+                                for (int i = 0; i<numberOfQuestions; i++){
+                                    String questionPrompt = (String) JOptionPane.showInputDialog(null, "Enter new question Prompt:", "Edit Questions", JOptionPane.QUESTION_MESSAGE, null, null, currentQuiz.getQuestions()[i].getPrompt());
+                                    if (questionPrompt == null){
+                                        frame.setContentPane(teacherViewQuizzesWindow);
+                                        refresh();
+                                        break;
+                                    }
+                                    else{
+                                        in.add(questionPrompt);
+                                    }
+                                    for (int j=0; j<4; j++){
+                                        String answerChoice = (String) JOptionPane.showInputDialog(null, "Enter " +(j+1)+" choice of the Question:", "Edit Questions", JOptionPane.QUESTION_MESSAGE, null, null, currentQuiz.getQuestions()[i].getAnswerChoices()[j]);
+                                        if (answerChoice == null){
+                                            frame.setContentPane(teacherViewQuizzesWindow);
+                                            refresh();
+                                            break;
+                                        }
+                                        else{
+                                            in.add(answerChoice);
+                                        }
+                                    }
+                                }
+                                ArrayList<String> out = connect(in, 4009);
+                                if (out.get(0).equals("Success")) {
+                                    JOptionPane.showMessageDialog(null, "Editing quiz success", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                    quizListGUITeacher.removeItem(currentQuiz.getName());
+                                    quizListGUITeacher.addItem(quizName);
+                                } else if (out.get(0).equals("Fail")) {
+                                    JOptionPane.showMessageDialog(null, "There was a problem editing quiz ", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                                break;
+                            }catch (Exception ex){
+                                JOptionPane.showMessageDialog(null, "Please enter the String", "Erorr", JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
             if(e.getSource() == deleteQuizButton){
                 for (Course c : courses){
                     if (c.getName().equals(courseListGUITeacher.getSelectedItem())){
