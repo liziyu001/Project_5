@@ -467,6 +467,7 @@ public class GUIProgram extends JComponent implements Runnable {
                                 in.add(quizName);
                                int numberOfQuestions = Integer.parseInt(numOfQuestions);
                                in.add(numOfQuestions);
+                               Question q[] = new Question[numberOfQuestions];
                                 for (int i = 0; i<numberOfQuestions; i++){
                                     String questionPrompt = JOptionPane.showInputDialog(null, "Enter question Prompt:", "New Questions", JOptionPane.QUESTION_MESSAGE);
                                     if (questionPrompt == null){
@@ -477,6 +478,7 @@ public class GUIProgram extends JComponent implements Runnable {
                                     else{
                                         in.add(questionPrompt);
                                     }
+                                    String[] options = new String[4];
                                     for (int j=0; j<4; j++){
                                         String answerChoice = JOptionPane.showInputDialog(null, "Enter " +(j+1)+" choice of the Question:", "New Quiz", JOptionPane.QUESTION_MESSAGE);
                                         if (answerChoice == null){
@@ -486,13 +488,22 @@ public class GUIProgram extends JComponent implements Runnable {
                                         }
                                         else{
                                             in.add(answerChoice);
+                                            options[j] = answerChoice;
                                         }
                                     }
+                                    q[i] = new Question(questionPrompt, options);
                                 }
                                 ArrayList<String> out = connect(in, 4005);
                                 if (out.get(0).equals("Success")) {
                                     JOptionPane.showMessageDialog(null, "Creating quiz success", "Success", JOptionPane.INFORMATION_MESSAGE);
                                     quizListGUITeacher.addItem(quizName);
+                                    for (Course c : courses){
+                                        if (c.getName().equals(courseListGUITeacher.getSelectedItem())){
+                                            currentCourse = c;
+                                        }
+                                    }
+                                    Quiz newQuizToAdd = new Quiz(quizName, q);
+                                    currentCourse.addQuiz(newQuizToAdd);
                                 } else if (out.get(0).equals("Fail")) {
                                     JOptionPane.showMessageDialog(null, "There was a problem adding quiz ", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
@@ -512,6 +523,7 @@ public class GUIProgram extends JComponent implements Runnable {
                         currentCourse = c;
                     }
                 }
+                quizzes = currentCourse.getCourseQuiz();
                 for (Quiz q : quizzes){
                     if (q.getName().equals(quizListGUITeacher.getSelectedItem())){
                         currentQuiz = q;
@@ -626,7 +638,9 @@ public class GUIProgram extends JComponent implements Runnable {
                         ArrayList<String> out = connect(in, 4004);
                         if (out.get(0).equals("Success")) {
                             JOptionPane.showMessageDialog(null, "Creating course success", "Success", JOptionPane.INFORMATION_MESSAGE);
-
+                            courseListGUITeacher.addItem(newCourse);
+                            Course newCourseToAdd =new Course(newCourse);
+                            courses.add(newCourseToAdd);
                         } else if (out.get(0).equals("Account not found")) {
                             JOptionPane.showMessageDialog(null, "There was a problem adding course ", "Error", JOptionPane.ERROR_MESSAGE);
                         }

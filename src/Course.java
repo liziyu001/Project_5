@@ -26,6 +26,8 @@ public class Course {
         return courseQuiz;
     }
 
+    public void addQuiz(Quiz quiz){courseQuiz.add(quiz);}
+
     public void setCourseQuiz(ArrayList<Quiz> courseQuiz) {
         this.courseQuiz = courseQuiz;
     }
