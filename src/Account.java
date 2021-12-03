@@ -219,7 +219,7 @@ public class Account {
         return null;
     }
 
-    public Submission takeQuiz (Scanner s, Quiz q) {
+    public Submission takeQuiz(Scanner s, Quiz q) {
         /* GUI version
         JOptionPane.showMessageDialog(null, "You are now taking Quiz " + q.getName(), "Take Quiz", JOptionPane.INFORMATION_MESSAGE);
         int [] answers = new int[q.getQuestions().length];
@@ -241,7 +241,7 @@ public class Account {
         return new Submission(this, answers, q);
     }
 
-    public Submission takeQuizViaFile (Scanner s, Quiz q) {
+    public Submission takeQuizViaFile(Scanner s, Quiz q) {
         /* GUI version
         int[] answers = new int[q.getQuestions().length];
         for (int i = 0; i < answers.length; i++) {
