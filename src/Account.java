@@ -73,6 +73,23 @@ public class Account {
     }
 
     public void editQuiz(Scanner s, Quiz quiz) {
+        /* GUI version
+        String name = JOptionPane.showInputDialog(null, "Enter the new Name of the Quiz", "New Quiz Name", JOptionPane.QUESTION_MESSAGE);
+        quiz.setName(name);
+        int number = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the number of questions in the quiz", "Number of Quiz Questions", JOptionPane.QUESTION_MESSAGE));
+        Question[] q = new Question[number];
+        for (int i = 0; i < number; i++) {
+            String prompt = JOptionPane.showInputDialog(null, "Enter the prompt of the Question", "Prompt", JOptionPane.QUESTION_MESSAGE);
+            String[] options = new String[3];
+            options[0] = JOptionPane.showInputDialog(null, "Enter the First Option prompt", "First Option Prompt", JOptionPane.QUESTION_MESSAGE);
+            options[1] = JOptionPane.showInputDialog(null, "Enter the Second Option prompt", "Second Option Prompt", JOptionPane.QUESTION_MESSAGE);
+            options[2] = JOptionPane.showInputDialog(null, "Enter the Third Option prompt", "Third Option Prompt", JOptionPane.QUESTION_MESSAGE);
+            q[i] = new Question(prompt, options);
+            JOptionPane.showMessageDialog(null, "Question" + i + i + "has been created", "Question Created", JOptionPane.INFORMATION_MESSAGE);
+        }
+        JOptionPane.showMessageDialog(null, "Edited Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        quiz.setQuestions(q);
+        */
         System.out.println("Enter the new Name of the Quiz");
         String name = s.nextLine();
         quiz.setName(name);
@@ -97,11 +114,29 @@ public class Account {
     }
 
     public Submission gradeSubmission(Scanner s, Submission sub) {
+        /* GUI version
+        int[] subScore = new int[sub.getAnswers().length];
+        for (int i = 0; i < subScore.length; i++) {
+            JOptionPane.showMessageDialog(null, "Question: " + sub.getQuiz().getQuestions()[i].toString(), "Question", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The student's answer is " + sub.getAnswers()[i], "Student's Answer", JOptionPane.INFORMATION_MESSAGE);
+            subScore[i] = Integer.parseInt(JOptionPane.showInputDialog(null, "What grade do you want to give?", "Grade", JOptionPane.QUESTION_MESSAGE);
+            
+        }
+        JOptionPane.showMessageDialog(null, "Grading finished", "Grading Done", JOptionPane.INFORMATION_MESSAGE);
+        sub.setSubGrades(subScore);
+        sub.setGraded(true);
+        int total = 0;
+        for (int j : subScore) {
+            total += j;
+        }
+        sub.setTotalGrades(total);
+        return sub;
+        */
         int[] subScore = new int[sub.getAnswers().length];
         for (int i = 0; i < subScore.length; i++) {
             System.out.println("Question: " + sub.getQuiz().getQuestions()[i].toString());
             System.out.println("The student's answer is " + sub.getAnswers()[i]);
-            System.out.println("What grade do you wan to give");
+            System.out.println("What grade do you want to give");
             subScore[i] = Integer.parseInt(s.nextLine());
         }
         System.out.println("Grading finished");
@@ -116,6 +151,40 @@ public class Account {
     }
 
     public Submission gradeSubmissionViaFile(Scanner s, Submission sub) {
+        /* GUI version
+        for (int i = 0; i < sub.getAnswers().length; i++) {
+            JOptionPane.showMessageDialog(null, "Question: " + sub.getQuiz().getQuestions()[i].toString(), "Question", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The student's answer is " + sub.getAnswers()[i], "Student's Answer", JOptionPane.INFORMATION_MESSAGE);
+        }
+        String file = JOptionPane.showMessageDialog(null, "Enter the file path, please include a score per line", "File Path", JOptionPane.QUESTION_MESSAGE);
+        try {
+            File f = new File(file);
+            FileReader fr = new FileReader(f);
+            BufferedReader bfr = new BufferedReader(fr);
+            ArrayList<String> info = new ArrayList<String>();
+            String line = bfr.readLine();
+            while (line != null) {
+                info.add(line);
+                line = bfr.readLine();
+            }
+            bfr.close();
+            int[] subScore = new int[info.size()];
+            for (int i = 0; i < subScore.length; i++) {
+                subScore[i] = Integer.parseInt(info.get(i));
+            }
+            sub.setSubGrades(subScore);
+            sub.setGraded(true);
+            int total = 0;
+            for (int i = 0; i < subScore.length; i++) {
+                i = i + subScore[i];
+            }
+            sub.setTotalGrades(total);
+            return sub;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+        */
         for (int i = 0; i < sub.getAnswers().length; i++) {
             System.out.println("Question: " + sub.getQuiz().getQuestions()[i].toString());
             System.out.println("The student's answer is " + sub.getAnswers()[i]);
@@ -151,6 +220,16 @@ public class Account {
     }
 
     public Submission takeQuiz (Scanner s, Quiz q) {
+        /* GUI version
+        JOptionPane.showMessageDialog(null, "You are now taking Quiz " + q.getName(), "Take Quiz", JOptionPane.INFORMATION_MESSAGE);
+        int [] answers = new int[q.getQuestions().length];
+        for (int i = 0; i < answers.length; i++) {
+            q.getQuestions()[i].displayQuestion();
+            answers[i] = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter your choice", "Answer", JOptionPane.QUESTION_MESSAGE));
+        }
+        JOptionPane.showMessageDialog(null, "Finished taking the quiz", "Quiz Finished", JOptionPane.INFORMATION_MESSAGE);
+        return new Submission(this, answers, q);
+        */
         System.out.println("You are now taking Quiz " + q.getName());
         int[] answers = new int[q.getQuestions().length];
         for (int i = 0; i < answers.length; i++) {
@@ -163,6 +242,32 @@ public class Account {
     }
 
     public Submission takeQuizViaFile (Scanner s, Quiz q) {
+        /* GUI version
+        int[] answers = new int[q.getQuestions().length];
+        for (int i = 0; i < answers.length; i++) {
+            JOptionPane.showMessageDialog(null, q.getQuestions()[i].toString(), "Questions", JOptionPane.INFORMATION_MESSAGE);
+        }
+        String file = JOptionPane.showInputDialog(null, "Enter the file path, please include an answer per line", "File Path", JOptionPane.QUESTION_MESSAGE);
+        try {
+            File f = new File(file);
+            FileReader fr = new FileReader(f);
+            BufferedReader bfr = new BufferedReader(fr);
+            ArrayList<String> info = new ArrayList<String>();
+            String line = bfr.readLine();
+            while (line != null) {
+                info.add(line);
+                line = bfr.readLine();
+            }
+            bfr.close();
+            for (int i = 0; i < answers.length; i++) {
+                answers[i] = Integer.parseInt(info.get(i));
+            }
+            return new Submission(this, answers, q);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+        */
         int[] answers = new int[q.getQuestions().length];
         for (int i = 0; i < answers.length; i++) {
             System.out.println(q.getQuestions()[i].toString());
