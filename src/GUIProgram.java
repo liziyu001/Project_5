@@ -380,7 +380,7 @@ public class GUIProgram extends JComponent implements Runnable {
                 ArrayList<String> out = connect(in, 4008);
                 if (out.get(0).equals("Success")) {
                     JOptionPane.showMessageDialog(null, "Deleting success", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    currentAccount=null;
+                    currentAccount = null;
                     frame.setContentPane(startWindow);
                     refresh();
                 } else if (out.get(0).equals("Account not found")) {
@@ -391,11 +391,11 @@ public class GUIProgram extends JComponent implements Runnable {
                 frame.setContentPane(previousWindow);
                 refresh();
             }
-            if (e.getSource() == backLoginWindowButton){
+            if (e.getSource() == backLoginWindowButton) {
                 frame.setContentPane(previousWindow);
                 refresh();
             }
-            if (e.getSource() == backSignUpWindowButton){
+            if (e.getSource() == backSignUpWindowButton) {
                 frame.setContentPane(previousWindow);
                 refresh();
             }
@@ -416,7 +416,7 @@ public class GUIProgram extends JComponent implements Runnable {
                 frame.setContentPane(studentViewQuizzesWindow);
                 refresh();
             }
-            if (e.getSource() == viewCourseTeacherButton){
+            if (e.getSource() == viewCourseTeacherButton) {
                 for (Course c : courses) {
                     if (c.getName().equals(courseListGUITeacher.getSelectedItem())) {
                         currentCourse = c;
@@ -424,14 +424,14 @@ public class GUIProgram extends JComponent implements Runnable {
                 }
                 quizzes = currentCourse.getCourseQuiz();
                 quizListGUITeacher.removeAllItems();
-                for (Quiz q: quizzes){
+                for (Quiz q : quizzes) {
                     quizListGUITeacher.addItem(q.getName());
                 }
                 previousWindow = frame.getContentPane();
                 frame.setContentPane(teacherViewQuizzesWindow);
                 refresh();
             }
-            if (e.getSource() == createCourseButton){
+            if (e.getSource() == createCourseButton) {
                 while (true) {
                     String newCourse = JOptionPane.showInputDialog(null, "Enter name of the Course:", "New Course", JOptionPane.QUESTION_MESSAGE);
                     if (newCourse == null) { // user closed the window
@@ -768,7 +768,7 @@ public class GUIProgram extends JComponent implements Runnable {
         teacherCoursesWindow.setLayout(new BorderLayout());
 
         String[] namesTeacher = new String[courses.size()];
-        for (int i =0; i<namesTeacher.length; i++){
+        for (int i = 0; i < namesTeacher.length; i++) {
             namesTeacher[i] = courses.get(i).getName();
         }
         courseListGUITeacher = new JComboBox<String>(namesTeacher);
