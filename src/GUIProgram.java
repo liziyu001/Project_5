@@ -91,6 +91,7 @@ public class GUIProgram extends JComponent implements Runnable {
     JButton viewCourseTeacherButton;
     JButton addQuizButton;
     JButton editQuizButton;
+    JButton deleteQuizButton;
     JButton ViewSubmissionsButton;
     JTextField usernameFieldLogin;
     JTextField passwordFieldLogin;
@@ -505,6 +506,32 @@ public class GUIProgram extends JComponent implements Runnable {
                     }
                 }
             }
+            if(e.getSource() == deleteQuizButton){
+                for (Course c : courses){
+                    if (c.getName().equals(courseListGUITeacher.getSelectedItem())){
+                        currentCourse = c;
+                    }
+                }
+                quizzes = currentCourse.getCourseQuiz();
+                for (Quiz q : quizzes){
+                    if (q.getName().equals(quizListGUITeacher.getSelectedItem())){
+                        currentQuiz = q;
+                    }
+                }
+                String coursename =  currentCourse.getName();
+                String quizName = currentQuiz.getName();
+                ArrayList<String> in = new ArrayList<>();
+                in.add(coursename);
+                in.add(quizName);
+                ArrayList<String> out = connect(in, 4011);
+                if (out.get(0).equals("Success")) {
+                    JOptionPane.showMessageDialog(null, "Selected quiz has been successfully deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    quizListGUITeacher.removeItem(quizName);
+                    refresh();
+                } else if (out.get(0).equals("Course or Quiz not found")) {
+                    JOptionPane.showMessageDialog(null, "There was a problem deleting a quiz ", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
             if (e.getSource() == createCourseButton) {
                 while (true) {
                     String newCourse = JOptionPane.showInputDialog(null, "Enter name of the Course:", "New Course", JOptionPane.QUESTION_MESSAGE);
@@ -728,7 +755,8 @@ public class GUIProgram extends JComponent implements Runnable {
         deleteAccountTeacherButton.addActionListener(actionListener);
         backAccountSettingsTeacherButton = new JButton("Back");
         backAccountSettingsTeacherButton.addActionListener(actionListener);
-
+        deleteQuizButton =  new JButton("Delete Quiz");
+        deleteQuizButton.addActionListener(actionListener);
         backLoginWindowButton = new JButton("Back");
         backLoginWindowButton.addActionListener(actionListener);
         backSignUpWindowButton = new JButton("Back");
@@ -875,6 +903,7 @@ public class GUIProgram extends JComponent implements Runnable {
         quizzPanelTeacherSouth.add(addQuizButton);
         quizzPanelTeacherSouth.add(editQuizButton);
         quizzPanelTeacherSouth.add(ViewSubmissionsButton);
+        quizzPanelTeacherSouth.add(deleteQuizButton);
         teacherViewQuizzesWindow.add(quizzPanelTeacher, BorderLayout.CENTER);
         teacherViewQuizzesWindow.add(quizzPanelTeacherSouth, BorderLayout.SOUTH);
         // Layout of the quiz taking window
