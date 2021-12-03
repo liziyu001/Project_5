@@ -1,3 +1,6 @@
+import java.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +11,29 @@ import java.util.Scanner;
 
 public class test {
     public static void main(String[] args) throws IOException {
+        /* GUI version
+        while (true) {
+            Socket socket = new Socket("localhost", 4006);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter writer = new PrintWriter(socket.getOutputStream());
+            for (int i = 0; i < 2; i++) {
+                String s = JOptionPane.showInputDialog(null, "What do you want to send to the server?", "Send to Server", JOptionPane.QUESTION_MESSAGE);
+                writer.write(s);
+                writer.println();
+            }
+            writer.flush(); // ensure data is sent to the server
+            String receive = "";
+            String s1 = reader.readLine();
+            while (s1 != null) {
+                receive = receive + s1 + "\n";
+                s1 = reader.readLine();
+            }
+            JOptionPane.showMessageDialog(null, "Received from server:", "Received", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, receive, "Received", JOptionPane.INFORMATION_MESSAGE);
+            writer.close();
+            reader.close();
+        }
+        */
         while (true) {
             Scanner scan = new Scanner(System.in);
             Socket socket = new Socket("localhost", 4006);
