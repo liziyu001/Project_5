@@ -407,7 +407,7 @@ public class GUIProgram extends JComponent implements Runnable {
                     }
                 }
                 quizzes = currentCourse.getCourseQuiz();
-                if (quizzes.size() == 0){
+                if (quizzes.size() == 0) {
                     JOptionPane.showMessageDialog(null, "This course doesn't have quizzes", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
@@ -436,9 +436,9 @@ public class GUIProgram extends JComponent implements Runnable {
                 frame.setContentPane(teacherViewQuizzesWindow);
                 refresh();
             }
-            if (e.getSource() == addQuizButton){
-                for (Course c : courses){
-                    if (c.getName().equals(courseListGUITeacher.getSelectedItem())){
+            if (e.getSource() == addQuizButton) {
+                for (Course c : courses) {
+                    if (c.getName().equals(courseListGUITeacher.getSelectedItem())) {
                         currentCourse = c;
                     }
                 }
@@ -453,40 +453,40 @@ public class GUIProgram extends JComponent implements Runnable {
                     } else if (quizName.contains(";")) { // user's newPassword has a ";"
                         JOptionPane.showMessageDialog(null, "Password cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    else{ // their input was valid ask for amount of questions
+                    else { // their input was valid ask for amount of questions
                         String numOfQuestions =JOptionPane.showInputDialog(null, "Enter amount of questions", "New Quiz", JOptionPane.QUESTION_MESSAGE);
-                        if (numOfQuestions == null){
+                        if (numOfQuestions == null) {
                             frame.setContentPane(teacherViewQuizzesWindow);
                             refresh();
                             break;
                         }
-                        else{
-                            try{
+                        else {
+                            try {
                                 ArrayList<String> in = new ArrayList<>();
                                 in.add(currentCourse.getName());
                                 in.add(quizName);
-                               int numberOfQuestions = Integer.parseInt(numOfQuestions);
-                               in.add(numOfQuestions);
-                               Question q[] = new Question[numberOfQuestions];
-                                for (int i = 0; i<numberOfQuestions; i++){
+                                int numberOfQuestions = Integer.parseInt(numOfQuestions);
+                                in.add(numOfQuestions);
+                                Question q[] = new Question[numberOfQuestions];
+                                for (int i = 0; i < numberOfQuestions; i++) {
                                     String questionPrompt = JOptionPane.showInputDialog(null, "Enter question Prompt:", "New Questions", JOptionPane.QUESTION_MESSAGE);
-                                    if (questionPrompt == null){
+                                    if (questionPrompt == null) {
                                         frame.setContentPane(teacherViewQuizzesWindow);
                                         refresh();
                                         break;
                                     }
-                                    else{
+                                    else {
                                         in.add(questionPrompt);
                                     }
                                     String[] options = new String[4];
-                                    for (int j=0; j<4; j++){
-                                        String answerChoice = JOptionPane.showInputDialog(null, "Enter " +(j+1)+" choice of the Question:", "New Quiz", JOptionPane.QUESTION_MESSAGE);
-                                        if (answerChoice == null){
+                                    for (int j = 0; j < 4; j++) {
+                                        String answerChoice = JOptionPane.showInputDialog(null, "Enter " + (j + 1) + " choice of the Question:", "New Quiz", JOptionPane.QUESTION_MESSAGE);
+                                        if (answerChoice == null) {
                                             frame.setContentPane(teacherViewQuizzesWindow);
                                             refresh();
                                             break;
                                         }
-                                        else{
+                                        else {
                                             in.add(answerChoice);
                                             options[j] = answerChoice;
                                         }
@@ -497,8 +497,8 @@ public class GUIProgram extends JComponent implements Runnable {
                                 if (out.get(0).equals("Success")) {
                                     JOptionPane.showMessageDialog(null, "Creating quiz success", "Success", JOptionPane.INFORMATION_MESSAGE);
                                     quizListGUITeacher.addItem(quizName);
-                                    for (Course c : courses){
-                                        if (c.getName().equals(courseListGUITeacher.getSelectedItem())){
+                                    for (Course c : courses) {
+                                        if (c.getName().equals(courseListGUITeacher.getSelectedItem())) {
                                             currentCourse = c;
                                         }
                                     }
@@ -508,7 +508,7 @@ public class GUIProgram extends JComponent implements Runnable {
                                     JOptionPane.showMessageDialog(null, "There was a problem adding quiz ", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
                                 break;
-                            }catch (Exception ex){
+                            }catch (Exception ex) {
                                 JOptionPane.showMessageDialog(null, "Please enter the String", "Erorr", JOptionPane.ERROR_MESSAGE);
                                 break;
                             }
@@ -517,22 +517,22 @@ public class GUIProgram extends JComponent implements Runnable {
                     }
                 }
             }
-            if(e.getSource() == editQuizButton){
-                for (Course c : courses){
-                    if (c.getName().equals(courseListGUITeacher.getSelectedItem())){
+            if(e.getSource() == editQuizButton) {
+                for (Course c : courses) { 
+                    if (c.getName().equals(courseListGUITeacher.getSelectedItem())) {
                         currentCourse = c;
                     }
                 }
                 quizzes = currentCourse.getCourseQuiz();
-                for (Quiz q : quizzes){
-                    if (q.getName().equals(quizListGUITeacher.getSelectedItem())){
+                for (Quiz q : quizzes) {
+                    if (q.getName().equals(quizListGUITeacher.getSelectedItem())) {
                         currentQuiz = q;
                     }
                 }
                 ArrayList<String> in = new ArrayList<>();
                 in.add(currentCourse.getName());
                 in.add(currentQuiz.getName());
-                while(true){
+                while (true) {
                     String quizName = (String) JOptionPane.showInputDialog(null, "Enter the new name of the Quiz:", "Edit Quiz", JOptionPane.QUESTION_MESSAGE, null, null, currentQuiz.getName());
                     if (quizName == null) {
                         frame.setContentPane(teacherViewQuizzesWindow);
@@ -543,36 +543,36 @@ public class GUIProgram extends JComponent implements Runnable {
                     } else if (quizName.contains(";")) { // user's newPassword has a ";"
                         JOptionPane.showMessageDialog(null, "Password cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    else{
+                    else {
                         String numOfQuestions = (String) JOptionPane.showInputDialog(null, "Enter new amount of questions", "Edit Quiz", JOptionPane.QUESTION_MESSAGE, null, null, currentQuiz.getQuestions().length);
-                        if (numOfQuestions == null){
+                        if (numOfQuestions == null) {
                             frame.setContentPane(teacherViewQuizzesWindow);
                             refresh();
                             break;
                         }
                         else {
-                            try{
+                            try {
                                 in.add(quizName);
                                 int numberOfQuestions = Integer.parseInt(numOfQuestions);
                                 in.add(numOfQuestions);
-                                for (int i = 0; i<numberOfQuestions; i++){
+                                for (int i = 0; i < numberOfQuestions; i++) {
                                     String questionPrompt = (String) JOptionPane.showInputDialog(null, "Enter new question Prompt:", "Edit Questions", JOptionPane.QUESTION_MESSAGE, null, null, currentQuiz.getQuestions()[i].getPrompt());
-                                    if (questionPrompt == null){
+                                    if (questionPrompt == null) {
                                         frame.setContentPane(teacherViewQuizzesWindow);
                                         refresh();
                                         break;
                                     }
-                                    else{
+                                    else {
                                         in.add(questionPrompt);
                                     }
-                                    for (int j=0; j<4; j++){
-                                        String answerChoice = (String) JOptionPane.showInputDialog(null, "Enter " +(j+1)+" choice of the Question:", "Edit Questions", JOptionPane.QUESTION_MESSAGE, null, null, currentQuiz.getQuestions()[i].getAnswerChoices()[j]);
-                                        if (answerChoice == null){
+                                    for (int j = 0; j < 4; j++) {
+                                        String answerChoice = (String) JOptionPane.showInputDialog(null, "Enter " + (j + 1) + " choice of the Question:", "Edit Questions", JOptionPane.QUESTION_MESSAGE, null, null, currentQuiz.getQuestions()[i].getAnswerChoices()[j]);
+                                        if (answerChoice == null) {
                                             frame.setContentPane(teacherViewQuizzesWindow);
                                             refresh();
                                             break;
                                         }
-                                        else{
+                                        else {
                                             in.add(answerChoice);
                                         }
                                     }
@@ -586,7 +586,7 @@ public class GUIProgram extends JComponent implements Runnable {
                                     JOptionPane.showMessageDialog(null, "There was a problem editing quiz ", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
                                 break;
-                            }catch (Exception ex){
+                            }catch (Exception ex) {
                                 JOptionPane.showMessageDialog(null, "Please enter the String", "Erorr", JOptionPane.ERROR_MESSAGE);
                                 break;
                             }
@@ -594,15 +594,15 @@ public class GUIProgram extends JComponent implements Runnable {
                     }
                 }
             }
-            if(e.getSource() == deleteQuizButton){
-                for (Course c : courses){
-                    if (c.getName().equals(courseListGUITeacher.getSelectedItem())){
+            if (e.getSource() == deleteQuizButton) {
+                for (Course c : courses) {
+                    if (c.getName().equals(courseListGUITeacher.getSelectedItem())) {
                         currentCourse = c;
                     }
                 }
                 quizzes = currentCourse.getCourseQuiz();
-                for (Quiz q : quizzes){
-                    if (q.getName().equals(quizListGUITeacher.getSelectedItem())){
+                for (Quiz q : quizzes) {
+                    if (q.getName().equals(quizListGUITeacher.getSelectedItem())) {
                         currentQuiz = q;
                     }
                 }
