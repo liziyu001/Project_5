@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-/* 
+/** 
  * Represents the Course that the teacher creates and the student takes part in
  */
 public class Course {
@@ -8,7 +8,7 @@ public class Course {
     //The list of quizzes that are in the course
     private ArrayList<Quiz> courseQuiz;
     
-    /* 
+    /** 
      * Constructs a newly allocated Course object with the specified name and list of course quizzes
      * @param name The name of the course used for construction
      * @param courseQuiz The list of course quizzes used for construction
@@ -18,7 +18,7 @@ public class Course {
         this.courseQuiz = courseQuiz;
     }
     
-    /*
+    /**
      * Constructs a newly allocated Course object with the specified name and empty list of quizzes in the course
      * @param name The name of the course used for construction
      */
@@ -27,7 +27,7 @@ public class Course {
         this.courseQuiz = new ArrayList<>();
     }
     
-    /* 
+    /** 
      * Returns the specified name of the course
      * @return Returns the specified name of the course
      */
@@ -35,7 +35,7 @@ public class Course {
         return name;
     }
     
-    /* 
+    /** 
      * Updates the name of the course with the specified name
      * @param name The name to be used in the update
      */
@@ -43,7 +43,7 @@ public class Course {
         this.name = name;
     }
     
-    /* 
+    /** 
      * Returns the list of quizzes in the course
      * @return Returns the list of quizzes in the course
      */
@@ -51,13 +51,13 @@ public class Course {
         return courseQuiz;
     }
     
-    /* 
+    /** 
      * Adds a quiz to the the course
      * @param quiz The quiz that is being added to the course
      */  
     public void addQuiz(Quiz quiz){courseQuiz.add(quiz);}
     
-    /* 
+    /** 
      * Updates the list of course quizzes with the specified list of course quizzes
      * @param courseQuiz The list of course quizzes to be used in the update
      */
@@ -65,7 +65,7 @@ public class Course {
         this.courseQuiz = courseQuiz;
     }
 
-    /* 
+    /** 
      * Lists the quizzes in the course line by line
      * @return Returns a String representation of the list of quizzes in the course 
      */
@@ -80,7 +80,7 @@ public class Course {
         return s;
     }
     
-    /* 
+    /** 
      * Prints the String representation of the list of quizzes in the course
      */
     public void printString() {
