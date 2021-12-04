@@ -5,17 +5,19 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class Submission {
-    private Account Account;
-    private Quiz quiz;
+    private String id;
+    private String courseName;
+    private String quizName;
     private boolean graded;
     private int[] answers;
     private int[] subGrades;
     private int totalGrades;
     private String timestamp;
-    public Submission(Account Account, int[] answers, Quiz quiz) {
-        this.Account = Account;
+    public Submission(String courseName, String quizName, String id, int[] answers) {
+        this.id = id;
         this.answers = answers;
-        this.quiz = quiz;
+        this.courseName = courseName;
+        this.quizName = quizName;
         graded = false;
         subGrades = new int[answers.length];
         totalGrades = 0;
@@ -24,7 +26,7 @@ public class Submission {
     @Override
     public String toString() {
         return "Submission{" +
-                ", Account=" + Account +
+                ", Account=" + id +
                 ", graded=" + graded +
                 ", answers=" + Arrays.toString(answers) +
                 ", subGrades=" + Arrays.toString(subGrades) +
@@ -32,24 +34,25 @@ public class Submission {
                 '}';
     }
 
-    public Submission(Account Account, boolean graded, int[] answers, int[] subGrades, int totalGrades) {
-        this.Account = Account;
+    public Submission(String courseName, String quizName, String id, boolean graded, int[] answers, int[] subGrades) {
+        this.courseName = courseName;
+        this.quizName = quizName;
+        this.id = id;
         this.graded = graded;
         this.answers = answers;
         this.subGrades = subGrades;
-        this.totalGrades = totalGrades;
     }
 
     public String getTimestamp() {
         return timestamp;
     }
 
-    public Account getAccount() {
-        return Account;
+    public String getId() {
+        return id;
     }
 
-    public void setAccount(Account Account) {
-        this.Account = Account;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int[] getAnswers() {
@@ -84,6 +87,14 @@ public class Submission {
         return graded;
     }
 
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public String getQuizName() {
+        return quizName;
+    }
+
     public void setTimestamp() {
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -100,7 +111,5 @@ public class Submission {
 
     }
 
-    public Quiz getQuiz() {
-        return quiz;
-    }
+
 }
