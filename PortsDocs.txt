@@ -30,7 +30,7 @@ Port:4002 Get the Course List as a String
 
 
 Port:4003 Get the Quiz List of a given course as a String
-    Input: Course Name
+    Input: Course Name(get from user while choosing from list from port 4002)
         ex. "CS180\n"
     Return:
         if the input course was not found in the course list, return: "Given Course is not found\n"
@@ -50,7 +50,7 @@ Port:4004 Create Course
 
 Port:4005 Create Quiz
     Input:Course name and quiz info, must be in the following format
-    "<Course name>\n<Quiz name>\n<number of questions>\n<prompt of first question>\n<first option>\n<second option>\n<third option>\n<forth option>\n<prompt of second question>...<fourth option>\n"
+    "<Course name>(record while choosing quiz)\n<Quiz name>(record while choosing quiz)\n<number of questions>\n<prompt of first question>\n<first option>\n<second option>\n<third option>\n<forth option>\n<prompt of second question>...<fourth option>\n"
         ex. CS193
             The first Quiz
             2
@@ -71,7 +71,7 @@ Port:4005 Create Quiz
 
 
 Port:4006 Edit username
-    Input: "<old username>\n<new username>\n"
+    Input: "<old username>(record while login or register)\n<new username>\n"
         ex: "abc\n123\n"
     return:
         If the edit is successful, return "Success\n"
@@ -81,7 +81,7 @@ Port:4006 Edit username
 
 
 Port:4007 Edit Password
-    Input: "<username>\n<new Password>\n"
+    Input: "<username>(record while login or register)\n<new Password>\n"
         ex: "abc\n12345\n"
     return:
         If the edit is successful, return "Success\n"
@@ -90,7 +90,7 @@ Port:4007 Edit Password
 
 
 Port:4008 Delete account
-    Input: "<username>\n"
+    Input: "<username>(record while login or register)\n"
         ex: "abc\n"
     return:
         If the deletion is successful, return "Success\n"
@@ -101,12 +101,13 @@ Port:4008 Delete account
 Port:4009 Edit Quiz
     same as port 4005, except no new quiz will be created(old quiz will be edited).
     return:
-        If the quiz is created successfully, return "Success\n"
+        If the quiz is edited successfully, return "Success\n"
         if any error occurs, return "Fail\n"
 
 
 Port:4010  get quiz content
-    Input: "<courseName>\n<quizName\n"
+Used while taking quiz or display while grading and viewing grades
+    Input: "<courseName>\n<quizName>\n"
     Return:
         quiz content
             ex. The first Quiz
@@ -125,8 +126,50 @@ Port:4010  get quiz content
 
 
 Port:4011 delete quiz
-    Input: "<courseName>\n<quizName\n"
+    Input: "<courseName>\n<quizName>\n"
     return:
         If the deletion is successful, return "Success\n"
         If given names are not found, return "Course or Quiz not found\n"
     Quiz will be deleted from file
+
+Note: following service contains submission, which is identified by three identifier: course name, quiz name and people(user id) who takes the quiz
+
+Port:4012 Get list of ungraded submission
+(So teacher can choose a submission from this list to grade)
+    Input: None
+    Return: list of ungraded submission
+        ex. "CS180-The first Quiz-William\nCS193-The Second Quiz-Manas"
+
+
+Port:4013 take quiz
+    Input:"<Course name>\n<Quiz name>\n<User id who take the quiz>(record while login or register)\n<set of answers, separate by commas>\n"
+        ex. "CS180\nThe first Quiz\nWilliam\n1,4,2,1\n"
+    Return: If the quiz is recorded successfully return "Success"
+            If there is any error occurs, such as incorrect input format, return "Error"
+    New submission will be created
+
+Port:4014 view grading
+    Input: "<Course name>\n<Quiz name>(record while choosing graded course)\n<User id who take the quiz>(record while login or register)\n"
+        ex. "CS180\nThe first Quiz\nWilliam\n"
+    Return: "<subGrade set separate by commas>\n<total grade>\n"
+        ex. "1,2\n3"
+        if matched submission is not found, return "Submission not found"
+        if matched submission is ungraded, return "Not graded"
+
+
+Port:4015 grade submissions
+    Input:"<Course name>\n<Quiz name>\n<User id who take the quiz>(record while choosing ungraded course)\n<set of subGraded, separate by commas>\n"
+        ex. "CS180\nThe first Quiz\nWilliam\n1,3,2,1\n"
+    Return: if grading is success return "Success"
+            if matched submission is not found, return "Submission not found"
+            If there is any error occurs, such as incorrect input format, return "Input Format Not Correct"
+    Grading will be recorded in the file
+
+
+Port:4016 Get list of graded submission
+(So Student can choose a submission from this list to view the grade)
+    Input: None
+    Return: list of graded submission
+        ex. CS180-The Second Quiz-William
+            CS180-The Second Quiz-manass
+
