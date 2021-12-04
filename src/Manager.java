@@ -1,4 +1,3 @@
-import java.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -9,17 +8,17 @@ public class Manager {
     private ArrayList<Course> courseList;
     private ArrayList<Account> accountList;
     private ArrayList<Submission> submissionList;
-    
+
     /*
      * @Description Initialize Manager by reading from Account and Course File
      * @Date 4:36 PM 11/18/2021
      * @Param []
-     * @return 
+     * @return
      **/
     public Manager() {
         courseList = readCourses();
         accountList = readAccounts();
-        submissionList = new ArrayList<Submission>();
+        submissionList = readSubmission();
     }
 
     public ArrayList<Course> getCourseList() {
@@ -91,11 +90,11 @@ public class Manager {
                 return new Account(id, pwd, true);
             default:
                 //error handling can be added
-                return null; 
+                return null;
         }
 
     }
-    
+
     /*
      * @Description ask information; return corresponding account; return null if not found
      * @Date 4:19 PM 11/18/2021
@@ -136,7 +135,7 @@ public class Manager {
         System.out.println("Your id hasn't been created");
         return null;
     }
-    
+
     /*
      * @Description read from Account.txt and return a list of existed accounts
      * @Date 4:42 PM 11/18/2021
@@ -144,7 +143,7 @@ public class Manager {
      * @return java.util.ArrayList<Account>
      **/
     public ArrayList<Account> readAccounts() {
-    
+
         ArrayList<Account> accounts = new ArrayList<>();
         try {
             File file = new File("Account.txt");
@@ -162,7 +161,7 @@ public class Manager {
         }
         return accounts;
     }
-    
+
     /*
      * @Description read from Course.txt and related course file and return a list of existed courses
      * @Date 5:04 PM 11/18/2021
@@ -170,7 +169,7 @@ public class Manager {
      * @return java.util.ArrayList<Course>
      **/
     public ArrayList<Course> readCourses() {
-        
+
         ArrayList<String> coursePaths = new ArrayList<String>();
         ArrayList<Course> courses = new ArrayList<Course>();
         try {
@@ -213,7 +212,7 @@ public class Manager {
         }
         return courses;
     }
-    
+
     /*
      * @Description Update the current AccountList to files
      * @Date 3:25 PM 11/20/2021
@@ -254,7 +253,7 @@ public class Manager {
             e.printStackTrace();
         }
     }
-    
+
     /*
      * @Description Update the current courseList to files
      * @Date 3:25 PM 11/20/2021
@@ -325,7 +324,7 @@ public class Manager {
             e.printStackTrace();
         }
     }
-    
+
     /*
      * @Description return a list of existed course for user to choose
      * @Date 4:23 PM 11/20/2021
@@ -375,5 +374,66 @@ public class Manager {
         String pwd = s.nextLine();
         ac.setPassword(pwd);
         return ac;
+    }
+
+    public ArrayList<Submission> readSubmission() {
+        ArrayList<Submission> list = new ArrayList<Submission>();
+        ArrayList<String> info = new ArrayList<String>();
+        try {
+            File f = new File("Submissions.txt");
+            FileReader fr = new FileReader(f);
+            BufferedReader br = new BufferedReader(fr);
+            String line = br.readLine();
+            while (line != null) {
+                info.add(line);
+                line = br.readLine();
+            }
+            br.close();
+            for (int i = 0; i < info.size(); i++) {
+                String[] current = info.get(i).split(";");
+                String id = current[2];
+                String courseName = current[0];
+                String quizName = current[1];
+                boolean graded = Boolean.parseBoolean(current[3]);
+                int[] answers = new int[current[4].split(",").length];
+                int[] subGrades = new int[answers.length];
+                for (int j = 0; j < answers.length; j++) {
+                    answers[j] = Integer.parseInt(current[4].split(",")[j]);
+                    subGrades[j] = Integer.parseInt(current[5].split(",")[j]);
+                }
+                list.add(new Submission(courseName, quizName, id, graded, answers, subGrades));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public void updateSubmission() {
+        try {
+            File f = new File("Submissions.txt");
+            FileOutputStream fos = new FileOutputStream(f, false);
+            PrintWriter pr = new PrintWriter(fos);
+            for (int i = 0; i < submissionList.size(); i++) {
+                Submission sub = submissionList.get(i);
+                String line = "";
+                line = line + sub.getCourseName() + ";"
+                        + sub.getQuizName() + ";"
+                        + sub.getId() + ";"
+                        + sub.isGraded() + ";";
+                for (int j = 0; j < sub.getAnswers().length; j++) {
+                    line = line + sub.getAnswers()[j] + ",";
+                }
+                line = line.substring(0,line.length() - 1) + ";";
+                for (int j = 0; j < sub.getSubGrades().length; j++) {
+                    line = line + sub.getSubGrades()[j] + ",";
+                }
+                line = line.substring(0,line.length() - 1);
+                pr.println(line);
+            }
+            pr.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
