@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Manager {
+    //Represents the list of courses the teacher creates and the student takes
     private ArrayList<Course> courseList;
+    //Represents the list of accounts created
     private ArrayList<Account> accountList;
+    //Represents the list of submissions that the student made
     private ArrayList<Submission> submissionList;
 
     /*
@@ -20,24 +23,44 @@ public class Manager {
         accountList = readAccounts();
         submissionList = readSubmission();
     }
-
+    
+    /** 
+     * Returns the list of courses that are in the file
+     * @return Returns the list of courses that are in the file
+     */
     public ArrayList<Course> getCourseList() {
         return courseList;
     }
-
+    
+    /** 
+     * Returns the list of accounts that are in the file
+     * @return Returns the list of accounts that are in the file
+     */
     public ArrayList<Account> getAccountList() {
         return accountList;
     }
-
+    
+    /**
+     * Updates the list of accounts with the specified list of accounts, and updates the accounts in general
+     * @param accountList The account list that is used in the update
+     */
     public void setAccountList(ArrayList<Account> accountList) {
         this.accountList = accountList;
         updateAccount();
     }
-
+    
+    /** 
+     * Returns the list of submissions that are in the file
+     * @return Returns the list of submissions that are in the file
+     */
     public ArrayList<Submission> getSubmissionList() {
         return submissionList;
     }
-
+    
+    /**
+     * Updates the list of courses with the specified list of courses, and updates the courses in general
+     * @param courseList The course list that is used in the update
+     */
     public void setCourseList(ArrayList<Course> courseList) {
         this.courseList = courseList;
         updateCourse();
