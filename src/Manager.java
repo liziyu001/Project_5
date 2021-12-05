@@ -3,7 +3,9 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/** 
+ * Manages, edits, and updates the Accounts, Courses, and Submissions
+ */
 public class Manager {
     //Represents the list of courses the teacher creates and the student takes
     private ArrayList<Course> courseList;
@@ -70,7 +72,7 @@ public class Manager {
      * @Description ask information; return corresponding account; return null if duplicate id
      * @Date 4:20 PM 11/18/2021
      * @Param [s]
-     * @return Account
+     * @return Returns an account based on the type of Account that is being created 
      **/
     public Account createAccount(Scanner s) {
         /* GUI version
@@ -122,7 +124,7 @@ public class Manager {
      * @Description ask information; return corresponding account; return null if not found
      * @Date 4:19 PM 11/18/2021
      * @Param [s]
-     * @return Account
+     * @return Returns the account that the person logged into. If the person did not login correctly, then it returns null.
      **/
     public Account login(Scanner s) { // ; shouldn't be contained
         /* GUI version
@@ -163,7 +165,7 @@ public class Manager {
      * @Description read from Account.txt and return a list of existed accounts
      * @Date 4:42 PM 11/18/2021
      * @Param []
-     * @return java.util.ArrayList<Account>
+     * @return Returns a list of accounts that is read from Account.txt
      **/
     public ArrayList<Account> readAccounts() {
 
@@ -189,7 +191,7 @@ public class Manager {
      * @Description read from Course.txt and related course file and return a list of existed courses
      * @Date 5:04 PM 11/18/2021
      * @Param []
-     * @return java.util.ArrayList<Course>
+     * @return Returns a list of courses that is gathered from reading Course.txt
      **/
     public ArrayList<Course> readCourses() {
 
@@ -352,7 +354,7 @@ public class Manager {
      * @Description return a list of existed course for user to choose
      * @Date 4:23 PM 11/20/2021
      * @Param []
-     * @return java.lang.String
+     * @return Returns a String representation of a list of existing courses for user to choose
      **/
     public String listCourses() {
         String s = "";
@@ -362,7 +364,13 @@ public class Manager {
         s = s.substring(0, s.length() - 1);
         return s;
     }
-
+    
+    /**
+     * Returns the account with the changes made to the user id
+     * @param ac The account that is returned with a new username
+     * @param index Represents the position of where the account is on the list of accounts
+     * @return Returns the account with the specific user id
+     */  
     public Account editID(Scanner s, Account ac, int index) {
         /* GUI version
         String id = JOptionPane.showInputDialog(null, "Enter your User ID", "User ID", JOptionPane.QUESTION_MESSAGE);
@@ -386,7 +394,12 @@ public class Manager {
         ac.setUsername(id);
         return ac;
     }
-
+    
+    /** 
+     * Returns the account with the new password
+     * @param ac The account with the edited password
+     * @return Returns the account with the new password
+     */
     public Account editPwd(Scanner s, Account ac) {
         /* GUI version
         String pwd = JOptionPane.showInputDialog(null, "Enter your new Password", "Password", JOptionPane.QUESTION_MESSAGE);
@@ -398,7 +411,11 @@ public class Manager {
         ac.setPassword(pwd);
         return ac;
     }
-
+    
+    /**
+     * Reads the file Submissions.txt and returns the list of thos existing submissions
+     * @return Returns a list of submissions that is read from the file Submissions.txt
+     */
     public ArrayList<Submission> readSubmission() {
         ArrayList<Submission> list = new ArrayList<Submission>();
         ArrayList<String> info = new ArrayList<String>();
@@ -431,7 +448,10 @@ public class Manager {
         }
         return list;
     }
-
+    
+    /** 
+     * Writes the submission in the Submissions.txt file
+     */
     public void updateSubmission() {
         try {
             File f = new File("Submissions.txt");
