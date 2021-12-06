@@ -497,11 +497,11 @@ public class Server extends Thread {
                 Question[] q = new Question[number];
                 for (int i = 0; i < number; i++) {
                     String prompt = reader.readLine();
-                    String[] options = new String[4];
-                    options[0] = reader.readLine();
-                    options[1] = reader.readLine();
-                    options[2] = reader.readLine();
-                    options[3] = reader.readLine();
+                    int numOptions = Integer.parseInt(reader.readLine());
+                    String[] options = new String[numOptions];
+                    for (int j = 0; j < numOptions; j++) {
+                        options[j] = reader.readLine();
+                    }
                     q[i] = new Question(prompt, options);
                 }
                 Quiz quiz = new Quiz(quizName, q);
@@ -657,11 +657,11 @@ public class Server extends Thread {
                 Question[] q = new Question[number];
                 for (int i = 0; i < number; i++) {
                     String prompt = reader.readLine();
-                    String[] options = new String[4];
-                    options[0] = reader.readLine();
-                    options[1] = reader.readLine();
-                    options[2] = reader.readLine();
-                    options[3] = reader.readLine();
+                    int numOptions = Integer.parseInt(reader.readLine());
+                    String[] options = new String[numOptions];
+                    for (int j = 0; j < numOptions; j++) {
+                        options[j] = reader.readLine();
+                    }
                     q[i] = new Question(prompt, options);
                 }
                 for (int i = 0; i < c.getCourseQuiz().size(); i++) {
