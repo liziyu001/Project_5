@@ -103,10 +103,11 @@ public class Account {
         Question[] q = new Question[number];
         for (int i = 0; i < number; i++) {
             String prompt = JOptionPane.showInputDialog(null, "Enter the prompt of the Question", "Prompt", JOptionPane.QUESTION_MESSAGE);
-            String[] options = new String[3];
+            String[] options = new String[4];
             options[0] = JOptionPane.showInputDialog(null, "Enter the First Option prompt", "First Option Prompt", JOptionPane.QUESTION_MESSAGE);
             options[1] = JOptionPane.showInputDialog(null, "Enter the Second Option prompt", "Second Option Prompt", JOptionPane.QUESTION_MESSAGE);
             options[2] = JOptionPane.showInputDialog(null, "Enter the Third Option prompt", "Third Option Prompt", JOptionPane.QUESTION_MESSAGE);
+            options[3] = JOptionPane.showInputDialog(null, "Enter the Fourth Option prompt", "Fourth Option Prompt", JOptionPane.QUESTION_MESSAGE);
             q[i] = new Question(prompt, options);
             JOptionPane.showMessageDialog(null, "Question" + i + 1 + "has been created", "Question Created", JOptionPane.INFORMATION_MESSAGE);
         }
