@@ -1,5 +1,4 @@
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -50,24 +49,23 @@ public class Account {
      * @return Returns a Quiz object that represents a quiz with a certain name that has a certain amount of questions
      */
     public Quiz createQuiz(Scanner s) {
-        //GUI version
-        String name = JOptionPane.showInputDialog(null, "Enter the Name of the Quiz", "Quiz Name", JOptionPane.QUESTION_MESSAGE);
+        /* GUI version
+        JOptionPane.showInputDialog(null, "Enter the Name of the Quiz", "Quiz Name", JOptionPane.QUESTION_MESSAGE);
         int number = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the number of questions in the quiz", "Questions", JOptionPane.QUESTION_MESSAGE));
         Question[] q = new Question[number];
         for (int i = 0; i < number; i++) {
             String prompt = JOptionPane.showInputDialog(null, "Enter the prompt of the Question", "Question Prompt", JOptionPane.QUESTION_MESSAGE);
-            int numOptions = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the number of options", "Question Prompt", JOptionPane.QUESTION_MESSAGE));
-            String[] options = new String[numOptions];
-            for (int j = 0; j < numOptions; j++) {
-                options[j] = JOptionPane.showInputDialog(null, "Enter Prompt " + (j + 1), "Prompt " + (j + 1), JOptionPane.QUESTION_MESSAGE);
-            }
+            String[] options = new String[4];
+            options[0] = JOptionPane.showInputDialog(null, "Enter the First Option prompt", "First Prompt", JOptionPane.QUESTION_MESSAGE);
+            options[1] = JOptionPane.showInputDialog(null, "Enter the Second Option prompt", "Second Prompt", JOptionPane.QUESTION_MESSAGE);
+            options[2] = JOptionPane.showInputDialog(null, "Enter the Third Option prompt", "Third Prompt", JOptionPane.QUESTION_MESSAGE);
+            options[3] = JOptionPane.showInputDialog(null, "Enter the Fourth Option prompt", "Fourth Prompt", JOptionPane.QUESTION_MESSAGE);
             q[i] = new Question(prompt, options);
             JOptionPane.showMessageDialog(null, "Question " + (i + 1) + " has been created", "Question Created", JOptionPane.INFORMATION_MESSAGE);
         }
         JOptionPane.showMessageDialog(null, "Created Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
         return new Quiz(name, q);
-        //needs to be updated to allow any # of options, gui is fine
-        /*
+        */
         System.out.println("Enter the Name of the Quiz");
         String name = s.nextLine();
         System.out.println("Enter the number of questions in the quiz");
@@ -91,8 +89,6 @@ public class Account {
         System.out.println("Created Successfully");
 
         return new Quiz(name, q);
-
-         */
     }
     
     /** 
@@ -100,25 +96,23 @@ public class Account {
      * @param quiz The specified quiz that is being modified and changed
      */
     public void editQuiz(Scanner s, Quiz quiz) {
-        //GUI version
+        /* GUI version
         String name = JOptionPane.showInputDialog(null, "Enter the new Name of the Quiz", "New Quiz Name", JOptionPane.QUESTION_MESSAGE);
         quiz.setName(name);
         int number = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the number of questions in the quiz", "Number of Quiz Questions", JOptionPane.QUESTION_MESSAGE));
         Question[] q = new Question[number];
         for (int i = 0; i < number; i++) {
-            String prompt = JOptionPane.showInputDialog(null, "Enter the prompt of the Question", "Question Prompt", JOptionPane.QUESTION_MESSAGE);
-            int numOptions = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the number of options", "Question Prompt", JOptionPane.QUESTION_MESSAGE));
-            String[] options = new String[numOptions];
-            for (int j = 0; j < numOptions; j++) {
-                options[j] = JOptionPane.showInputDialog(null, "Enter Prompt " + (j + 1), "Prompt " + (j + 1), JOptionPane.QUESTION_MESSAGE);
-            }
+            String prompt = JOptionPane.showInputDialog(null, "Enter the prompt of the Question", "Prompt", JOptionPane.QUESTION_MESSAGE);
+            String[] options = new String[3];
+            options[0] = JOptionPane.showInputDialog(null, "Enter the First Option prompt", "First Option Prompt", JOptionPane.QUESTION_MESSAGE);
+            options[1] = JOptionPane.showInputDialog(null, "Enter the Second Option prompt", "Second Option Prompt", JOptionPane.QUESTION_MESSAGE);
+            options[2] = JOptionPane.showInputDialog(null, "Enter the Third Option prompt", "Third Option Prompt", JOptionPane.QUESTION_MESSAGE);
             q[i] = new Question(prompt, options);
-            JOptionPane.showMessageDialog(null, "Question " + (i + 1) + " has been created", "Question Created", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Question" + i + 1 + "has been created", "Question Created", JOptionPane.INFORMATION_MESSAGE);
         }
         JOptionPane.showMessageDialog(null, "Edited Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
         quiz.setQuestions(q);
-        //needs to be updated to allow any # of options, gui is fine
-        /*
+        */
         System.out.println("Enter the new Name of the Quiz");
         String name = s.nextLine();
         quiz.setName(name);
@@ -128,20 +122,20 @@ public class Account {
         for (int i = 0; i < number; i++) {
             System.out.println("Enter the prompt of the Question");
             String prompt = s.nextLine();
-            String[] options = new String[3];
+            String[] options = new String[4];
             System.out.println("Enter the First Option prompt");
             options[0] = s.nextLine();
             System.out.println("Enter the Second Option prompt");
             options[1] = s.nextLine();
             System.out.println("Enter the Third Option prompt");
             options[2] = s.nextLine();
+            System.out.println("Enter the Fourth Option prompt");
+            options[3] = s.nextLine();
             q[i] = new Question(prompt, options);
-            System.out.println("Question" + i + i + "has been created");
+            System.out.println("Question" + i + 1 + "has been created");
         }
         System.out.println("Edited Successfully");
         quiz.setQuestions(q);
-
-         */
     }
     
     /**
