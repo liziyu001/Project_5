@@ -49,7 +49,6 @@ public class Account {
      * Creates a quiz with a specified amount of questions with four answer choices in each question
      * @return Returns a Quiz object that represents a quiz with a certain name that has a certain amount of questions
      */
-
     public Quiz createQuiz(Scanner s) {
         //GUI version
         String name = JOptionPane.showInputDialog(null, "Enter the Name of the Quiz", "Quiz Name", JOptionPane.QUESTION_MESSAGE);
@@ -60,7 +59,7 @@ public class Account {
             int numOptions = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the number of options", "Question Prompt", JOptionPane.QUESTION_MESSAGE));
             String[] options = new String[numOptions];
             for (int j = 0; j < numOptions; j++) {
-                options[j] = JOptionPane.showInputDialog(null, "Enter Prompt " + j, "Prompt " + j, JOptionPane.QUESTION_MESSAGE);
+                options[j] = JOptionPane.showInputDialog(null, "Enter Prompt " + (j + 1), "Prompt " + (j + 1), JOptionPane.QUESTION_MESSAGE);
             }
             q[i] = new Question(prompt, options);
             JOptionPane.showMessageDialog(null, "Question " + (i + 1) + " has been created", "Question Created", JOptionPane.INFORMATION_MESSAGE);
@@ -111,7 +110,7 @@ public class Account {
             int numOptions = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the number of options", "Question Prompt", JOptionPane.QUESTION_MESSAGE));
             String[] options = new String[numOptions];
             for (int j = 0; j < numOptions; j++) {
-                options[j] = JOptionPane.showInputDialog(null, "Enter Prompt " + j, "Prompt " + j, JOptionPane.QUESTION_MESSAGE);
+                options[j] = JOptionPane.showInputDialog(null, "Enter Prompt " + (j + 1), "Prompt " + (j + 1), JOptionPane.QUESTION_MESSAGE);
             }
             q[i] = new Question(prompt, options);
             JOptionPane.showMessageDialog(null, "Question " + (i + 1) + " has been created", "Question Created", JOptionPane.INFORMATION_MESSAGE);
