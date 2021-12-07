@@ -166,10 +166,15 @@ Port:4015 grade submissions
     Grading will be recorded in the file
 
 
-Port:4016 Get list of graded submission
+Port:4016 Get list of graded submission taken by user
 (So Student can choose a submission from this list to view the grade)
-    Input: None
+    Input: "<Username>\n"
     Return: list of graded submission
         ex. CS180-The Second Quiz-William
-            CS180-The Second Quiz-manass
+            CS193-The Third Quiz-William
+
+
+Port:4017 Get student answer
+    Input: "<Course name>\n<Quiz name>\n<User id who take the quiz>\n"
+    Return:"<set of answers, separate by commas>\n"
 

@@ -23,6 +23,7 @@ public class Server extends Thread {
     ServerSocket viewGradingService;
     ServerSocket gradeSubmissionService;
     ServerSocket viewGradedService;
+    ServerSocket getAnswerService;
 
     public Server() throws IOException {
         //Initialize the services with port numbers assignments
@@ -43,6 +44,7 @@ public class Server extends Thread {
         viewGradingService = new ServerSocket(4014);
         gradeSubmissionService = new ServerSocket(4015);
         viewGradedService = new ServerSocket(4016);
+        getAnswerService = new ServerSocket(4017);
     }
 
     public static void main(String[] args) throws Exception {
@@ -283,12 +285,26 @@ public class Server extends Thread {
                     while (true) {
                         server.getGradedSubmissionList(server.viewGradedService.accept());
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
         viewGraded.start();
+
+        Thread getAnswer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        server.getAnswer(server.getAnswerService.accept());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        getAnswer.run();
     }
 
 
@@ -830,7 +846,7 @@ public class Server extends Thread {
     }
 
     /*
-     * @Description input submission identifiers and answers, the new submission will be recorded
+     * @Description input submission identifiers and answers, the new submission will be recorded, newer attempt will replace older ones
      * @Date 5:54 PM 12/3/2021
      * @Param [takeQuizRequest]
      * @return void
@@ -848,7 +864,19 @@ public class Server extends Thread {
                 for (int i = 0; i < answers.length; i++) {
                     answers[i] = Integer.parseInt(ans.split(",")[i]);
                 }
-                m.getSubmissionList().add(new Submission(courseName, quizName, id, answers));
+                boolean found = false;
+                for (int i = 0; i < m.getSubmissionList().size(); i++) {
+                    if (m.getSubmissionList().get(i).getCourseName().equals(courseName)
+                            && m.getSubmissionList().get(i).getId().equals(id)
+                            && m.getSubmissionList().get(i).getQuizName().equals(quizName)) {
+                        found = true;
+                        m.getSubmissionList().get(i).setAnswers(answers);
+                        m.getSubmissionList().get(i).setGraded(false);
+                    }
+                }
+                if (!found) {
+                    m.getSubmissionList().add(new Submission(courseName, quizName, id, answers));
+                }
                 m.updateSubmission();
                 writer.println("Success");
             } catch (Exception e) {
@@ -909,11 +937,13 @@ public class Server extends Thread {
 
     public void getGradedSubmissionList(Socket getSubmissionListRequest) {
         try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(getSubmissionListRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(getSubmissionListRequest.getOutputStream());
+            String id = reader.readLine();
             String out = "";
             for (int i = 0; i < m.getSubmissionList().size(); i++) {
                 Submission sub = m.getSubmissionList().get(i);
-                if (sub.isGraded()) {
+                if (sub.isGraded() && sub.getId().equals(id)) {
                     out = out + sub.getCourseName() + "-" + sub.getQuizName() + "-" + sub.getId() + "\n";
                 }
             }
@@ -925,6 +955,39 @@ public class Server extends Thread {
         }
     }
 
+    public void getAnswer(Socket getAnswerRequest) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(getAnswerRequest.getInputStream()));
+            PrintWriter writer = new PrintWriter(getAnswerRequest.getOutputStream());
+            String courseName = reader.readLine();
+            String quizName = reader.readLine();
+            String id = reader.readLine();
+            int total = 0;
+            String ans = "";
+            boolean found = false;
+            for (int i = 0; i < m.getSubmissionList().size(); i++) {
+                if (m.getSubmissionList().get(i).getCourseName().equals(courseName)
+                        && m.getSubmissionList().get(i).getId().equals(id)
+                        && m.getSubmissionList().get(i).getQuizName().equals(quizName)) {
+                    found = true;
+                    for (int j = 0; j < m.getSubmissionList().get(i).getAnswers().length; j++) {
+                        ans = ans + m.getSubmissionList().get(i).getAnswers()[j] + ",";
+                    }
+                    ans = ans.substring(0, ans.length() - 1);
+                    writer.println(ans);
+                    writer.println(total);
+                }
+            }
+            if (!found) {
+                writer.println("Submission not found");
+            }
+            writer.flush();
+            writer.close();
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 

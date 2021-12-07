@@ -8,6 +8,7 @@ public class TeacherMenu extends javax.swing.JFrame {
     private javax.swing.JButton createCourseButton;
     private javax.swing.JButton settingButton;
     private javax.swing.JButton viewCourseButton;
+    private javax.swing.JButton gradingButton;
 
     public TeacherMenu() {
         initComponents();
@@ -18,6 +19,7 @@ public class TeacherMenu extends javax.swing.JFrame {
         viewCourseButton = new javax.swing.JButton();
         createCourseButton = new javax.swing.JButton();
         settingButton = new javax.swing.JButton();
+        gradingButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -39,6 +41,13 @@ public class TeacherMenu extends javax.swing.JFrame {
         settingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 settingButtonActionPerformed(evt);
+            }
+        });
+
+        gradingButton.setText("Grade Submissions");
+        gradingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gradingButtonActionPerformed(evt);
             }
         });
 
@@ -77,6 +86,7 @@ public class TeacherMenu extends javax.swing.JFrame {
         panel.add(viewCourseButton);
         panel.add(createCourseButton);
         panel.add(settingButton);
+        panel.add(gradingButton);
         getContentPane().add(panel, BorderLayout.CENTER);
     }
     private void viewCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,6 +121,46 @@ public class TeacherMenu extends javax.swing.JFrame {
     private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {
         AccountSetting as = new AccountSetting();
         as.setVisible(true);
+    }
+
+    private void gradingButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        ArrayList<String> sub = Main.connect(new ArrayList<String>(), 4012);
+        String[] submissions = new String[sub.size()];
+        for (int i = 0; i < sub.size() ; i++) {
+            if (!sub.get(i).isEmpty()) {
+                submissions[i] = sub.get(i);
+            }
+        }
+        String choice = (String) JOptionPane.showInputDialog(null, "Select the submission you want to grade",
+                "Submission selection", JOptionPane.QUESTION_MESSAGE, null, submissions,
+                submissions[0]);
+        ArrayList<String> contentRequest = new ArrayList<String>();
+        contentRequest.add(choice.split("-")[0]);
+        contentRequest.add(choice.split("-")[1]);
+        ArrayList<String> quizContent = Main.connect(contentRequest, 4010);
+        contentRequest.add(choice.split("-")[2]);
+        ArrayList<String> answers = Main.connect(contentRequest, 4017);
+        ArrayList<String> in = contentRequest;
+        String grades = "";
+        for (int i = 0; i < ((quizContent.size() - 1) / 5); i++) {
+            String q = "";
+            for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
+                q = q + "\n" + quizContent.get(j);
+            }
+            grades = grades + JOptionPane.showInputDialog(null,
+                    "Question: " + (i + 1) + "\n" + q + "\n\n" + "The student's answer is:\n" + answers.get(0).split(",")[i] + "\n\n"
+                    + "Enter the score you want to give",
+                    "Grade submission", JOptionPane.QUESTION_MESSAGE) + ",";
+
+        }
+        in.add(grades.substring(0, grades.length() - 1));
+        ArrayList<String> out = Main.connect(in, 4015);
+        if (out.get(0).equals("Success")) {
+            Main.setCurrentAccount(in.get(1));
+            JOptionPane.showMessageDialog(null, "Successfully grading this submission", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 

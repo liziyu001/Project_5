@@ -16,8 +16,9 @@ public class Main {
         ArrayList<String> result = new ArrayList<String>();
 
         try {
-            InetAddress address = InetAddress.getByName("10.186.124.152");
-            Socket socket = new Socket(address , port);
+            //InetAddress address = InetAddress.getByName("10.186.124.152");
+            //Socket socket = new Socket(address , port);
+            Socket socket = new Socket("localhost", port);
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter writer = new PrintWriter(socket.getOutputStream());
             for (int i = 0; i < input.size(); i++) {

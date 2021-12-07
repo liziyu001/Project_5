@@ -11,6 +11,7 @@ public class CourseMenu extends javax.swing.JFrame {
     private javax.swing.JButton createButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton editButton;
+    private javax.swing.JButton backButton;
     public CourseMenu() {
         initComponents();
     }
@@ -20,6 +21,7 @@ public class CourseMenu extends javax.swing.JFrame {
         createButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -41,6 +43,13 @@ public class CourseMenu extends javax.swing.JFrame {
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteButtonActionPerformed(evt);
+            }
+        });
+
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -80,6 +89,7 @@ public class CourseMenu extends javax.swing.JFrame {
         panel.add(createButton);
         panel.add(editButton);
         panel.add(deleteButton);
+        panel.add(backButton);
         getContentPane().add(panel, BorderLayout.CENTER);
     }
 
@@ -207,6 +217,11 @@ public class CourseMenu extends javax.swing.JFrame {
         }
     }
 
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        this.setVisible(false);
+        new TeacherMenu().setVisible(true);
+    }
 
     public static void main(String args[]) {
 

@@ -111,7 +111,7 @@ public class StudentMenu extends javax.swing.JFrame {
         in.add(choice.split("\\. ")[1]);
         ArrayList<String> quizContent = Main.connect(in, 4010);
         in.add(Main.getCurrentAccount());
-        int takeViaFile = JOptionPane.showConfirmDialog(null, "Do you want to create by file import?", "File import", JOptionPane.YES_NO_OPTION);
+        int takeViaFile = JOptionPane.showConfirmDialog(null, "Do you want to take this quiz by file import?", "File import", JOptionPane.YES_NO_OPTION);
         if (takeViaFile == JOptionPane.YES_OPTION) {
             String path = JOptionPane.showInputDialog(null,
                     "Enter the path of your file",
@@ -153,7 +153,38 @@ public class StudentMenu extends javax.swing.JFrame {
     }
 
     private void viewGradingButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        ArrayList<String> temp = new ArrayList<String>();
+        temp.add(Main.getCurrentAccount());
+        ArrayList<String> sub = Main.connect(temp, 4016);
+        String[] submissions = new String[sub.size()];
+        for (int i = 0; i < sub.size() ; i++) {
+            if (!sub.get(i).isEmpty()) {
+                submissions[i] = sub.get(i);
+            }
+        }
+        String choice = (String) JOptionPane.showInputDialog(null, "Select the graded submission you want to view",
+                "Submission selection", JOptionPane.QUESTION_MESSAGE, null, submissions,
+                submissions[0]);
+        ArrayList<String> contentRequest = new ArrayList<String>();
+        contentRequest.add(choice.split("-")[0]);
+        contentRequest.add(choice.split("-")[1]);
+        ArrayList<String> quizContent = Main.connect(contentRequest, 4010);
+        contentRequest.add(choice.split("-")[2]);
+        ArrayList<String> answers = Main.connect(contentRequest, 4017);
+        ArrayList<String> grades = Main.connect(contentRequest, 4014);
+        for (int i = 0; i < answers.get(0).split(",").length; i++) {
+            String q = "";
+            for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
+                q = q + "\n" + quizContent.get(j);
+            }
+            JOptionPane.showMessageDialog(null, "Question " + (i + 1) + "\n" + q + "\n\n"
+                            + "Your answer: " + answers.get(0).split(",")[i] + "\n\n" + "Grade for this answer: "
+                            + grades.get(0).split(",")[i],
+                    "View Grading", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+        JOptionPane.showMessageDialog(null, "Total Grade: " + grades.get(1),
+                "View Grading", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {
