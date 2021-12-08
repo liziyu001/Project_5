@@ -1,5 +1,7 @@
 /**
  * Represents a person's account where they have certain features based on the role they choose (Teacher or Student)
+ * @author Ram, William, Leo, Manas, Miras
+ * @version December 13, 2021
  */
 public class Account {
     //The username of the person's account
