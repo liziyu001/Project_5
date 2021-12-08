@@ -105,13 +105,18 @@ public class AccountSetting extends javax.swing.JFrame {
         ArrayList<String> in = new ArrayList<String>();
         in.add(Main.getCurrentAccount());
         in.add(nID);
-        ArrayList<String> out = Main.connect(in, 4006);
-        if (out.get(0).equals("Success")) {
-            Main.setCurrentAccount(in.get(1));
-            JOptionPane.showMessageDialog(null, "Successfully editing your ID", "Success", JOptionPane.INFORMATION_MESSAGE);
+        if (in.get(1).contains(";")) {
+            JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Your New ID has already be taken", "Fail", JOptionPane.ERROR_MESSAGE);
+            ArrayList<String> out = Main.connect(in, 4006);
+            if (out.get(0).equals("Success")) {
+                Main.setCurrentAccount(in.get(1));
+                JOptionPane.showMessageDialog(null, "Successfully editing your ID", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Your New ID has already be taken", "Fail", JOptionPane.ERROR_MESSAGE);
+            }
         }
+
     }
 
     /*
@@ -127,12 +132,17 @@ public class AccountSetting extends javax.swing.JFrame {
         ArrayList<String> in = new ArrayList<String>();
         in.add(Main.getCurrentAccount());
         in.add(pwd);
-        ArrayList<String> out = Main.connect(in, 4007);
-        if (out.get(0).equals("Success")) {
-            JOptionPane.showMessageDialog(null, "Successfully editing your Password", "Success", JOptionPane.INFORMATION_MESSAGE);
+        if (in.get(1).contains(";")) {
+            JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+            ArrayList<String> out = Main.connect(in, 4007);
+            if (out.get(0).equals("Success")) {
+                JOptionPane.showMessageDialog(null, "Successfully editing your Password", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+            }
         }
+
 
     }
 

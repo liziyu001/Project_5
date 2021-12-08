@@ -89,27 +89,32 @@ public class Login extends javax.swing.JFrame {
         ArrayList<String> in = new ArrayList<String>();
         in.add(idIn.getText());
         in.add(pwdIn.getText());
-        ArrayList<String> out = Main.connect(in, 4000);
-        if (!out.get(0).equals("Fail")) {
-            if (out.get(0).equals("true")) {
-                JOptionPane.showMessageDialog(null, "Successfully login as Student " + in.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Successfully login as Teacher " + in.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
-            }
-            Main.setCurrentAccount(in.get(0));
-            if (out.get(0).equals("true")) {
-                Main.setStudent(true);
-                StudentMenu sm = new StudentMenu();
-                sm.setVisible(true);
-            } else {
-                Main.setStudent(false);
-                TeacherMenu tm = new TeacherMenu();
-                tm.setVisible(true);
-            }
-            this.setVisible(false);
+        if (in.get(0).contains(";") || in.get(1).contains(";")) {
+            JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error", JOptionPane.ERROR_MESSAGE);
+            ArrayList<String> out = Main.connect(in, 4000);
+            if (!out.get(0).equals("Fail")) {
+                if (out.get(0).equals("true")) {
+                    JOptionPane.showMessageDialog(null, "Successfully login as Student " + in.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Successfully login as Teacher " + in.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+                Main.setCurrentAccount(in.get(0));
+                if (out.get(0).equals("true")) {
+                    Main.setStudent(true);
+                    StudentMenu sm = new StudentMenu();
+                    sm.setVisible(true);
+                } else {
+                    Main.setStudent(false);
+                    TeacherMenu tm = new TeacherMenu();
+                    tm.setVisible(true);
+                }
+                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
+
     }
 
 

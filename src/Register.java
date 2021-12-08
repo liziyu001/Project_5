@@ -97,24 +97,29 @@ public class Register extends javax.swing.JFrame {
         in.add(idIn.getText());
         in.add(pwdIn.getText());
         in.add(role.getSelectedItem());
-        ArrayList<String> out = Main.connect(in, 4001);
-        if (out.get(0).equals("Success")) {
-            Main.setCurrentAccount(in.get(0));
-            JOptionPane.showMessageDialog(null, "Success", "Success", JOptionPane.INFORMATION_MESSAGE);
-            if (role.getSelectedItem().equals("Teacher")) {
-                Main.setStudent(false);
-                TeacherMenu tm = new TeacherMenu();
-                tm.setVisible(true);
-            } else {
-                Main.setStudent(true);
-                StudentMenu sm = new StudentMenu();
-                sm.setVisible(true);
-            }
-            this.setVisible(false);
+        if (in.get(0).contains(";") || in.get(1).contains(";")) {
+            JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "this id has already been taken", "Error", JOptionPane.ERROR_MESSAGE);
-            this.setVisible(false);
+            ArrayList<String> out = Main.connect(in, 4001);
+            if (out.get(0).equals("Success")) {
+                Main.setCurrentAccount(in.get(0));
+                JOptionPane.showMessageDialog(null, "Success", "Success", JOptionPane.INFORMATION_MESSAGE);
+                if (role.getSelectedItem().equals("Teacher")) {
+                    Main.setStudent(false);
+                    TeacherMenu tm = new TeacherMenu();
+                    tm.setVisible(true);
+                } else {
+                    Main.setStudent(true);
+                    StudentMenu sm = new StudentMenu();
+                    sm.setVisible(true);
+                }
+                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "this id has already been taken", "Error", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(false);
+            }
         }
+
     }
 
 
