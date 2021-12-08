@@ -119,6 +119,7 @@ public class TeacherMenu extends javax.swing.JFrame {
     }
 
     private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        this.setVisible(false);
         AccountSetting as = new AccountSetting();
         as.setVisible(true);
     }

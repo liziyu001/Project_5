@@ -98,9 +98,11 @@ public class Login extends javax.swing.JFrame {
             }
             Main.setCurrentAccount(in.get(0));
             if (out.get(0).equals("true")) {
+                Main.setStudent(true);
                 StudentMenu sm = new StudentMenu();
                 sm.setVisible(true);
             } else {
+                Main.setStudent(false);
                 TeacherMenu tm = new TeacherMenu();
                 tm.setVisible(true);
             }

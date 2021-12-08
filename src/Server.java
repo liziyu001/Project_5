@@ -24,6 +24,7 @@ public class Server extends Thread {
     ServerSocket gradeSubmissionService;
     ServerSocket viewGradedService;
     ServerSocket getAnswerService;
+    ServerSocket randomizeQuizService;
 
     public Server() throws IOException {
         //Initialize the services with port numbers assignments
@@ -45,6 +46,7 @@ public class Server extends Thread {
         gradeSubmissionService = new ServerSocket(4015);
         viewGradedService = new ServerSocket(4016);
         getAnswerService = new ServerSocket(4017);
+        randomizeQuizService = new ServerSocket(4018);
     }
 
     public static void main(String[] args) throws Exception {
@@ -304,7 +306,21 @@ public class Server extends Thread {
                 }
             }
         });
-        getAnswer.run();
+        getAnswer.start();
+
+        Thread randomizeQuiz = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        server.randomizeQuiz(server.randomizeQuizService.accept());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        randomizeQuiz.start();
     }
 
 
@@ -619,7 +635,7 @@ public class Server extends Thread {
      * @Param [editPasswordRequest]
      * @return void
      **/
-    private void editPassword(Socket editPasswordRequest) {
+    public void editPassword(Socket editPasswordRequest) {
 
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(editPasswordRequest.getInputStream()));
@@ -761,7 +777,7 @@ public class Server extends Thread {
                     if (c.getCourseQuiz().get(i).getName().equals(quizName)) {
                         c.getCourseQuiz().remove(i);
                         m.updateCourse();
-                        writer.print("Success");
+                        writer.println("Success");
                     }
                 }
             } catch (Exception e) {
@@ -872,6 +888,7 @@ public class Server extends Thread {
                         found = true;
                         m.getSubmissionList().get(i).setAnswers(answers);
                         m.getSubmissionList().get(i).setGraded(false);
+                        m.getSubmissionList().get(i).setSubGrades(new int[answers.length]);
                     }
                 }
                 if (!found) {
@@ -980,6 +997,39 @@ public class Server extends Thread {
             }
             if (!found) {
                 writer.println("Submission not found");
+            }
+            writer.flush();
+            writer.close();
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void randomizeQuiz(Socket randomizeQuizRequest) {
+        try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(randomizeQuizRequest.getInputStream()));
+                PrintWriter writer = new PrintWriter(randomizeQuizRequest.getOutputStream());
+            try {
+                String courseName = reader.readLine();
+                String quizName = reader.readLine();
+                Course c = null;
+                for (int i = 0; i < m.getCourseList().size(); i++) {
+                    if (m.getCourseList().get(i).getName().equals(courseName)) {
+                        c = m.getCourseList().get(i);
+                    }
+                }
+                for (int i = 0; i < c.getCourseQuiz().size(); i++) {
+                    if (c.getCourseQuiz().get(i).getName().equals(quizName)) {
+                        c.getCourseQuiz().get(i).randomizeQuiz();
+                        m.updateCourse();
+                        writer.println("Success");
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                writer.println("Fail");
             }
             writer.flush();
             writer.close();

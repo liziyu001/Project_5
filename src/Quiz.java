@@ -1,7 +1,9 @@
+import java.util.ArrayList;
+import java.util.Random;
 public class Quiz {
     private String name;
     private Question[] questions;
-
+    Random r = new Random();
 
     public Quiz(String name, Question[] questions) {
         this.name = name;
@@ -47,5 +49,20 @@ public class Quiz {
             string = string + questions[i].toString();
         }
         return string;
+    }
+
+    public void randomizeQuiz() {
+        ArrayList<Question> q = new ArrayList<Question>();
+        for (int i = 0; i < questions.length; i++) {
+            q.add(questions[i]);
+        }
+        for (int i = 0; i < questions.length; i++) {
+            int n = r.nextInt(q.size());
+            questions[i] = q.get(n);
+            q.remove(n);
+        }
+        for (int i = 0; i < questions.length; i++) {
+            questions[i].randomizeOption();
+        }
     }
 }

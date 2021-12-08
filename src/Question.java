@@ -1,7 +1,9 @@
+import java.util.ArrayList;
+import java.util.Random;
 public class Question {
     private String prompt;
     private String[] answerChoices;
-
+    Random r = new Random();
 
     public Question(String prompt, String[] answerChoices) {
         this.prompt = prompt;
@@ -39,6 +41,18 @@ public class Question {
             string = string + (i + 1) + ". " + answerChoices[i] + "\n";
         }
         return string;
+    }
+
+    public void randomizeOption () {
+        ArrayList<String> option = new ArrayList<String>();
+        for (int i = 0; i < answerChoices.length; i++) {
+            option.add(answerChoices[i]);
+        }
+        for (int i = 0; i < answerChoices.length; i++) {
+            int n = r.nextInt(option.size());
+            answerChoices[i] = option.get(n);
+            option.remove(n);
+        }
     }
 }
 

@@ -8,6 +8,7 @@ public class AccountSetting extends javax.swing.JFrame {
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton editIdButton;
     private javax.swing.JButton editPwdButton;
+    private javax.swing.JButton backButton;
 
 
     public AccountSetting() {
@@ -20,6 +21,7 @@ public class AccountSetting extends javax.swing.JFrame {
         editIdButton = new javax.swing.JButton();
         editPwdButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         editIdButton.setText("Edit Username");
@@ -40,6 +42,13 @@ public class AccountSetting extends javax.swing.JFrame {
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteButtonActionPerformed(evt);
+            }
+        });
+
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -79,9 +88,16 @@ public class AccountSetting extends javax.swing.JFrame {
         panel.add(editIdButton);
         panel.add(editPwdButton);
         panel.add(deleteButton);
+        panel.add(backButton);
         getContentPane().add(panel, BorderLayout.CENTER);
     }
 
+    /*
+     * @Description action when edit id button is pressed
+     * @Date 8:23 PM 12/7/2021
+     * @Param [evt]
+     * @return void
+     **/
     private void editIdButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String nID = JOptionPane.showInputDialog(null,
                 "Enter the your new User ID",
@@ -98,6 +114,12 @@ public class AccountSetting extends javax.swing.JFrame {
         }
     }
 
+    /*
+     * @Description action when edit password button is pressed
+     * @Date 8:24 PM 12/7/2021
+     * @Param [evt]
+     * @return void
+     **/
     private void editPwdButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String pwd = JOptionPane.showInputDialog(null,
                 "Enter your new password",
@@ -119,9 +141,20 @@ public class AccountSetting extends javax.swing.JFrame {
         in.add(Main.getCurrentAccount());
         ArrayList<String> out = Main.connect(in, 4008);
         if (out.get(0).equals("Success")) {
-            System.exit(0); //to be changed
+            this.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Successfully deleting your account, you are now logged out", "Success", JOptionPane.INFORMATION_MESSAGE);
+            new Menu().setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        this.setVisible(false);
+        if (Main.isStudent() == true) {
+            new StudentMenu().setVisible(true);
+        } else {
+            new TeacherMenu().setVisible(true);
         }
     }
 

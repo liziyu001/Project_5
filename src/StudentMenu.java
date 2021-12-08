@@ -85,6 +85,7 @@ public class StudentMenu extends javax.swing.JFrame {
     }
 
     private void viewCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        String[] options = new String[] {"1", "2", "3", "4"};
         ArrayList<String> courseList = Main.connect(new ArrayList<>(), 4002);
         String[] courses = new String[courseList.size()];
         for (int i = 0; i < courseList.size(); i++) {
@@ -136,10 +137,9 @@ public class StudentMenu extends javax.swing.JFrame {
                 for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
                     q = q + "\n" + quizContent.get(j);
                 }
-                ans = ans + JOptionPane.showInputDialog(null,
-                        "Enter the your answer to this question" + q,
-                        "Taking quiz", JOptionPane.QUESTION_MESSAGE) + ",";
-
+                ans = ans + (String) JOptionPane.showInputDialog(null, "Enter the your answer to this question" + q,
+                        "Taking quiz", JOptionPane.QUESTION_MESSAGE, null, options,
+                        options[0]) + ",";
             }
             in.add(ans.substring(0, ans.length() - 1));
         }

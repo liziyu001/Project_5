@@ -96,6 +96,7 @@ public class CourseMenu extends javax.swing.JFrame {
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {
         int choice = JOptionPane.showConfirmDialog(null, "Do you want to create by file import?", "File import",JOptionPane.YES_NO_OPTION);
         ArrayList<String> in = new ArrayList<String>();
+        in.add(Main.getCurrentCourse());
         if (choice == JOptionPane.YES_OPTION) {
             String path = JOptionPane.showInputDialog(null,
                     "Enter the path of your file",
@@ -114,7 +115,6 @@ public class CourseMenu extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         } else {
-            in.add(Main.getCurrentCourse());
             in.add(JOptionPane.showInputDialog(null,
                     "Enter the name of the quiz",
                     "Create Quiz", JOptionPane.QUESTION_MESSAGE));
@@ -141,11 +141,21 @@ public class CourseMenu extends javax.swing.JFrame {
             }
         }
         ArrayList<String> out = Main.connect(in, 4005);
+        int c = JOptionPane.showConfirmDialog(null,
+                "Do you want to randomize the order of questions and the order of potential options?",
+                "Randomize", JOptionPane.YES_NO_OPTION);
+        if (c == JOptionPane.YES_OPTION) {
+            ArrayList<String> temp = new ArrayList<String>();
+            temp.add(Main.getCurrentCourse());
+            temp.add(in.get(1));
+            ArrayList<String> a = Main.connect(temp, 4018);
+            if (a.get(0).equals("Fail")) {
+                JOptionPane.showMessageDialog(null, "Randomize Error", "Fail", JOptionPane.ERROR_MESSAGE);
+            }
+        }
         if (out.get(0).equals("Success")) {
-            System.out.println(out.get(0));
             JOptionPane.showMessageDialog(null, "Successfully creating the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            System.out.println(out.get(0));
             JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
         }
     }

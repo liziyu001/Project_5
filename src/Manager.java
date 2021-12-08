@@ -65,7 +65,7 @@ public class Manager {
         return list;
     }
 
-    public void updateSubmission() {
+    public synchronized void updateSubmission() {
         try {
             File f = new File("Submissions.txt");
             FileOutputStream fos = new FileOutputStream(f, false);
@@ -93,7 +93,7 @@ public class Manager {
         }
     }
 
-    public void updateCourse() {
+    public synchronized void updateCourse() {
         try {
             File f = new File("Courses.txt");
             FileOutputStream fos = new FileOutputStream(f, false);
@@ -177,7 +177,7 @@ public class Manager {
      * @Param []
      * @return void
      **/
-    public void updateAccount() {
+    public synchronized void updateAccount() {
         try {
             File f = new File("Account.txt");
             FileOutputStream fos = new FileOutputStream(f, false);

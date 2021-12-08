@@ -102,9 +102,11 @@ public class Register extends javax.swing.JFrame {
             Main.setCurrentAccount(in.get(0));
             JOptionPane.showMessageDialog(null, "Success", "Success", JOptionPane.INFORMATION_MESSAGE);
             if (role.getSelectedItem().equals("Teacher")) {
+                Main.setStudent(false);
                 TeacherMenu tm = new TeacherMenu();
                 tm.setVisible(true);
             } else {
+                Main.setStudent(true);
                 StudentMenu sm = new StudentMenu();
                 sm.setVisible(true);
             }
