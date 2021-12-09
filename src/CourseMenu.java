@@ -170,39 +170,86 @@ public class CourseMenu extends javax.swing.JFrame {
                 quizs[i] = quizList.get(i);
             }
         }
-        String choice = (String) JOptionPane.showInputDialog(null, "Select the course you want to proceed",
-                "Course selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
+        String choice = (String) JOptionPane.showInputDialog(null, "Select the quiz you want to proceed",
+                "Quiz selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
                 quizs[0]);
         ArrayList<String> in = new ArrayList<String>();
         in.add(Main.getCurrentCourse());
         in.add(choice.split("\\. ")[1]);
-        String n = JOptionPane.showInputDialog(null,
-                "How many Question do you want to include",
-                "Create Quiz", JOptionPane.QUESTION_MESSAGE);
-        in.add(n);
-        for (int i = 0; i < Integer.parseInt(n); i++) { //Error handling required
-            in.add(JOptionPane.showInputDialog(null,
-                    "Enter the prompt for question" + (i + 1),
-                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-            in.add(JOptionPane.showInputDialog(null,
-                    "Enter the first choice for question" + (i + 1),
-                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-            in.add(JOptionPane.showInputDialog(null,
-                    "Enter the second choice for question" + (i + 1),
-                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-            in.add(JOptionPane.showInputDialog(null,
-                    "Enter the third choice for question" + (i + 1),
-                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-            in.add(JOptionPane.showInputDialog(null,
-                    "Enter the fourth choice for question" + (i + 1),
-                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+        System.out.println(choice);
+//        String n = JOptionPane.showInputDialog(null,
+//                "How many Question do you want to include",
+//                "Create Quiz", JOptionPane.QUESTION_MESSAGE);
+//        in.add(n);
+        while(true){
+            String numbOfQuestions = JOptionPane.showInputDialog(null, "Enter new amount of questions", "Edit Quiz", JOptionPane.QUESTION_MESSAGE);
+            if (numbOfQuestions == null){
+                break;
+            }
+            else{
+                try{
+                    in.add(numbOfQuestions);
+                    int numberOfQuestions = Integer.parseInt(numbOfQuestions);
+                    for (int i = 0; i<numberOfQuestions; i++){
+                        String questionPrompt = JOptionPane.showInputDialog(null, "Enter new question Prompt:", "Edit Quiz", JOptionPane.QUESTION_MESSAGE);
+                        if (questionPrompt == null){
+                            break;
+                        }
+                        else if (questionPrompt.contains(";")){
+                            JOptionPane.showMessageDialog(null, "Value cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                        else{
+                            in.add(questionPrompt);
+                        }
+                        for (int j=0; j<4; j++){
+                            String answerChoice = (String) JOptionPane.showInputDialog(null, "Enter " +(j+1)+" choice of the Question:", "Edit Questions", JOptionPane.QUESTION_MESSAGE);
+                            if(answerChoice == null){
+                                break;
+                            }
+                            else if(answerChoice.contains(";")){
+                                JOptionPane.showMessageDialog(null, "Value cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                            else{
+                                in.add(answerChoice);
+                            }
+                        }
+                    }
+                    ArrayList<String> out = Main.connect(in, 4009);
+                    if (out.get(0).equals("Success")) {
+                        JOptionPane.showMessageDialog(null, "Successfully Editing the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                }catch (Exception ex){
+                    JOptionPane.showMessageDialog(null, "Please enter the String", "Erorr", JOptionPane.ERROR_MESSAGE);
+                    break;
+                }
+            }
         }
-        ArrayList<String> out = Main.connect(in, 4009);
-        if (out.get(0).equals("Success")) {
-            JOptionPane.showMessageDialog(null, "Successfully Editing the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
-        }
+//        for (int i = 0; i < Integer.parseInt(n); i++) { //Error handling required
+//            in.add(JOptionPane.showInputDialog(null,
+//                    "Enter the prompt for question" + (i + 1),
+//                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+//            in.add(JOptionPane.showInputDialog(null,
+//                    "Enter the first choice for question" + (i + 1),
+//                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+//            in.add(JOptionPane.showInputDialog(null,
+//                    "Enter the second choice for question" + (i + 1),
+//                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+//            in.add(JOptionPane.showInputDialog(null,
+//                    "Enter the third choice for question" + (i + 1),
+//                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+//            in.add(JOptionPane.showInputDialog(null,
+//                    "Enter the fourth choice for question" + (i + 1),
+//                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+//        }
+//        ArrayList<String> out = Main.connect(in, 4009);
+//        if (out.get(0).equals("Success")) {
+//            JOptionPane.showMessageDialog(null, "Successfully Editing the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+//        }
     }
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {
