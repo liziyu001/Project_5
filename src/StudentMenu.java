@@ -168,29 +168,34 @@ public class StudentMenu extends javax.swing.JFrame {
                 submissions[i] = sub.get(i);
             }
         }
-        String choice = (String) JOptionPane.showInputDialog(null, "Select the graded submission you want to view",
-                "Submission selection", JOptionPane.QUESTION_MESSAGE, null, submissions,
-                submissions[0]);
-        ArrayList<String> contentRequest = new ArrayList<String>();
-        contentRequest.add(choice.split("-")[0]);
-        contentRequest.add(choice.split("-")[1]);
-        ArrayList<String> quizContent = Main.connect(contentRequest, 4010);
-        contentRequest.add(choice.split("-")[2]);
-        ArrayList<String> answers = Main.connect(contentRequest, 4017);
-        ArrayList<String> grades = Main.connect(contentRequest, 4014);
-        for (int i = 0; i < answers.get(0).split(",").length; i++) {
-            String q = "";
-            for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
-                q = q + "\n" + quizContent.get(j);
-            }
-            JOptionPane.showMessageDialog(null, "Question " + (i + 1) + "\n" + q + "\n\n"
-                            + "Your answer: " + answers.get(0).split(",")[i] + "\n\n" + "Grade for this answer: "
-                            + grades.get(0).split(",")[i],
-                    "View Grading", JOptionPane.INFORMATION_MESSAGE);
+        if (submissions.length == 0) {
+            JOptionPane.showMessageDialog(null, "There are currently no graded ssubmissions!", "Fail", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String choice = (String) JOptionPane.showInputDialog(null, "Select the graded submission you want to view",
+                    "Submission selection", JOptionPane.QUESTION_MESSAGE, null, submissions,
+                    submissions[0]);
+            ArrayList<String> contentRequest = new ArrayList<String>();
+            contentRequest.add(choice.split("-")[0]);
+            contentRequest.add(choice.split("-")[1]);
+            ArrayList<String> quizContent = Main.connect(contentRequest, 4010);
+            contentRequest.add(choice.split("-")[2]);
+            ArrayList<String> answers = Main.connect(contentRequest, 4017);
+            ArrayList<String> grades = Main.connect(contentRequest, 4014);
+            for (int i = 0; i < answers.get(0).split(",").length; i++) {
+                String q = "";
+                for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
+                    q = q + "\n" + quizContent.get(j);
+                }
+                JOptionPane.showMessageDialog(null, "Question " + (i + 1) + "\n" + q + "\n\n"
+                                + "Your answer: " + answers.get(0).split(",")[i] + "\n\n" + "Grade for this answer: "
+                                + grades.get(0).split(",")[i],
+                        "View Grading", JOptionPane.INFORMATION_MESSAGE);
 
+            }
+            JOptionPane.showMessageDialog(null, "Total Grade: " + grades.get(1),
+                    "View Grading", JOptionPane.INFORMATION_MESSAGE);
         }
-        JOptionPane.showMessageDialog(null, "Total Grade: " + grades.get(1),
-                "View Grading", JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {
