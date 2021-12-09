@@ -151,7 +151,7 @@ public class Manager {
                 pr1.close();
             }
             pr.close();
-            JOptionPane.showMessageDialog(null, "\n", "", JOptionPane.INFORMATION_MESSAGE);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
