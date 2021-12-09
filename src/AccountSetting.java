@@ -105,7 +105,7 @@ public class AccountSetting extends javax.swing.JFrame {
     }
 
     /**
-     * @Description action when edit id button is pressed
+     * @Description action when edit id button is pressed, represents editing username
      * @Date 8:23 PM 12/7/2021
      * @Param [evt] Allows the button's action to be performed
      * @return void
@@ -132,7 +132,7 @@ public class AccountSetting extends javax.swing.JFrame {
     }
 
     /**
-     * @Description action when edit password button is pressed
+     * @Description action when edit password button is pressed, represents editing password
      * @Date 8:24 PM 12/7/2021
      * @Param [evt] Allows the button's action to be performed
      * @return void
@@ -159,7 +159,7 @@ public class AccountSetting extends javax.swing.JFrame {
     }
     
     /**
-     * @Description action when delete button is pressed
+     * @Description action when delete button is pressed, represents deleting account
      * @Param [evt] Allows the button's action to be performed
      * @return void
      */
@@ -192,7 +192,7 @@ public class AccountSetting extends javax.swing.JFrame {
     }
     
     /**
-     * Main method that invokes the AWT and runs the AccountSetting object that displays the button and all its functionalities
+     * Main method that invokes the AWT and runs the AccountSetting object that displays the buttons and all its functionalities
      * @param args Stores the command line arguments
      */
     public static void main(String args[]) {
