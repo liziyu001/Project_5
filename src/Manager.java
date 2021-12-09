@@ -1,37 +1,59 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/**
+ * Manages and updates the list of courses, accounts, and submissions that are in each file
+ * @author Ram, William, Leo, Manas, Miras
+ * @version December 13, 2021
+ */
 public class Manager {
+    //Represents the list of courses
     private ArrayList<Course> courseList;
+    //Represents the list of accounts
     private ArrayList<Account> accountList;
+    //Represents the list of submissions
     private ArrayList<Submission> submissionList;
 
-    /*
+    /**
      * @Description Initialize Manager by reading from Account and Course File
      * @Date 4:36 PM 11/18/2021
      * @Param []
      * @return
-     **/
+     */
     public Manager() {
         courseList = readCourses();
         accountList = readAccounts();
         submissionList = readSubmission();
     }
 
-
+    /**
+     * Returns the list of submissions
+     * @return Returns the list of submissions
+     */
     public ArrayList<Submission> getSubmissionList() {
         return submissionList;
     }
-
+    
+    /**
+     * Returns the list of accounts
+     * @return Returns the list of accounts
+     */
     public ArrayList<Account> getAccountList() {
         return accountList;
     }
-
+    
+    /**
+     * Returns the list of courses
+     * @return Returns the list of courses
+     */
     public ArrayList<Course> getCourseList() {
         return courseList;
     }
-
+    
+    /**
+     * Reads the submissions from the Submissions.txt file, breaks up the parts of the submissions from that file into categories, and adds the submission objects to a list based on those categories
+     * @return Returns the list containing the submission objects that are based off the Submissions.txt file
+     */
     public ArrayList<Submission> readSubmission() {
         ArrayList<Submission> list = new ArrayList<Submission>();
         ArrayList<String> info = new ArrayList<String>();
@@ -64,7 +86,10 @@ public class Manager {
         }
         return list;
     }
-
+    
+    /**
+     * Updates the submission list into the Submission.txt file by splitting each category of the submission with ; and ,
+     */
     public synchronized void updateSubmission() {
         try {
             File f = new File("Submissions.txt");
@@ -92,7 +117,10 @@ public class Manager {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Updates the course list by writing and updating the quizzes and questions in the course to the Courses.txt file 
+     */
     public synchronized void updateCourse() {
         try {
             File f = new File("Courses.txt");
@@ -125,7 +153,11 @@ public class Manager {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Reads the course list in the Courses.txt file, and returns a list containing the Course objects that were made based on what was read in the Courses.txt file
+     * @return Returns a list of Course objects that was made based off the course list that was read in the Courses.txt file
+     */
     public ArrayList<Course> readCourses() {
 
         ArrayList<String> coursePaths = new ArrayList<String>();
@@ -171,12 +203,12 @@ public class Manager {
         return courses;
     }
 
-    /*
+    /**
      * @Description Update the current AccountList to files
      * @Date 3:25 PM 11/20/2021
      * @Param []
      * @return void
-     **/
+     */
     public synchronized void updateAccount() {
         try {
             File f = new File("Account.txt");
@@ -193,7 +225,11 @@ public class Manager {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Reads the accounts in the Account.txt file and returns a list of Account objects that were created based on the account contents in the Account.txt file
+     * @return Returns a list of account objects that were made based on the account contents in the Account.txt file
+     */
     public ArrayList<Account> readAccounts() {
 
         ArrayList<Account> accounts = new ArrayList<>();
