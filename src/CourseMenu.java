@@ -137,45 +137,56 @@ public class CourseMenu extends javax.swing.JFrame {
                     "Enter the name of the quiz",
                     "Create Quiz", JOptionPane.QUESTION_MESSAGE));
             String n = JOptionPane.showInputDialog(null,
-                    "How many Question do you want to include",
+                    "How many Questions do you want to include",
                     "Create Quiz", JOptionPane.QUESTION_MESSAGE);
             in.add(n);
-            for (int i = 0; i < Integer.parseInt(n); i++) { //Error handling required
-                in.add(JOptionPane.showInputDialog(null,
-                        "Enter the prompt for question" + (i + 1),
-                        "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-                in.add(JOptionPane.showInputDialog(null,
-                        "Enter the first choice for question" + (i + 1),
-                        "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-                in.add(JOptionPane.showInputDialog(null,
-                        "Enter the second choice for question" + (i + 1),
-                        "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-                in.add(JOptionPane.showInputDialog(null,
-                        "Enter the third choice for question" + (i + 1),
-                        "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-                in.add(JOptionPane.showInputDialog(null,
-                        "Enter the fourth choice for question" + (i + 1),
-                        "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+            int numQuestions;
+            try {
+                numQuestions = Integer.parseInt(n);
+                if (numQuestions <= 0) {
+                    throw new Exception();
+                }
+                for (int i = 0; i < numQuestions; i++) { //Error handling required
+                    in.add(JOptionPane.showInputDialog(null,
+                            "Enter the prompt for question" + (i + 1),
+                            "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+                    in.add(JOptionPane.showInputDialog(null,
+                            "Enter the first choice for question" + (i + 1),
+                            "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+                    in.add(JOptionPane.showInputDialog(null,
+                            "Enter the second choice for question" + (i + 1),
+                            "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+                    in.add(JOptionPane.showInputDialog(null,
+                            "Enter the third choice for question" + (i + 1),
+                            "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+                    in.add(JOptionPane.showInputDialog(null,
+                            "Enter the fourth choice for question" + (i + 1),
+                            "Create Quiz", JOptionPane.QUESTION_MESSAGE));
+                }
+                ArrayList<String> out = Main.connect(in, 4005);
+                int c = JOptionPane.showConfirmDialog(null,
+                        "Do you want to randomize the order of questions and the order of potential options?",
+                        "Randomize", JOptionPane.YES_NO_OPTION);
+                if (c == JOptionPane.YES_OPTION) {
+                    ArrayList<String> temp = new ArrayList<String>();
+                    temp.add(Main.getCurrentCourse());
+                    temp.add(in.get(1));
+                    ArrayList<String> a = Main.connect(temp, 4018);
+                    if (a.get(0).equals("Fail")) {
+                        JOptionPane.showMessageDialog(null, "Randomize Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                if (out.get(0).equals("Success")) {
+                    JOptionPane.showMessageDialog(null, "Successfully creating the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Enter a valid input", "Fail", JOptionPane.ERROR_MESSAGE);
             }
+
         }
-        ArrayList<String> out = Main.connect(in, 4005);
-        int c = JOptionPane.showConfirmDialog(null,
-                "Do you want to randomize the order of questions and the order of potential options?",
-                "Randomize", JOptionPane.YES_NO_OPTION);
-        if (c == JOptionPane.YES_OPTION) {
-            ArrayList<String> temp = new ArrayList<String>();
-            temp.add(Main.getCurrentCourse());
-            temp.add(in.get(1));
-            ArrayList<String> a = Main.connect(temp, 4018);
-            if (a.get(0).equals("Fail")) {
-                JOptionPane.showMessageDialog(null, "Randomize Error", "Fail", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        if (out.get(0).equals("Success")) {
-            JOptionPane.showMessageDialog(null, "Successfully creating the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
-        }
+
     }
     
     /**
