@@ -1,20 +1,34 @@
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-
-
+/**
+ * Represents the login aspect of the program which allows a person to enter their username and password, and login to their account
+ * @author Ram, William, Leo, Manas, Miras
+ * @version December 13, 2021
+ */
 public class Login extends javax.swing.JFrame {
-
+    //Text Field where the person can enter their username
     private javax.swing.JTextField idIn;
+    //Represents the label for login
     private javax.swing.JLabel jLabel1;
+    //Represents the label for username
     private javax.swing.JLabel jLabel2;
+    //Represents the label for password
     private javax.swing.JLabel jLabel3;
+    //Button that allows the person to login
     private javax.swing.JButton loginButton;
+    //Text Field where the person can enter their password
     private javax.swing.JTextField pwdIn;
-
+    
+    /** 
+     * Constructs a newly allocated Login object that calls the initComponents() method
+     */
     public Login() {
         initComponents();
     }
-
+    
+    /**
+     * Creates and initializes the text fields, labels, and login button, and also sets the entire layout for the login board with each JTextField, JButton, and JLabel positioned at a specific point i
+     */
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -83,8 +97,12 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }
-
-
+    
+    /**
+     * @Description action when login button is pressed, represents logging into an account
+     * @Param [evt] Allows the button's action to be performed
+     * @return void
+     */
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {
         ArrayList<String> in = new ArrayList<String>();
         in.add(idIn.getText());
@@ -117,7 +135,10 @@ public class Login extends javax.swing.JFrame {
 
     }
 
-
+    /**
+     * Main method that invokes the AWT and runs the Login object that displays the login button, text fields, labels, and all its functionalities
+     * @param args Stores the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
