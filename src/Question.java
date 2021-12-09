@@ -60,9 +60,9 @@ public class Question {
      * Displays each question with the question prompt being displayed first, and then the answer choices being displayed next line by line
      */
     public void displayQuestion() {
-        System.out.println(prompt);
+        JOptionPane.showMessageDialog(null, prompt, "Question Prompt", JOptionPane.QUESTION_MESSAGE);
         for (int i = 0; i < 4; i++) {
-            System.out.println((i + 1) + ". " + answerChoices[i]);
+            JOptionPane.showMessageDialog(null, (i + 1) + ". " + answerChoices[i], "Answer Choices", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
