@@ -225,6 +225,9 @@ public class CourseMenu extends javax.swing.JFrame {
                 try {
                     in.add(numbOfQuestions);
                     int numberOfQuestions = Integer.parseInt(numbOfQuestions);
+                    if (numberOfQuestions <= 0) {
+                        throw new Exception();
+                    }
                     for (int i = 0; i < numberOfQuestions; i++) {
                         String questionPrompt = JOptionPane.showInputDialog(null, "Enter new question Prompt:", "Edit Quiz", JOptionPane.QUESTION_MESSAGE);
                         if (questionPrompt == null) {
@@ -261,13 +264,13 @@ public class CourseMenu extends javax.swing.JFrame {
                     }
                     ArrayList<String> out = Main.connect(in, 4009);
                     if (out.get(0).equals("Success")) {
-                        JOptionPane.showMessageDialog(null, "Successfully Editing the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Successfully edited the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
                     }
                     break;
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Please enter the String", "Erorr", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
                     break;
                 }
             }
