@@ -178,7 +178,6 @@ public class AccountSetting extends javax.swing.JFrame {
     
     /**
      * @Description action when back button is pressed
-     * @Date 8:24 PM 12/7/2021
      * @Param [evt] Allows the button's action to be performed
      * @return void
      */
