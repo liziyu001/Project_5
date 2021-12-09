@@ -115,12 +115,17 @@ public class TeacherMenu extends javax.swing.JFrame {
                 "Create Course", JOptionPane.QUESTION_MESSAGE);
         ArrayList<String> in = new ArrayList<String>();
         in.add(name);
-        ArrayList<String> out = Main.connect(in, 4004);
-        if (out.get(0).equals("Success")) {
-            JOptionPane.showMessageDialog(null, "Successfully creating the new course", "Success", JOptionPane.INFORMATION_MESSAGE);
+        if (in.get(0).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Course with same name has already been created", "Fail", JOptionPane.ERROR_MESSAGE);
+            ArrayList<String> out = Main.connect(in, 4004);
+            if (out.get(0).equals("Success")) {
+                JOptionPane.showMessageDialog(null, "Successfully creating the new course", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Course with same name has already been created", "Fail", JOptionPane.ERROR_MESSAGE);
+            }
         }
+
     }
 
     private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {

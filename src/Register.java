@@ -99,6 +99,8 @@ public class Register extends javax.swing.JFrame {
         in.add(role.getSelectedItem());
         if (in.get(0).contains(";") || in.get(1).contains(";")) {
             JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (in.get(0).isEmpty() || in.get(1).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             ArrayList<String> out = Main.connect(in, 4001);
             if (out.get(0).equals("Success")) {
