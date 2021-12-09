@@ -170,6 +170,7 @@ public class CourseMenu extends javax.swing.JFrame {
                 quizs[i] = quizList.get(i);
             }
         }
+
         String choice = (String) JOptionPane.showInputDialog(null, "Select the quiz you want to proceed",
                 "Quiz selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
                 quizs[0]);
