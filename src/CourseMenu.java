@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -222,21 +221,31 @@ public class CourseMenu extends javax.swing.JFrame {
                         }
                         else if (questionPrompt.contains(";")) {
                             JOptionPane.showMessageDialog(null, "Value cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
+                            break;
+                        }
+                        else if (questionPrompt.equals("")){
+                            JOptionPane.showMessageDialog(null, "Value cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                            break;
                         }
                         else {
                             in.add(questionPrompt);
-                        }
-                        for (int j = 0; j < 4; j++) {
+                             for (int j = 0; j < 4; j++) {
                             String answerChoice = (String) JOptionPane.showInputDialog(null, "Enter " +(j+1)+" choice of the Question:", "Edit Questions", JOptionPane.QUESTION_MESSAGE);
                             if (answerChoice == null) {
                                 break;
                             }
                             else if (answerChoice.contains(";")) {
                                 JOptionPane.showMessageDialog(null, "Value cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
+                            else if(answerChoice.equals("")){
+                                JOptionPane.showMessageDialog(null, "Value cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                                break;
                             }
                             else { 
                                 in.add(answerChoice);
                             }
+                        }
                         }
                     }
                     ArrayList<String> out = Main.connect(in, 4009);
