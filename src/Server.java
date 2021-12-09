@@ -891,11 +891,12 @@ public class Server extends Thread {
                         m.getSubmissionList().get(i).setSubGrades(new int[answers.length]);
                     }
                 }
+                Submission s = new Submission(courseName, quizName, id, answers);
                 if (!found) {
-                    m.getSubmissionList().add(new Submission(courseName, quizName, id, answers));
+                    m.getSubmissionList().add(s);
                 }
                 m.updateSubmission();
-                writer.println("Success");
+                writer.println(s.getTimestamp());
             } catch (Exception e) {
                 writer.println("Error");
             }

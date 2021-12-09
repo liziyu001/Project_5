@@ -148,11 +148,10 @@ public class StudentMenu extends javax.swing.JFrame {
                 in.add(ans.substring(0, ans.length() - 1));
             }
             ArrayList<String> out = Main.connect(in, 4013);
-            if (out.get(0).equals("Success")) {
-                Main.setCurrentAccount(in.get(1));
-                JOptionPane.showMessageDialog(null, "Successfully submitting your answer", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } else {
+            if (out.get(0).equals("Error")) {
                 JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Successfully submitting your answer at " + out.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
             }
         }
 
