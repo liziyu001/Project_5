@@ -125,7 +125,7 @@ public class CourseMenu extends javax.swing.JFrame {
         in.add(Main.getCurrentCourse());
         if (choice == JOptionPane.YES_OPTION) {
             String path = JOptionPane.showInputDialog(null,
-                    "Enter the path of your file",
+                    "Enter the path of your file(.txt)",
                     "Path input", JOptionPane.QUESTION_MESSAGE);
             try {
                 File f = new File(path);
@@ -137,15 +137,16 @@ public class CourseMenu extends javax.swing.JFrame {
                     line = br.readLine();
                 }
                 br.close();
+                JOptionPane.showMessageDialog(null, "Successfully created the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "There was a problem creating this quiz!", "Fail", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             in.add(JOptionPane.showInputDialog(null,
                     "Enter the name of the quiz",
                     "Create Quiz", JOptionPane.QUESTION_MESSAGE));
             String n = JOptionPane.showInputDialog(null,
-                    "How many Questions do you want to include",
+                    "How many Questions do you want to include?",
                     "Create Quiz", JOptionPane.QUESTION_MESSAGE);
             in.add(n);
             int numQuestions;
