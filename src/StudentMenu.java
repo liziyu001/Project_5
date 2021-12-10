@@ -128,8 +128,8 @@ public class StudentMenu extends javax.swing.JFrame {
                     quizs[i] = quizList.get(i);
                 }
             }
-            choice = (String) JOptionPane.showInputDialog(null, "Select the course you want to take",
-                    "Course selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
+            choice = (String) JOptionPane.showInputDialog(null, "Select the quiz you want to take",
+                    "Quiz selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
                     quizs[0]);
             ArrayList<String> in = new ArrayList<String>();
             in.add(Main.getCurrentCourse());
@@ -194,7 +194,7 @@ public class StudentMenu extends javax.swing.JFrame {
             }
         }
         if (submissions.length == 0) {
-            JOptionPane.showMessageDialog(null, "There are currently no graded ssubmissions!", "Fail", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "There are currently no graded submissions!", "Fail", JOptionPane.ERROR_MESSAGE);
         } else {
             String choice = (String) JOptionPane.showInputDialog(null, "Select the graded submission you want to view",
                     "Submission selection", JOptionPane.QUESTION_MESSAGE, null, submissions,

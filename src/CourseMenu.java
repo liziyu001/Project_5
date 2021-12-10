@@ -321,7 +321,7 @@ public class CourseMenu extends javax.swing.JFrame {
         for (int i = 0; i < quizList.size(); i++) {
             quizs[i] = quizList.get(i);
         }
-        String choice = (String) JOptionPane.showInputDialog(null, "Select the course you want to proceed",
+        String choice = (String) JOptionPane.showInputDialog(null, "Select the quiz you want to delete",
                 "Course selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
                 quizs[0]);
         ArrayList<String> in = new ArrayList<String>();
