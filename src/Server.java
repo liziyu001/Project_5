@@ -2,10 +2,15 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-
+/**
+ * Represents the server class, which starts and performs the threads of the services
+ * @author Ram, William, Leo, Manas, Miras
+ * @version December 13, 2021
+ */
 public class Server extends Thread {
+    //Initializes a Manager object in the server
     static Manager m = new Manager();
-    //field of services provided by the server
+    //fields of services provided by the server
     ServerSocket loginService;
     ServerSocket registerService;
     ServerSocket getCourseService;
@@ -25,7 +30,10 @@ public class Server extends Thread {
     ServerSocket viewGradedService;
     ServerSocket getAnswerService;
     ServerSocket randomizeQuizService;
-
+    
+    /**
+     * Constructs a newly allocated Server object which initializes the services with port number assignments
+     */
     public Server() throws IOException {
         //Initialize the services with port numbers assignments
         loginService = new ServerSocket(4000);
@@ -48,7 +56,12 @@ public class Server extends Thread {
         getAnswerService = new ServerSocket(4017);
         randomizeQuizService = new ServerSocket(4018);
     }
-
+    
+    /**
+     * Main method which initializes the server, performs the thread of each service by listening to the port 
+     * And starts the service once it receives connection
+     * @param args Stores the command line arguments
+     */
     public static void main(String[] args) throws Exception {
         //Initialize the server
         Server server = new Server();
@@ -69,12 +82,14 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         login.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread idCheck = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.register(server.registerService.accept());
                     }
                 } catch (Exception e) {
@@ -82,13 +97,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         idCheck.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread getCourse = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.getCourse(server.getCourseService.accept());
                     }
                 } catch (Exception e) {
@@ -96,13 +114,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         getCourse.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread getQuiz = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.getQuiz(server.getQuizService.accept());
                     }
                 } catch (Exception e) {
@@ -110,13 +131,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         getQuiz.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread createCourse = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.createCourse(server.createCourseService.accept());
                     }
                 } catch (Exception e) {
@@ -124,13 +148,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         createCourse.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread createQuiz = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.createQuiz(server.createQuizService.accept());
                     }
                 } catch (Exception e) {
@@ -138,13 +165,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         createQuiz.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread editID = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.editID(server.editUsernameService.accept());
                     }
                 } catch (Exception e) {
@@ -152,13 +182,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         editID.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread editPwd = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.editPassword(server.editPasswordService.accept());
                     }
                 } catch (Exception e) {
@@ -166,13 +199,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         editPwd.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread deleteAccount = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.deleteAccount(server.deleteAccountService.accept());
                     }
                 } catch (Exception e) {
@@ -180,13 +216,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         deleteAccount.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread editQuiz = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.editQuiz(server.editQuizService.accept());
                     }
                 } catch (Exception e) {
@@ -194,13 +233,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         editQuiz.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread getQuizContent = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.getQuizContent(server.getQuizContentService.accept());
                     }
                 } catch (Exception e) {
@@ -208,13 +250,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         getQuizContent.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread deleteQuiz = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.deleteQuiz(server.deleteQuizService.accept());
                     }
                 } catch (Exception e) {
@@ -222,13 +267,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         deleteQuiz.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread getSubmissionList = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.getSubmissionList(server.getSubmissionListService.accept());
                     }
                 } catch (Exception e) {
@@ -236,13 +284,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         getSubmissionList.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread takeQuiz = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.takeQuiz(server.takeQuizService.accept());
                     }
                 } catch (Exception e) {
@@ -250,13 +301,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         takeQuiz.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread viewGrading = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.viewGrading(server.viewGradingService.accept());
                     }
                 } catch (Exception e) {
@@ -264,13 +318,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         viewGrading.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread gradeSubmission = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.gradeSubmission(server.gradeSubmissionService.accept());
                     }
                 } catch (Exception e) {
@@ -278,13 +335,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         gradeSubmission.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread viewGraded = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.getGradedSubmissionList(server.viewGradedService.accept());
                     }
                 } catch (Exception e) {
@@ -292,13 +352,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         viewGraded.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread getAnswer = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.getAnswer(server.getAnswerService.accept());
                     }
                 } catch (Exception e) {
@@ -306,13 +369,16 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         getAnswer.start();
-
+        
+        //thread of a service, simultaneously listening to the port
         Thread randomizeQuiz = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (true) { // 'keep' listening to the port
+                        // start the service after receiving connection
                         server.randomizeQuiz(server.randomizeQuizService.accept());
                     }
                 } catch (Exception e) {
@@ -320,16 +386,17 @@ public class Server extends Thread {
                 }
             }
         });
+        //start the thread, since simultaneously, no need to join
         randomizeQuiz.start();
     }
 
 
-    /*
+    /**
      * @Description input username and password, return the result of login
      * @Date 12:27 PM 11/26/2021
-     * @Param [loginRequest]
+     * @param [loginRequest] A Socket object used to determine whether the person logged into their account correctly or not
      * @return void
-     **/
+     */
     public void login(Socket loginRequest) throws IOException, InterruptedException {
 
         try {
@@ -361,12 +428,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description input username and password, create account based on them
      * @Date 12:28 PM 11/26/2021
-     * @Param [registerRequest]
+     * @param [registerRequest] Socket object used to determine if person registered successfully or not
      * @return void
-     **/
+     */
     public void register(Socket registerRequest) throws Exception {
 
         try {
@@ -408,12 +475,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description return a course list to the client
      * @Date 10:03 AM 11/27/2021
-     * @Param [getCourseRequest]
+     * @param [getCourseRequest] Socket object that gives access to the course list
      * @return void
-     **/
+     */
     public void getCourse(Socket getCourseRequest) {
 
         try {
@@ -430,12 +497,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description input a course name, return the quiz list of the course
      * @Date 10:03 AM 11/27/2021
-     * @Param [getQuizRequest]
+     * @param [getQuizRequest] Socket object that gives access to the quiz list
      * @return void
-     **/
+     */
     public void getQuiz(Socket getQuizRequest) {
 
         try {
@@ -468,12 +535,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description input a course name, create a course based on it
      * @Date 11:45 AM 11/27/2021
-     * @Param [createCourseRequest]
+     * @param [createCourseRequest] Socket object that allows a course to be created if it does not already exist
      * @return void
-     **/
+     */
     public void createCourse(Socket createCourseRequest) {
 
         try {
@@ -503,12 +570,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description input quiz information and create the quiz
      * @Date 1:01 PM 11/27/2021
-     * @Param [createQuizRequest]
+     * @param [createQuizRequest] Socket object that allows a quiz to be created if it does not already exist
      * @return void
-     **/
+     */
     public void createQuiz(Socket createQuizRequest) {
 
         try {
@@ -553,12 +620,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description Input account id and the account will be deleted
      * @Date 1:23 PM 11/27/2021
-     * @Param [deleteAccountRequest]
+     * @param [deleteAccountRequest] Socket object that allows the account to be deleted if it exists
      * @return void
-     **/
+     */
     public void deleteAccount(Socket deleteAccountRequest) {
 
         try {
@@ -587,12 +654,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description Input an old id and a new id, id will be edited
      * @Date 1:24 PM 11/27/2021
-     * @Param [editIDRequest]
+     * @param [editIDRequest] Socket object that allows username to be edited
      * @return void
-     **/
+     */
     public void editID(Socket editIDRequest) {
 
         try {
@@ -629,12 +696,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description Input id and new password, password will be updated
      * @Date 1:24 PM 11/27/2021
-     * @Param [editPasswordRequest]
+     * @param [editPasswordRequest] Socket object that allows password to be edited
      * @return void
-     **/
+     */
     public void editPassword(Socket editPasswordRequest) {
 
         try {
@@ -664,12 +731,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description input course name and target quiz name and quiz info, quiz will be edited
      * @Date 8:51 PM 11/27/2021
-     * @Param [editQuizRequest]
+     * @param [editQuizRequest] Socket object that allows the quiz to be edited
      * @return void
-     **/
+     */
     public void editQuiz(Socket editQuizRequest) {
 
         try {
@@ -717,12 +784,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description Input course and quiz name, quiz content will be returned
      * @Date 8:50 PM 11/27/2021
-     * @Param [getQuizContentRequest]
+     * @param [getQuizContentRequest] Socket object that allows the contents of the quiz to be accessed
      * @return void
-     **/
+     */
     public void getQuizContent(Socket getQuizContentRequest) {
 
         try {
@@ -753,12 +820,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description input course name and quiz name, quiz will be deleted
      * @Date 8:50 PM 11/27/2021
-     * @Param [deleteQuizRequest]
+     * @param [deleteQuizRequest] Socket object that allows the quiz to be deleted if it exists
      * @return void
-     **/
+     */
     public void deleteQuiz(Socket deleteQuizRequest) {
 
         try {
@@ -791,12 +858,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description return the list of ungraded submissions
      * @Date 5:48 PM 12/3/2021
-     * @Param [getSubmissionListRequest]
+     * @param [getSubmissionListRequest] Socket object that allows the submission list to be accessed
      * @return void
-     **/
+     */
     public void getSubmissionList(Socket getSubmissionListRequest) {
         try {
             PrintWriter writer = new PrintWriter(getSubmissionListRequest.getOutputStream());
@@ -815,12 +882,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description Input submission identifiers and subGrades, the submission will be graded
      * @Date 5:47 PM 12/3/2021
-     * @Param [gradeSubmissionRequest]
+     * @param [gradeSubmissionRequest] Socket object that gives access for the submission that needs to be graded
      * @return void
-     **/
+     */
     public void gradeSubmission(Socket gradeSubmissionRequest) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(gradeSubmissionRequest.getInputStream()));
@@ -861,12 +928,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description input submission identifiers and answers, the new submission will be recorded, newer attempt will replace older ones
      * @Date 5:54 PM 12/3/2021
-     * @Param [takeQuizRequest]
+     * @param [takeQuizRequest] Socket object that gives access to the quiz
      * @return void
-     **/
+     */
     public void takeQuiz(Socket takeQuizRequest) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(takeQuizRequest.getInputStream()));
@@ -908,12 +975,12 @@ public class Server extends Thread {
         }
     }
 
-    /*
+    /**
      * @Description input submission identifier to get its detailed grading
      * @Date 6:02 PM 12/3/2021
-     * @Param [viewGradingRequest]
+     * @param [viewGradingRequest] Socket object that gives access to the quiz grade
      * @return void
-     **/
+     */
     public void viewGrading(Socket viewGradingRequest) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(viewGradingRequest.getInputStream()));
@@ -952,7 +1019,12 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * @Description Uses Socket to get student's usernames and their submissions
+     * @param [getSubmissionListRequest] Socket object that gives access to list of graded submissions
+     * @return void
+     */
     public void getGradedSubmissionList(Socket getSubmissionListRequest) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getSubmissionListRequest.getInputStream()));
@@ -972,7 +1044,12 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * @Description Uses Socket to get the course name, quiz name, and student's usernames to get access to the student's answers 
+     * @param [getAnswerRequest] Socket object that gives access to student's answers
+     * @return void
+     */
     public void getAnswer(Socket getAnswerRequest) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getAnswerRequest.getInputStream()));
@@ -1006,7 +1083,11 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
+    /**
+     * @Description Uses Socket to get the course name and quiz name to help generate a randomized quiz
+     * @param [randomizeQuizRequest] Socket object that gives access to a randomized quiz version
+     * @return void
+     */
     public void randomizeQuiz(Socket randomizeQuizRequest) {
         try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(randomizeQuizRequest.getInputStream()));
