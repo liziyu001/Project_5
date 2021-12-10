@@ -27,18 +27,23 @@ public class CourseMenu extends javax.swing.JFrame {
     }
     
     /**
-     * Creates and initializes the four buttons with the set text and the action listeners, which performs the functionality of each button when clicked
+     * Creates and initializes the four buttons with the set texts and the action listeners
+     * That helps perform the functionality of each button when clicked
      */
     private void initComponents() {
-
+        //Creates the create Button
         createButton = new javax.swing.JButton();
+        //Creates the edit Button
         editButton = new javax.swing.JButton();
+        //Creates the delete Button
         deleteButton = new javax.swing.JButton();
+        //Creates the back Button
         backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         createButton.setText("Create a Quiz");
+        //Allows the createButton to be performed when clicked
         createButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createButtonActionPerformed(evt);
@@ -46,6 +51,7 @@ public class CourseMenu extends javax.swing.JFrame {
         });
 
         editButton.setText("Edit a Quiz");
+        //Allows the editButton to be performed when clicked
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editButtonActionPerformed(evt);
@@ -53,6 +59,7 @@ public class CourseMenu extends javax.swing.JFrame {
         });
 
         deleteButton.setText("Delete a Quiz");
+        //Allows the deleteButton to be performed when clicked
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteButtonActionPerformed(evt);
@@ -60,6 +67,7 @@ public class CourseMenu extends javax.swing.JFrame {
         });
 
         backButton.setText("Back");
+        //Allows the backButton to be performed when clicked
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -92,7 +100,7 @@ public class CourseMenu extends javax.swing.JFrame {
 //        );
 //
 //        pack();
-
+        //Sets up panels and border layout, and adds the buttons to the panel
         this.setTitle("Course menu");
         getContentPane().setLayout(new BorderLayout());
         this.setSize(600, 100);
