@@ -4,27 +4,41 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-
-
+/**
+ * Represents a student's menu that allows them to view their grades, courses, and their settings
+ * @author Ram, William, Leo, Manas, Miras
+ * @version December 13, 2021
+ */
 public class StudentMenu extends javax.swing.JFrame {
-
+    //Button that allows the student to go to their settings
     private javax.swing.JButton settingButton;
+    //Button that allows the student to view their courses
     private javax.swing.JButton viewCourseButton;
+    //Button that allows the student to view their grades
     private javax.swing.JButton viewGradingButton;
+    
+    /**
+     * Constructs a newly allocated StudentMenu object that calls the initComponents() method
+     */
     public StudentMenu() {
         initComponents();
     }
 
-
+    /**
+     * Creates and initalizes all the buttons, and allows all the buttons to be displayed on the panels and accurately performed when clicked
+     */
     private void initComponents() {
-
+        //Creates the viewCourseButton
         viewCourseButton = new javax.swing.JButton();
+        //Creates the viewGradingButton
         viewGradingButton = new javax.swing.JButton();
+        //Creates the settingButton
         settingButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         viewCourseButton.setText("Take a quiz");
+        //Allows the viewCourseButton to be performed when clicked
         viewCourseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewCourseButtonActionPerformed(evt);
@@ -32,6 +46,7 @@ public class StudentMenu extends javax.swing.JFrame {
         });
 
         viewGradingButton.setText("View Grading");
+        //Allows the viewGradingButton to be performed when clicked
         viewGradingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewGradingButtonActionPerformed(evt);
@@ -39,6 +54,7 @@ public class StudentMenu extends javax.swing.JFrame {
         });
 
         settingButton.setText("Account Setting");
+        //Allows the settingButton to be performed when clicked
         settingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 settingButtonActionPerformed(evt);
@@ -71,7 +87,7 @@ public class StudentMenu extends javax.swing.JFrame {
 //        );
 //
 //        pack();
-
+        //Sets up panels and border layout, and adds the buttons to the panel
         this.setTitle("Student Menu");
         getContentPane().setLayout(new BorderLayout());
         this.setSize(600, 100);
@@ -83,7 +99,12 @@ public class StudentMenu extends javax.swing.JFrame {
         panel.add(settingButton);
         getContentPane().add(panel, BorderLayout.CENTER);
     }
-
+    
+    /**
+     * @Description action when viewCourse button is pressed, represents list of student's courses
+     * @Param [evt] Allows the button's action to be performed
+     * @return void
+     */
     private void viewCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String[] options = new String[] {"1", "2", "3", "4"};
         ArrayList<String> courseList = Main.connect(new ArrayList<>(), 4002);
@@ -157,6 +178,11 @@ public class StudentMenu extends javax.swing.JFrame {
 
     }
 
+    /**
+     * @Description action when viewGrading button is pressed, represents list of student's grades
+     * @Param [evt] Allows the button's action to be performed
+     * @return void
+     */
     private void viewGradingButtonActionPerformed(java.awt.event.ActionEvent evt) {
         ArrayList<String> temp = new ArrayList<String>();
         temp.add(Main.getCurrentAccount());
@@ -196,12 +222,21 @@ public class StudentMenu extends javax.swing.JFrame {
         }
 
     }
-
+    
+    /**
+     * @Description action when setting button is pressed, represents account settings
+     * @Param [evt] Allows the button's action to be performed
+     * @return void
+     */
     private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {
         AccountSetting as = new AccountSetting();
         as.setVisible(true);
     }
-
+    
+    /**
+     * Main method that invokes the AWT and runs the StudentMenu object that displays the buttons and all its functionalities
+     * @param args Stores the command line arguments
+     */
     public static void main(String args[]) {
 
         SwingUtilities.invokeLater(new Runnable() {
