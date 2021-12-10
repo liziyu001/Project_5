@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 /**
- * Represents a class that pops up the beginning menu, connects to a certain port with certain features/service that is currently active, 
+ * Represents a class that pops up the beginning menu, connects to a certain port with certain features/service that is currently active 
  * And updates the current account, course, and quiz
  * @author Ram, William, Leo, Manas, Miras
  * @version December 13, 2021
