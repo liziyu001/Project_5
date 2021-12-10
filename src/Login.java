@@ -1,5 +1,7 @@
+import java.awt.*;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+
 /**
  * Represents the login aspect of the program which allows a person to enter their username and password, and login to their account
  * @author Ram, William, Leo, Manas, Miras
@@ -11,9 +13,9 @@ public class Login extends javax.swing.JFrame {
     //Represents the label for login
     private javax.swing.JLabel jLabel1;
     //Represents the label for username
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel idLabel;
     //Represents the label for password
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel pwdLabel;
     //Button that allows the person to login
     private javax.swing.JButton loginButton;
     //Text Field where the person can enter their password
@@ -34,13 +36,13 @@ public class Login extends javax.swing.JFrame {
         //Creates the Login JLabel
         jLabel1 = new javax.swing.JLabel();
         //Creates the Username JLabel
-        jLabel2 = new javax.swing.JLabel();
+        idLabel = new javax.swing.JLabel();
         //Creates the Username Text Field
         idIn = new javax.swing.JTextField();
         //Creates the Password Text Field
         pwdIn = new javax.swing.JTextField();
         //Creates the Password JLabel
-        jLabel3 = new javax.swing.JLabel();
+        pwdLabel = new javax.swing.JLabel();
         //Creates the login Button
         loginButton = new javax.swing.JButton();
 
@@ -48,9 +50,9 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setText("Login");
 
-        jLabel2.setText("Username");
+        idLabel.setText("Username");
 
-        jLabel3.setText("Password");
+        pwdLabel.setText("Password");
 
         loginButton.setText("Login");
         //Allows the loginButton to be performed when clicked
@@ -69,8 +71,8 @@ public class Login extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(103, 103, 103)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jLabel2)
-                                                        .addComponent(jLabel3))
+                                                        .addComponent(idLabel)
+                                                        .addComponent(pwdLabel))
                                                 .addGap(86, 86, 86)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(pwdIn, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
@@ -91,18 +93,20 @@ public class Login extends javax.swing.JFrame {
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(53, 53, 53)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel2)
+                                        .addComponent(idLabel)
                                         .addComponent(idIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(60, 60, 60)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(pwdIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel3))
+                                        .addComponent(pwdLabel))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                                 .addComponent(loginButton)
                                 .addGap(42, 42, 42))
         );
 
         pack();
+
+
     }
     
     /**
