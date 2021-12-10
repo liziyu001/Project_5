@@ -1,29 +1,45 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-
-
+/**
+ * Represents a teacher's menu with the options of creating and viewing a course, grading a quiz, and accessing their settings
+ * @author Ram, William, Leo, Manas, Miras
+ * @version December 13, 2021
+ */
 public class TeacherMenu extends javax.swing.JFrame {
-
+    //Button that allows a teacher to create a course
     private javax.swing.JButton createCourseButton;
+    //Button that allows a teacher to access their settings
     private javax.swing.JButton settingButton;
+    //Button that allows a teacher to view their courses
     private javax.swing.JButton viewCourseButton;
+    //Button that allows a teacher to grade the student's quizzes
     private javax.swing.JButton gradingButton;
-
+    
+    /**
+     * Constructs a newly allocated TeacherMenu object that calls the initComponents() method
+     */
     public TeacherMenu() {
         initComponents();
     }
-
+    
+    /**
+     * Creates and initalizes all the buttons, and allows all the buttons to be displayed on the panels and accurately performed when clicked
+     */
     private void initComponents() {
-
+        //Creates viewCourse Button
         viewCourseButton = new javax.swing.JButton();
+        //Creates createCourse Button
         createCourseButton = new javax.swing.JButton();
+        //Creates setting Button
         settingButton = new javax.swing.JButton();
+        //Creates grading Button
         gradingButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         viewCourseButton.setText("View Courses");
+        //Allows the viewCourseButton to be performed when clicked
         viewCourseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewCourseButtonActionPerformed(evt);
@@ -31,6 +47,7 @@ public class TeacherMenu extends javax.swing.JFrame {
         });
 
         createCourseButton.setText("Create new Course");
+        //Allows the createCourseButton to be performed when clicked
         createCourseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createCourseButtonActionPerformed(evt);
@@ -38,6 +55,7 @@ public class TeacherMenu extends javax.swing.JFrame {
         });
 
         settingButton.setText("Account Setting");
+        //Allows the settingButton to be performed when clicked
         settingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 settingButtonActionPerformed(evt);
@@ -45,6 +63,7 @@ public class TeacherMenu extends javax.swing.JFrame {
         });
 
         gradingButton.setText("Grade Submissions");
+        //Allows the gradingButton to be performed when clicked
         gradingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 gradingButtonActionPerformed(evt);
@@ -76,7 +95,7 @@ public class TeacherMenu extends javax.swing.JFrame {
 //        );
 //
 //        pack();
-
+        //Sets up panels and border layout, and adds the buttons to the panel
         this.setTitle("Teacher menu");
         getContentPane().setLayout(new BorderLayout());
         this.setSize(600, 100);
@@ -89,6 +108,12 @@ public class TeacherMenu extends javax.swing.JFrame {
         panel.add(gradingButton);
         getContentPane().add(panel, BorderLayout.CENTER);
     }
+    
+    /**
+     * @Description action when viewCourse button is pressed, represents list of teacher's courses
+     * @Param [evt] Allows the button's action to be performed
+     * @return void
+     */
     private void viewCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         ArrayList<String> courseList = Main.connect(new ArrayList<>(), 4002);
@@ -108,7 +133,12 @@ public class TeacherMenu extends javax.swing.JFrame {
         }
 
     }
-
+    
+    /**
+     * @Description action when createCourse button is pressed, represents creating a course
+     * @Param [evt] Allows the button's action to be performed
+     * @return void
+     */
     private void createCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String name = JOptionPane.showInputDialog(null,
                 "Enter the name of the course you want to create",
@@ -127,13 +157,23 @@ public class TeacherMenu extends javax.swing.JFrame {
         }
 
     }
-
+    
+    /**
+     * @Description action when settingCourse button is pressed, represents access to settings
+     * @Param [evt] Allows the button's action to be performed
+     * @return void
+     */
     private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         AccountSetting as = new AccountSetting();
         as.setVisible(true);
     }
-
+    
+    /**
+     * @Description action when grading button is pressed, represents grading of quizzes
+     * @Param [evt] Allows the button's action to be performed
+     * @return void
+     */
     private void gradingButtonActionPerformed(java.awt.event.ActionEvent evt) {
         ArrayList<String> sub = Main.connect(new ArrayList<String>(), 4012);
         String[] submissions = new String[sub.size()];
@@ -179,7 +219,10 @@ public class TeacherMenu extends javax.swing.JFrame {
 
     }
 
-
+    /**
+     * Main method that invokes the AWT and runs the TeacherMenu object that displays the buttons and all its functionalities
+     * @param args Stores the command line arguments
+     */
     public static void main(String args[]) {
 
 
