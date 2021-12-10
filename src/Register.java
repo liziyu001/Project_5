@@ -1,24 +1,40 @@
 import java.util.ArrayList;
 import javax.swing.*;
-
-
+/**
+ * Represents the register aspect where people can create their username and password, choose their role, and register
+ * @author Ram, William, Leo, Manas, Miras
+ * @version December 13, 2021
+ */
 public class Register extends javax.swing.JFrame {
 
-
+    /**
+     * Constructs a newly allocated Register object that calls the initComponents() method
+     * 
+     */
     public Register() {
         initComponents();
     }
 
-
+    /**
+     * Creates and initializes the text fields, labels, and register button 
+     * Also sets the entire layout for the register board with each JTextField, JButton, and JLabel positioned at a specific point
+     */
     private void initComponents() {
-
+        //Creates register label
         jLabel1 = new javax.swing.JLabel();
+        //Creates register button
         registerButton = new javax.swing.JButton();
+        //Creates username text field
         idIn = new javax.swing.JTextField();
+        //Creates password text field
         pwdIn = new javax.swing.JTextField();
+        //Creates username label
         jLabel2 = new javax.swing.JLabel();
+        //Creates password label
         jLabel3 = new javax.swing.JLabel();
+        //Creates an option to choose role (Teacher or Student)
         role = new java.awt.Choice();
+        //Creates role label
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -26,6 +42,7 @@ public class Register extends javax.swing.JFrame {
         jLabel1.setText("Register");
 
         registerButton.setText("Register");
+        //Allows action of register button to be performed when clicked
         registerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registerButtonActionPerformed(evt);
@@ -37,7 +54,7 @@ public class Register extends javax.swing.JFrame {
         jLabel3.setText("Password");
 
         jLabel4.setText("Role");
-
+        //Designs the whole layout of the register board
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,7 +108,12 @@ public class Register extends javax.swing.JFrame {
 
         pack();
     }
-
+    
+    /**
+     * @Description action when back button is pressed, represents registering an account with select username, password, and role chosen
+     * @Param [evt] Allows the button's action to be performed
+     * @return void
+     */
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {
         ArrayList<String> in = new ArrayList<String>();
         in.add(idIn.getText());
@@ -124,7 +146,10 @@ public class Register extends javax.swing.JFrame {
 
     }
 
-
+    /**
+     * Main method that invokes the AWT and runs the Register object that displays the register button, textfields, labels, and all its functionalities
+     * @param args Stores the command line arguments
+     */
     public static void main(String args[]) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -133,14 +158,21 @@ public class Register extends javax.swing.JFrame {
         });
     }
 
-
+    //Username that the person wants to register
     private javax.swing.JTextField idIn;
+    //Represents the Register label
     private javax.swing.JLabel jLabel1;
+    //Represents the Username label
     private javax.swing.JLabel jLabel2;
+    //Represents the Password label
     private javax.swing.JLabel jLabel3;
+    //Represents the Role label
     private javax.swing.JLabel jLabel4;
+    //Password that the person wants to register
     private javax.swing.JTextField pwdIn;
+    //Button that gives the person the register options
     private javax.swing.JButton registerButton;
+    //The role that the person can choose (Teacher or Student)
     private java.awt.Choice role;
 
 }
