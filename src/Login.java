@@ -27,15 +27,21 @@ public class Login extends javax.swing.JFrame {
     }
     
     /**
-     * Creates and initializes the text fields, labels, and login button, and also sets the entire layout for the login board with each JTextField, JButton, and JLabel positioned at a specific point i
+     * Creates and initializes the text fields, labels, and login button
+     * Also sets the entire layout for the login board with each JTextField, JButton, and JLabel positioned at a specific point 
      */
     private void initComponents() {
-
+        //Creates the Login JLabel
         jLabel1 = new javax.swing.JLabel();
+        //Creates the Username JLabel
         jLabel2 = new javax.swing.JLabel();
+        //Creates the Username Text Field
         idIn = new javax.swing.JTextField();
+        //Creates the Password Text Field
         pwdIn = new javax.swing.JTextField();
+        //Creates the Password JLabel
         jLabel3 = new javax.swing.JLabel();
+        //Creates the login Button
         loginButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -47,12 +53,13 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setText("Password");
 
         loginButton.setText("Login");
+        //Allows the loginButton to be performed when clicked
         loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginButtonActionPerformed(evt);
             }
         });
-
+        //Designs the whole layout of the login board
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
