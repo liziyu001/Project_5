@@ -1,5 +1,5 @@
 Submission:
-Student 1 - Submitted Report on Brightspace. Student 2 - Submitted Vocareum workspace
+Ram Laxminarayan - Submitted Report on Brightspace. Student 2 - Submitted Vocareum workspace
 
 
 Step to run the project:
