@@ -26,17 +26,22 @@ public class AccountSetting extends javax.swing.JFrame {
     }
 
     /**
-     * Creates and initializes the four buttons with the set text and the action listeners, which performs the functionality of each button when clicked
+     * Creates and initializes the four buttons with the set texts and the action listeners
+     * That helps perform the functionality of each button when clicked
      */
     private void initComponents() {
-
+        //Creates an edit ID Button
         editIdButton = new javax.swing.JButton();
+        //Creates an edit password Button
         editPwdButton = new javax.swing.JButton();
+        //Creates a delete Button
         deleteButton = new javax.swing.JButton();
+        //Creates a back Button
         backButton = new javax.swing.JButton();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         editIdButton.setText("Edit Username");
+        //Allows the editId Button to be performed when clicked
         editIdButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editIdButtonActionPerformed(evt);
@@ -44,6 +49,7 @@ public class AccountSetting extends javax.swing.JFrame {
         });
 
         editPwdButton.setText("Edit Password");
+        //Allows the editPwd Button to be performed when clicked
         editPwdButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editPwdButtonActionPerformed(evt);
@@ -51,6 +57,7 @@ public class AccountSetting extends javax.swing.JFrame {
         });
 
         deleteButton.setText("Delete this Account");
+        //Allows the delete Button to be performed when clicked
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteButtonActionPerformed(evt);
@@ -58,6 +65,7 @@ public class AccountSetting extends javax.swing.JFrame {
         });
 
         backButton.setText("Back");
+        //Allows the back Button to be performed when clicked
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -90,7 +98,7 @@ public class AccountSetting extends javax.swing.JFrame {
 //        );
 //
 //        pack();
-
+        //Sets up panels and border layout, and adds the buttons to the panel
         this.setTitle("Account Setting");
         getContentPane().setLayout(new BorderLayout());
         this.setSize(600, 100);
