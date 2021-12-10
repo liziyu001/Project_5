@@ -1,27 +1,41 @@
 import javax.swing.*;
 import java.awt.*;
 
-
+/**
+ * Represents the beginning menu where you can login if you already have an account, or you can register if you haven't created an account
+ * @author Ram, William, Leo, Manas, Miras
+ * @version December 13, 2021
+ */
 public class Menu extends javax.swing.JFrame {
-
+    
+    //Button that allows person to register
     private javax.swing.JButton register;
+    //Button that allows person to login
     private javax.swing.JButton login;
 
-
+    /**
+     * Constructs a newly allocated Menu object that calls the initComponents() method
+     */
     public Menu() {
         initComponents();
     }
-
+    
+    /**
+     * Creates and initializes the register and login button with its action performed when clicked
+     * Panels and BorderLayout is also set up
+     */
     private void initComponents() {
 
-
+        //Creates login button
         login = new javax.swing.JButton();
+        //Creates register button
         register = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 
         login.setText("Login");
+        //Allows action of login button to be performed when clicked
         login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginActionPerformed(evt);
@@ -29,6 +43,7 @@ public class Menu extends javax.swing.JFrame {
         });
 
         register.setText("Register");
+        //Allows action of register button to be performed when clicked
         register.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RegisterActionPerformed(evt);
@@ -65,7 +80,7 @@ public class Menu extends javax.swing.JFrame {
 //        );
 //
 //        pack();
-
+        //Sets the panel and border layout
         this.setTitle("Menu");
         getContentPane().setLayout(new BorderLayout());
         this.setSize(600, 100);
@@ -76,20 +91,33 @@ public class Menu extends javax.swing.JFrame {
         panel.add(register);
         getContentPane().add(panel, BorderLayout.CENTER);
     }
-
+    
+    /**
+     * @Description action when login button is pressed, represents logging in
+     * @Param [evt] Allows the button's action to be performed
+     * @return void
+     */
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {
         Login l = new Login();
         l.setVisible(true);
         this.setVisible(false);
     }
-
+    
+    /**
+     * @Description action when back button is pressed, represents registering an account
+     * @Param [evt] Allows the button's action to be performed
+     * @return void
+     */
     private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {
         Register r = new Register();
         r.setVisible(true);
         this.setVisible(false);
     }
 
-
+    /**
+     * Main method that invokes the AWT and runs the Menu object that displays the buttons and all its functionalities
+     * @param args Stores the command line arguments
+     */
     public static void main(String args[]) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
