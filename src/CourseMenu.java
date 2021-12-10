@@ -138,6 +138,19 @@ public class CourseMenu extends javax.swing.JFrame {
                 }
                 br.close();
                 JOptionPane.showMessageDialog(null, "Successfully created the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
+                ArrayList<String> out = Main.connect(in, 4005);
+                int c = JOptionPane.showConfirmDialog(null,
+                        "Do you want to randomize the order of questions and the order of potential options?",
+                        "Randomize", JOptionPane.YES_NO_OPTION);
+                if (c == JOptionPane.YES_OPTION) {
+                    ArrayList<String> temp = new ArrayList<String>();
+                    temp.add(Main.getCurrentCourse());
+                    temp.add(in.get(1));
+                    ArrayList<String> a = Main.connect(temp, 4018);
+                    if (a.get(0).equals("Fail")) {
+                        JOptionPane.showMessageDialog(null, "Randomize Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "There was a problem creating this quiz!", "Fail", JOptionPane.ERROR_MESSAGE);
             }
