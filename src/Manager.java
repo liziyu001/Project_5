@@ -54,7 +54,8 @@ public class Manager {
     }
     
     /**
-     * Reads the submissions from the Submissions.txt file, breaks up the parts of the submissions from that file into categories, and adds the submission objects to a list based on those categories
+     * Reads the submissions from the Submissions.txt file, and breaks up the parts of the submissions from that file into categories
+     * Also adds the submission objects to a list based on those categories
      * @return Returns the list containing the submission objects that are based off the Submissions.txt file
      */
     public ArrayList<Submission> readSubmission() {
@@ -158,7 +159,8 @@ public class Manager {
     }
     
     /**
-     * Reads the course list in the Courses.txt file, and returns a list containing the Course objects that were made based on what was read in the Courses.txt file
+     * Reads the course list in the Courses.txt file
+     * Returns a list containing the Course objects that were made based on what was read in the Courses.txt file
      * @return Returns a list of Course objects that was made based off the course list that was read in the Courses.txt file
      */
     public ArrayList<Course> readCourses() {
@@ -230,7 +232,8 @@ public class Manager {
     }
     
     /**
-     * Reads the accounts in the Account.txt file and returns a list of Account objects that were created based on the account contents in the Account.txt file
+     * Reads the accounts in the Account.txt file
+     * Returns a list of Account objects that were created based on the account contents in the Account.txt file
      * @return Returns a list of account objects that were made based on the account contents in the Account.txt file
      */
     public ArrayList<Account> readAccounts() {
