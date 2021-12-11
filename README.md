@@ -9,7 +9,7 @@ Step to run the project:
 The menu window should appear after step 3
 
 Format for creating quiz by uploading a file:
-  "<Course name>(record while choosing quiz)\n<Quiz name>(record while choosing quiz)\n<number of questions>\n<prompt of first question>\n<first option>\n<second option>\n<third option>\n<forth option>\n<prompt of second question>...<fourth option>\n"
+
             ex. CS193
             The first Quiz
             2
@@ -27,3 +27,19 @@ Format for creating quiz by uploading a file:
   Format for submitting answer by uploading a file:
     "<answer for question 1>,<answer for question 2>,<answer for question 3>..."(one line)
       ex. 3,2,1,4
+
+
+
+Class description:
+    Account: record the username and password and role of a user, used by the manager and server.
+    Course: information about courses; contain multiple quiz; 
+    Quiz: information about a quiz; contain multiple questions;
+    Question: information about a question including a prompt and four answer options;
+    Manager: store all information about account, course, quiz, and question; read files when initialize; update file when changes are made
+    Server: back-end of the project, can receive 17 kinds of request from any connected user and make responses, use manager to process data and update files
+    Menu: the initial menu of the project, can direct user to login or register
+    TeacherMenu: menu for teacher after login in, can perform course/quiz related function, grading and account setting;
+    StudentMenu: menu of teacher, can help student to take quiz/view gradings.
+    AccountSetting: menu for account setting function, can lead user to edit username/password or deleting account
+    Main: the launcher of the project, also make requests to the server and receive responses.
+    
