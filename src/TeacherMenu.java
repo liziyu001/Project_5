@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+
 /**
  * Represents a teacher's menu with the options of creating and viewing a course, grading a quiz, and accessing their settings
+ *
  * @author Ram, William, Leo, Manas, Miras
  * @version December 13, 2021
  */
@@ -15,14 +17,14 @@ public class TeacherMenu extends javax.swing.JFrame {
     private javax.swing.JButton viewCourseButton;
     //Button that allows a teacher to grade the student's quizzes
     private javax.swing.JButton gradingButton;
-    
+
     /**
      * Constructs a newly allocated TeacherMenu object that calls the initComponents() method
      */
     public TeacherMenu() {
         initComponents();
     }
-    
+
     /**
      * Creates and initalizes all the buttons, and allows all the buttons to be displayed on the panels and accurately performed when clicked
      */
@@ -70,31 +72,6 @@ public class TeacherMenu extends javax.swing.JFrame {
             }
         });
 
-//        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-//        getContentPane().setLayout(layout);
-//        layout.setHorizontalGroup(
-//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(layout.createSequentialGroup()
-//                                .addContainerGap(127, Short.MAX_VALUE)
-//                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-//                                        .addComponent(viewCourseButton, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-//                                        .addComponent(settingButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//                                        .addComponent(createCourseButton, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
-//                                .addContainerGap(127, Short.MAX_VALUE))
-//        );
-//        layout.setVerticalGroup(
-//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(layout.createSequentialGroup()
-//                                .addGap(51, 51, 51)
-//                                .addComponent(viewCourseButton, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-//                                .addGap(18, 18, 18)
-//                                .addComponent(createCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(32, 32, 32)
-//                                .addComponent(settingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(42, 42, 42))
-//        );
-//
-//        pack();
         //Sets up panels and border layout, and adds the buttons to the panel
         this.setTitle("Teacher menu");
         getContentPane().setLayout(new BorderLayout());
@@ -107,12 +84,13 @@ public class TeacherMenu extends javax.swing.JFrame {
         panel.add(settingButton);
         panel.add(gradingButton);
         getContentPane().add(panel, BorderLayout.CENTER);
+        pack();
     }
-    
+
     /**
+     * @return void
      * @Description action when viewCourse button is pressed, represents list of teacher's courses
      * @Param [evt] Allows the button's action to be performed
-     * @return void
      */
     private void viewCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
@@ -133,11 +111,11 @@ public class TeacherMenu extends javax.swing.JFrame {
         }
 
     }
-    
+
     /**
+     * @return void
      * @Description action when createCourse button is pressed, represents creating a course
      * @Param [evt] Allows the button's action to be performed
-     * @return void
      */
     private void createCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String name = JOptionPane.showInputDialog(null,
@@ -157,27 +135,27 @@ public class TeacherMenu extends javax.swing.JFrame {
         }
 
     }
-    
+
     /**
+     * @return void
      * @Description action when settingCourse button is pressed, represents access to settings
      * @Param [evt] Allows the button's action to be performed
-     * @return void
      */
     private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         AccountSetting as = new AccountSetting();
         as.setVisible(true);
     }
-    
+
     /**
+     * @return void
      * @Description action when grading button is pressed, represents grading of quizzes
      * @Param [evt] Allows the button's action to be performed
-     * @return void
      */
     private void gradingButtonActionPerformed(java.awt.event.ActionEvent evt) {
         ArrayList<String> sub = Main.connect(new ArrayList<String>(), 4012);
         String[] submissions = new String[sub.size()];
-        for (int i = 0; i < sub.size() ; i++) {
+        for (int i = 0; i < sub.size(); i++) {
             if (!sub.get(i).isEmpty()) {
                 submissions[i] = sub.get(i);
             }
@@ -221,6 +199,7 @@ public class TeacherMenu extends javax.swing.JFrame {
 
     /**
      * Main method that invokes the AWT and runs the TeacherMenu object that displays the buttons and all its functionalities
+     *
      * @param args Stores the command line arguments
      */
     public static void main(String args[]) {
@@ -232,8 +211,6 @@ public class TeacherMenu extends javax.swing.JFrame {
             }
         });
     }
-
-
 
 
 }

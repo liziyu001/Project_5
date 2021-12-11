@@ -4,8 +4,10 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 /**
  * Manages and updates the list of courses, accounts, and submissions that are in each file
+ *
  * @author Ram, William, Leo, Manas, Miras
  * @version December 13, 2021
  */
@@ -18,10 +20,10 @@ public class Manager {
     private ArrayList<Submission> submissionList;
 
     /**
+     * @return
      * @Description Initialize Manager by reading from Account and Course File
      * @Date 4:36 PM 11/18/2021
      * @Param []
-     * @return
      */
     public Manager() {
         courseList = readCourses();
@@ -31,31 +33,35 @@ public class Manager {
 
     /**
      * Returns the list of submissions
+     *
      * @return Returns the list of submissions
      */
     public ArrayList<Submission> getSubmissionList() {
         return submissionList;
     }
-    
+
     /**
      * Returns the list of accounts
+     *
      * @return Returns the list of accounts
      */
     public ArrayList<Account> getAccountList() {
         return accountList;
     }
-    
+
     /**
      * Returns the list of courses
+     *
      * @return Returns the list of courses
      */
     public ArrayList<Course> getCourseList() {
         return courseList;
     }
-    
+
     /**
      * Reads the submissions from the Submissions.txt file, and breaks up the parts of the submissions from that file into categories
      * Also adds the submission objects to a list based on those categories
+     *
      * @return Returns the list containing the submission objects that are based off the Submissions.txt file
      */
     public ArrayList<Submission> readSubmission() {
@@ -90,7 +96,7 @@ public class Manager {
         }
         return list;
     }
-    
+
     /**
      * Updates the submission list into the Submission.txt file by splitting each category of the submission with ; and ,
      */
@@ -109,11 +115,11 @@ public class Manager {
                 for (int j = 0; j < sub.getAnswers().length; j++) {
                     line = line + sub.getAnswers()[j] + ",";
                 }
-                line = line.substring(0,line.length() - 1) + ";";
+                line = line.substring(0, line.length() - 1) + ";";
                 for (int j = 0; j < sub.getSubGrades().length; j++) {
                     line = line + sub.getSubGrades()[j] + ",";
                 }
-                line = line.substring(0,line.length() - 1);
+                line = line.substring(0, line.length() - 1);
                 pr.println(line);
             }
             pr.close();
@@ -121,9 +127,9 @@ public class Manager {
             e.printStackTrace();
         }
     }
-    
+
     /**
-     * Updates the course list by writing and updating the quizzes and questions in the course to the Courses.txt file 
+     * Updates the course list by writing and updating the quizzes and questions in the course to the Courses.txt file
      */
     public synchronized void updateCourse() {
         try {
@@ -144,7 +150,7 @@ public class Manager {
                             Question question = q.getQuestions()[k];
                             pr1.println(question.getPrompt());
                             for (int l = 0; l < 4; l++) { // for each option
-                                    pr1.println(question.getAnswerChoices()[l]);
+                                pr1.println(question.getAnswerChoices()[l]);
                             }
                         }
                     }
@@ -152,15 +158,16 @@ public class Manager {
                 pr1.close();
             }
             pr.close();
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Reads the course list in the Courses.txt file
      * Returns a list containing the Course objects that were made based on what was read in the Courses.txt file
+     *
      * @return Returns a list of Course objects that was made based off the course list that was read in the Courses.txt file
      */
     public ArrayList<Course> readCourses() {
@@ -209,10 +216,10 @@ public class Manager {
     }
 
     /**
+     * @return void
      * @Description Update the current AccountList to files
      * @Date 3:25 PM 11/20/2021
      * @Param []
-     * @return void
      */
     public synchronized void updateAccount() {
         try {
@@ -230,10 +237,11 @@ public class Manager {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Reads the accounts in the Account.txt file
      * Returns a list of Account objects that were created based on the account contents in the Account.txt file
+     *
      * @return Returns a list of account objects that were made based on the account contents in the Account.txt file
      */
     public ArrayList<Account> readAccounts() {

@@ -2,8 +2,10 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+
 /**
  * Represents the server class, which starts and performs the threads of the services
+ *
  * @author Ram, William, Leo, Manas, Miras
  * @version December 13, 2021
  */
@@ -30,7 +32,7 @@ public class Server extends Thread {
     ServerSocket viewGradedService;
     ServerSocket getAnswerService;
     ServerSocket randomizeQuizService;
-    
+
     /**
      * Constructs a newly allocated Server object which initializes the services with port number assignments
      */
@@ -56,10 +58,11 @@ public class Server extends Thread {
         getAnswerService = new ServerSocket(4017);
         randomizeQuizService = new ServerSocket(4018);
     }
-    
+
     /**
-     * Main method which initializes the server, performs the thread of each service by listening to the port 
+     * Main method which initializes the server, performs the thread of each service by listening to the port
      * And starts the service once it receives connection
+     *
      * @param args Stores the command line arguments
      */
     public static void main(String[] args) throws Exception {
@@ -82,7 +85,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         login.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread idCheck = new Thread(new Runnable() {
             @Override
@@ -99,7 +102,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         idCheck.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread getCourse = new Thread(new Runnable() {
             @Override
@@ -116,7 +119,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         getCourse.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread getQuiz = new Thread(new Runnable() {
             @Override
@@ -133,7 +136,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         getQuiz.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread createCourse = new Thread(new Runnable() {
             @Override
@@ -150,7 +153,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         createCourse.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread createQuiz = new Thread(new Runnable() {
             @Override
@@ -167,7 +170,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         createQuiz.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread editID = new Thread(new Runnable() {
             @Override
@@ -184,7 +187,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         editID.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread editPwd = new Thread(new Runnable() {
             @Override
@@ -201,7 +204,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         editPwd.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread deleteAccount = new Thread(new Runnable() {
             @Override
@@ -218,7 +221,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         deleteAccount.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread editQuiz = new Thread(new Runnable() {
             @Override
@@ -235,7 +238,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         editQuiz.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread getQuizContent = new Thread(new Runnable() {
             @Override
@@ -252,7 +255,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         getQuizContent.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread deleteQuiz = new Thread(new Runnable() {
             @Override
@@ -269,7 +272,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         deleteQuiz.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread getSubmissionList = new Thread(new Runnable() {
             @Override
@@ -286,7 +289,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         getSubmissionList.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread takeQuiz = new Thread(new Runnable() {
             @Override
@@ -303,7 +306,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         takeQuiz.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread viewGrading = new Thread(new Runnable() {
             @Override
@@ -320,7 +323,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         viewGrading.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread gradeSubmission = new Thread(new Runnable() {
             @Override
@@ -337,7 +340,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         gradeSubmission.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread viewGraded = new Thread(new Runnable() {
             @Override
@@ -354,7 +357,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         viewGraded.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread getAnswer = new Thread(new Runnable() {
             @Override
@@ -371,7 +374,7 @@ public class Server extends Thread {
         });
         //start the thread, since simultaneously, no need to join
         getAnswer.start();
-        
+
         //thread of a service, simultaneously listening to the port
         Thread randomizeQuiz = new Thread(new Runnable() {
             @Override
@@ -392,10 +395,10 @@ public class Server extends Thread {
 
 
     /**
+     * @param loginRequest A Socket object used to determine whether the person logged into their account correctly or not
+     * @return void
      * @Description input username and password, return the result of login
      * @Date 12:27 PM 11/26/2021
-     * @param [loginRequest] A Socket object used to determine whether the person logged into their account correctly or not
-     * @return void
      */
     public void login(Socket loginRequest) throws IOException, InterruptedException {
 
@@ -429,10 +432,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param registerRequest Socket object used to determine if person registered successfully or not
+     * @return void
      * @Description input username and password, create account based on them
      * @Date 12:28 PM 11/26/2021
-     * @param [registerRequest] Socket object used to determine if person registered successfully or not
-     * @return void
      */
     public void register(Socket registerRequest) throws Exception {
 
@@ -476,10 +479,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param getCourseRequest Socket object that gives access to the course list
+     * @return void
      * @Description return a course list to the client
      * @Date 10:03 AM 11/27/2021
-     * @param [getCourseRequest] Socket object that gives access to the course list
-     * @return void
      */
     public void getCourse(Socket getCourseRequest) {
 
@@ -498,10 +501,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param getQuizRequest Socket object that gives access to the quiz list
+     * @return void
      * @Description input a course name, return the quiz list of the course
      * @Date 10:03 AM 11/27/2021
-     * @param [getQuizRequest] Socket object that gives access to the quiz list
-     * @return void
      */
     public void getQuiz(Socket getQuizRequest) {
 
@@ -536,10 +539,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param createCourseRequest Socket object that allows a course to be created if it does not already exist
+     * @return void
      * @Description input a course name, create a course based on it
      * @Date 11:45 AM 11/27/2021
-     * @param [createCourseRequest] Socket object that allows a course to be created if it does not already exist
-     * @return void
      */
     public void createCourse(Socket createCourseRequest) {
 
@@ -571,10 +574,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param createQuizRequest Socket object that allows a quiz to be created if it does not already exist
+     * @return void
      * @Description input quiz information and create the quiz
      * @Date 1:01 PM 11/27/2021
-     * @param [createQuizRequest] Socket object that allows a quiz to be created if it does not already exist
-     * @return void
      */
     public void createQuiz(Socket createQuizRequest) {
 
@@ -621,10 +624,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param deleteAccountRequest Socket object that allows the account to be deleted if it exists
+     * @return void
      * @Description Input account id and the account will be deleted
      * @Date 1:23 PM 11/27/2021
-     * @param [deleteAccountRequest] Socket object that allows the account to be deleted if it exists
-     * @return void
      */
     public void deleteAccount(Socket deleteAccountRequest) {
 
@@ -655,10 +658,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param editIDRequest Socket object that allows username to be edited
+     * @return void
      * @Description Input an old id and a new id, id will be edited
      * @Date 1:24 PM 11/27/2021
-     * @param [editIDRequest] Socket object that allows username to be edited
-     * @return void
      */
     public void editID(Socket editIDRequest) {
 
@@ -697,10 +700,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param editPasswordRequest Socket object that allows password to be edited
+     * @return void
      * @Description Input id and new password, password will be updated
      * @Date 1:24 PM 11/27/2021
-     * @param [editPasswordRequest] Socket object that allows password to be edited
-     * @return void
      */
     public void editPassword(Socket editPasswordRequest) {
 
@@ -732,10 +735,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param editQuizRequest Socket object that allows the quiz to be edited
+     * @return void
      * @Description input course name and target quiz name and quiz info, quiz will be edited
      * @Date 8:51 PM 11/27/2021
-     * @param [editQuizRequest] Socket object that allows the quiz to be edited
-     * @return void
      */
     public void editQuiz(Socket editQuizRequest) {
 
@@ -785,10 +788,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param getQuizContentRequest Socket object that allows the contents of the quiz to be accessed
+     * @return void
      * @Description Input course and quiz name, quiz content will be returned
      * @Date 8:50 PM 11/27/2021
-     * @param [getQuizContentRequest] Socket object that allows the contents of the quiz to be accessed
-     * @return void
      */
     public void getQuizContent(Socket getQuizContentRequest) {
 
@@ -821,10 +824,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param deleteQuizRequest Socket object that allows the quiz to be deleted if it exists
+     * @return void
      * @Description input course name and quiz name, quiz will be deleted
      * @Date 8:50 PM 11/27/2021
-     * @param [deleteQuizRequest] Socket object that allows the quiz to be deleted if it exists
-     * @return void
      */
     public void deleteQuiz(Socket deleteQuizRequest) {
 
@@ -859,10 +862,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param getSubmissionListRequest Socket object that allows the submission list to be accessed
+     * @return void
      * @Description return the list of ungraded submissions
      * @Date 5:48 PM 12/3/2021
-     * @param [getSubmissionListRequest] Socket object that allows the submission list to be accessed
-     * @return void
      */
     public void getSubmissionList(Socket getSubmissionListRequest) {
         try {
@@ -883,10 +886,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param gradeSubmissionRequest Socket object that gives access for the submission that needs to be graded
+     * @return void
      * @Description Input submission identifiers and subGrades, the submission will be graded
      * @Date 5:47 PM 12/3/2021
-     * @param [gradeSubmissionRequest] Socket object that gives access for the submission that needs to be graded
-     * @return void
      */
     public void gradeSubmission(Socket gradeSubmissionRequest) {
         try {
@@ -929,10 +932,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param takeQuizRequest Socket object that gives access to the quiz
+     * @return void
      * @Description input submission identifiers and answers, the new submission will be recorded, newer attempt will replace older ones
      * @Date 5:54 PM 12/3/2021
-     * @param [takeQuizRequest] Socket object that gives access to the quiz
-     * @return void
      */
     public void takeQuiz(Socket takeQuizRequest) {
         try {
@@ -976,10 +979,10 @@ public class Server extends Thread {
     }
 
     /**
+     * @param viewGradingRequest Socket object that gives access to the quiz grade
+     * @return void
      * @Description input submission identifier to get its detailed grading
      * @Date 6:02 PM 12/3/2021
-     * @param [viewGradingRequest] Socket object that gives access to the quiz grade
-     * @return void
      */
     public void viewGrading(Socket viewGradingRequest) {
         try {
@@ -1019,11 +1022,11 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-    
+
     /**
-     * @Description Uses Socket to get student's usernames and their submissions
-     * @param [getSubmissionListRequest] Socket object that gives access to list of graded submissions
+     * @param getSubmissionListRequest Socket object that gives access to list of graded submissions
      * @return void
+     * @Description Uses Socket to get student's usernames and their submissions
      */
     public void getGradedSubmissionList(Socket getSubmissionListRequest) {
         try {
@@ -1044,11 +1047,11 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-    
+
     /**
-     * @Description Uses Socket to get the course name, quiz name, and student's usernames to get access to the student's answers 
-     * @param [getAnswerRequest] Socket object that gives access to student's answers
+     * @param getAnswerRequest Socket object that gives access to student's answers
      * @return void
+     * @Description Uses Socket to get the course name, quiz name, and student's usernames to get access to the student's answers
      */
     public void getAnswer(Socket getAnswerRequest) {
         try {
@@ -1083,15 +1086,16 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
+
     /**
-     * @Description Uses Socket to get the course name and quiz name to help generate a randomized quiz
-     * @param [randomizeQuizRequest] Socket object that gives access to a randomized quiz version
+     * @param randomizeQuizRequest Socket object that gives access to a randomized quiz version
      * @return void
+     * @Description Uses Socket to get the course name and quiz name to help generate a randomized quiz
      */
     public void randomizeQuiz(Socket randomizeQuizRequest) {
         try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(randomizeQuizRequest.getInputStream()));
-                PrintWriter writer = new PrintWriter(randomizeQuizRequest.getOutputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(randomizeQuizRequest.getInputStream()));
+            PrintWriter writer = new PrintWriter(randomizeQuizRequest.getOutputStream());
             try {
                 String courseName = reader.readLine();
                 String quizName = reader.readLine();

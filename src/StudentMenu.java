@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+
 /**
  * Represents a student's menu that allows them to view their grades, courses, and their settings
+ *
  * @author Ram, William, Leo, Manas, Miras
  * @version December 13, 2021
  */
@@ -16,7 +18,7 @@ public class StudentMenu extends javax.swing.JFrame {
     private javax.swing.JButton viewCourseButton;
     //Button that allows the student to view their grades
     private javax.swing.JButton viewGradingButton;
-    
+
     /**
      * Constructs a newly allocated StudentMenu object that calls the initComponents() method
      */
@@ -61,32 +63,6 @@ public class StudentMenu extends javax.swing.JFrame {
             }
         });
 
-//        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-//        getContentPane().setLayout(layout);
-//        layout.setHorizontalGroup(
-//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(layout.createSequentialGroup()
-//                                .addGap(110, 110, 110)
-//                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-//                                        .addComponent(settingButton, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-//                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-//                                                .addComponent(viewGradingButton, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-//                                                .addComponent(viewCourseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-//                                .addContainerGap(119, Short.MAX_VALUE))
-//        );
-//        layout.setVerticalGroup(
-//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(layout.createSequentialGroup()
-//                                .addGap(49, 49, 49)
-//                                .addComponent(viewCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(18, 18, 18)
-//                                .addComponent(viewGradingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(18, 18, 18)
-//                                .addComponent(settingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addContainerGap(39, Short.MAX_VALUE))
-//        );
-//
-//        pack();
         //Sets up panels and border layout, and adds the buttons to the panel
         this.setTitle("Student Menu");
         getContentPane().setLayout(new BorderLayout());
@@ -98,15 +74,16 @@ public class StudentMenu extends javax.swing.JFrame {
         panel.add(viewGradingButton);
         panel.add(settingButton);
         getContentPane().add(panel, BorderLayout.CENTER);
+        pack();
     }
-    
+
     /**
+     * @return void
      * @Description action when viewCourse button is pressed, represents list of student's courses
      * @Param [evt] Allows the button's action to be performed
-     * @return void
      */
     private void viewCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        String[] options = new String[] {"1", "2", "3", "4"};
+        String[] options = new String[]{"1", "2", "3", "4"};
         ArrayList<String> courseList = Main.connect(new ArrayList<>(), 4002);
         String[] courses = new String[courseList.size()];
         for (int i = 0; i < courseList.size(); i++) {
@@ -179,16 +156,16 @@ public class StudentMenu extends javax.swing.JFrame {
     }
 
     /**
+     * @return void
      * @Description action when viewGrading button is pressed, represents list of student's grades
      * @Param [evt] Allows the button's action to be performed
-     * @return void
      */
     private void viewGradingButtonActionPerformed(java.awt.event.ActionEvent evt) {
         ArrayList<String> temp = new ArrayList<String>();
         temp.add(Main.getCurrentAccount());
         ArrayList<String> sub = Main.connect(temp, 4016);
         String[] submissions = new String[sub.size()];
-        for (int i = 0; i < sub.size() ; i++) {
+        for (int i = 0; i < sub.size(); i++) {
             if (!sub.get(i).isEmpty()) {
                 submissions[i] = sub.get(i);
             }
@@ -222,19 +199,20 @@ public class StudentMenu extends javax.swing.JFrame {
         }
 
     }
-    
+
     /**
+     * @return void
      * @Description action when setting button is pressed, represents account settings
      * @Param [evt] Allows the button's action to be performed
-     * @return void
      */
     private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {
         AccountSetting as = new AccountSetting();
         as.setVisible(true);
     }
-    
+
     /**
      * Main method that invokes the AWT and runs the StudentMenu object that displays the buttons and all its functionalities
+     *
      * @param args Stores the command line arguments
      */
     public static void main(String args[]) {

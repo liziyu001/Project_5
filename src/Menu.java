@@ -52,36 +52,6 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-//        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-//        getContentPane().setLayout(layout);
-//
-//        layout.setHorizontalGroup(
-//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(layout.createSequentialGroup()
-//                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                        .addGroup(layout.createSequentialGroup()
-//                                                .addGap(179, 179, 179)
-//                                                .addComponent(jLabel1))
-//                                        .addGroup(layout.createSequentialGroup()
-//                                                .addGap(119, 119, 119)
-//                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-//                                                        .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//                                                        .addComponent(Register, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))))
-//                                .addContainerGap(132, Short.MAX_VALUE))
-//        );
-//        layout.setVerticalGroup(
-//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(layout.createSequentialGroup()
-//                                .addGap(30, 30, 30)
-//                                .addComponent(jLabel1)
-//                                .addGap(36, 36, 36)
-//                                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(36, 36, 36)
-//                                .addComponent(Register, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addContainerGap(82, Short.MAX_VALUE))
-//        );
-//
-//        pack();
         //Sets the panel and border layout
         this.setTitle("Menu");
         getContentPane().setLayout(new BorderLayout());
@@ -92,6 +62,7 @@ public class Menu extends javax.swing.JFrame {
         panel.add(login);
         panel.add(register);
         getContentPane().add(panel, BorderLayout.CENTER);
+        pack();
     }
 
     /**

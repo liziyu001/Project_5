@@ -72,32 +72,6 @@ public class AccountSetting extends javax.swing.JFrame {
             }
         });
 
-//        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-//        getContentPane().setLayout(layout);
-//        layout.setHorizontalGroup(
-//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(layout.createSequentialGroup()
-//                                .addGap(133, 133, 133)
-//                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                        .addComponent(editIdButton, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-//                                                .addComponent(editPwdButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                                .addComponent(deleteButton)))
-//                                .addContainerGap(140, Short.MAX_VALUE))
-//        );
-//        layout.setVerticalGroup(
-//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(layout.createSequentialGroup()
-//                                .addContainerGap(53, Short.MAX_VALUE)
-//                                .addComponent(editIdButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(35, 35, 35)
-//                                .addComponent(editPwdButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(34, 34, 34)
-//                                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                .addGap(52, 52, 52))
-//        );
-//
-//        pack();
         //Sets up panels and border layout, and adds the buttons to the panel
         this.setTitle("Account Setting");
         getContentPane().setLayout(new BorderLayout());
@@ -110,6 +84,7 @@ public class AccountSetting extends javax.swing.JFrame {
         panel.add(deleteButton);
         panel.add(backButton);
         getContentPane().add(panel, BorderLayout.CENTER);
+        pack();
     }
 
     /**
