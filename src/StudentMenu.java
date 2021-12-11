@@ -211,7 +211,7 @@ public class StudentMenu extends javax.swing.JFrame {
     }
 
     /**
-     * Main method that invokes the AWT and runs the StudentMenu object that displays the buttons and all its functionalities
+     * Main method that invokes run using EDT and runs the StudentMenu object that displays the buttons and all its functionalities
      *
      * @param args Stores the command line arguments
      */
