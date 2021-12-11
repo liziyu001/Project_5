@@ -332,7 +332,7 @@ public class CourseMenu extends javax.swing.JFrame {
     }
 
     /**
-     * Main method that invokes the AWT and runs the CourseMenu object that displays the buttons and all its functionalities
+     * Main method that invokes run using EDT and runs the CourseMenu object that displays the buttons and all its functionalities
      *
      * @param args Stores the command line arguments
      */
