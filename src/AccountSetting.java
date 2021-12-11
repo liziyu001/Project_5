@@ -174,7 +174,7 @@ public class AccountSetting extends javax.swing.JFrame {
     }
     
     /**
-     * Main method that invokes the AWT and runs the AccountSetting object that displays the buttons and all its functionalities
+     * Main method that invokes run using EDT and runs the AccountSetting object that displays the buttons and all its functionalities
      * @param args Stores the command line arguments
      */
     public static void main(String args[]) {
