@@ -211,8 +211,6 @@ public class StudentMenu extends javax.swing.JFrame {
         } catch (Exception e) {
             this.setVisible(true);
         }
-
-
     }
 
     /**

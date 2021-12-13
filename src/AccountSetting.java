@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 /**
  * Represents the account setting options of a person
+ *
  * @author Ram, William, Leo, Manas, Miras
  * @version December 13, 2021
  */
@@ -88,10 +89,10 @@ public class AccountSetting extends javax.swing.JFrame {
     }
 
     /**
+     * @return void
      * @Description action when edit id button is pressed, represents editing username
      * @Date 8:23 PM 12/7/2021
      * @Param [evt] Allows the button's action to be performed
-     * @return void
      */
     private void editIdButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
@@ -119,15 +120,13 @@ public class AccountSetting extends javax.swing.JFrame {
         } catch (Exception e) {
             this.setVisible(true);
         }
-
-
     }
 
     /**
+     * @return void
      * @Description action when edit password button is pressed, represents editing password
      * @Date 8:24 PM 12/7/2021
      * @Param [evt] Allows the button's action to be performed
-     * @return void
      */
     private void editPwdButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
@@ -154,15 +153,12 @@ public class AccountSetting extends javax.swing.JFrame {
         } catch (Exception e) {
             this.setVisible(true);
         }
-
-
-
     }
-    
+
     /**
+     * @return void
      * @Description action when delete button is pressed, represents deleting account
      * @Param [evt] Allows the button's action to be performed
-     * @return void
      */
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
@@ -181,13 +177,12 @@ public class AccountSetting extends javax.swing.JFrame {
         } catch (Exception e) {
             this.setVisible(true);
         }
-
     }
-    
+
     /**
+     * @return void
      * @Description action when back button is pressed
      * @Param [evt] Allows the button's action to be performed
-     * @return void
      */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
@@ -197,21 +192,19 @@ public class AccountSetting extends javax.swing.JFrame {
             new TeacherMenu().setVisible(true);
         }
     }
-    
+
     /**
      * Main method that invokes run using EDT and runs the AccountSetting object that displays the buttons and all its functionalities
+     *
      * @param args Stores the command line arguments
      */
     public static void main(String args[]) {
-
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new AccountSetting().setVisible(true);
             }
         });
     }
-
-
 
 
 }

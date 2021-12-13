@@ -91,8 +91,8 @@ public class Manager {
                 }
                 list.add(new Submission(courseName, quizName, id, graded, answers, subGrades));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
+
         }
         return list;
     }
@@ -123,8 +123,7 @@ public class Manager {
                 pr.println(line);
             }
             pr.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -159,8 +158,7 @@ public class Manager {
             }
             pr.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 
@@ -209,8 +207,7 @@ public class Manager {
                 courses.add(new Course(courseName, courseQuiz));
             }
             br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
         return courses;
     }
@@ -233,8 +230,7 @@ public class Manager {
                 pr.println(info);
             }
             pr.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 
@@ -258,8 +254,7 @@ public class Manager {
                 line = br.readLine();
             }
             br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
         return accounts;
     }

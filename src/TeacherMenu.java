@@ -147,8 +147,6 @@ public class TeacherMenu extends javax.swing.JFrame {
         } catch (Exception e) {
             this.setVisible(true);
         }
-
-
     }
 
     /**
@@ -217,8 +215,6 @@ public class TeacherMenu extends javax.swing.JFrame {
         } catch (Exception e) {
             this.setVisible(true);
         }
-
-
     }
 
     /**
@@ -227,8 +223,6 @@ public class TeacherMenu extends javax.swing.JFrame {
      * @param args Stores the command line arguments
      */
     public static void main(String args[]) {
-
-
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new TeacherMenu().setVisible(true);

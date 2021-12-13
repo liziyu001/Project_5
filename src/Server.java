@@ -78,9 +78,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.login(server.loginService.accept());
                     }
-                } catch (Exception e) {
-
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -96,8 +94,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.register(server.registerService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -113,8 +110,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getCourse(server.getCourseService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -130,8 +126,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getQuiz(server.getQuizService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -147,8 +142,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.createCourse(server.createCourseService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -164,8 +158,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.createQuiz(server.createQuizService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -181,8 +174,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.editID(server.editUsernameService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -198,8 +190,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.editPassword(server.editPasswordService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -215,8 +206,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.deleteAccount(server.deleteAccountService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -232,8 +222,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.editQuiz(server.editQuizService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -249,8 +238,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getQuizContent(server.getQuizContentService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -266,8 +254,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.deleteQuiz(server.deleteQuizService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -283,8 +270,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getSubmissionList(server.getSubmissionListService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -300,8 +286,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.takeQuiz(server.takeQuizService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -317,8 +302,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.viewGrading(server.viewGradingService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -334,8 +318,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.gradeSubmission(server.gradeSubmissionService.accept());
                     }
-                } catch (Exception e) {
-
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -351,8 +334,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getGradedSubmissionList(server.viewGradedService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -368,8 +350,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getAnswer(server.getAnswerService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -385,8 +366,7 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.randomizeQuiz(server.randomizeQuizService.accept());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ignored) {
                 }
             }
         });
@@ -427,8 +407,7 @@ public class Server extends Thread {
             }
             reader.close();
             writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -474,8 +453,7 @@ public class Server extends Thread {
             writer.flush();
             reader.close();
             writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -496,8 +474,7 @@ public class Server extends Thread {
             writer.print(course);
             writer.flush();
             writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -534,8 +511,7 @@ public class Server extends Thread {
             writer.flush();
             reader.close();
             writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -569,8 +545,7 @@ public class Server extends Thread {
             writer.flush();
             reader.close();
             writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -617,15 +592,13 @@ public class Server extends Thread {
                 m.updateCourse();
                 writer.println("Success");
             } catch (Exception e) {
-                e.printStackTrace();
                 writer.println("Fail");
             }
 
             writer.flush();
             reader.close();
             writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -658,8 +631,7 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -700,8 +672,7 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -735,8 +706,7 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -747,7 +717,6 @@ public class Server extends Thread {
      * @Date 8:51 PM 11/27/2021
      */
     public void editQuiz(Socket editQuizRequest) {
-
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(editQuizRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(editQuizRequest.getOutputStream());
@@ -775,7 +744,6 @@ public class Server extends Thread {
                 }
                 for (int i = 0; i < c.getCourseQuiz().size(); i++) {
                     if (c.getCourseQuiz().get(i).getName().equals(quizName)) {
-                        System.out.println("123");
                         c.getCourseQuiz().get(i).setQuestions(q);
                         m.updateCourse();
                         break;
@@ -788,8 +756,7 @@ public class Server extends Thread {
             writer.flush();
             reader.close();
             writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -800,7 +767,6 @@ public class Server extends Thread {
      * @Date 8:50 PM 11/27/2021
      */
     public void getQuizContent(Socket getQuizContentRequest) {
-
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getQuizContentRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(getQuizContentRequest.getOutputStream());
@@ -824,8 +790,7 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -862,8 +827,7 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -886,8 +850,7 @@ public class Server extends Thread {
             writer.print(out);
             writer.flush();
             writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -932,8 +895,7 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -979,8 +941,7 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -1024,8 +985,7 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -1049,8 +1009,7 @@ public class Server extends Thread {
             writer.print(out);
             writer.flush();
             writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -1088,8 +1047,7 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -1120,14 +1078,12 @@ public class Server extends Thread {
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
                 writer.println("Fail");
             }
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 

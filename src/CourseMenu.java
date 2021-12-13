@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-//import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
-
 /**
  * Represents the course menu that displays all the quiz options
  *
@@ -152,7 +150,7 @@ public class CourseMenu extends javax.swing.JFrame {
                     if (numQuestions <= 0) {
                         throw new Exception();
                     }
-                    for (int i = 0; i < numQuestions; i++) { //Error handling required
+                    for (int i = 0; i < numQuestions; i++) {
                         String temp = JOptionPane.showInputDialog(null,
                                 "Enter the prompt for question" + (i + 1),
                                 "Create Quiz", JOptionPane.QUESTION_MESSAGE);
@@ -249,18 +247,12 @@ public class CourseMenu extends javax.swing.JFrame {
                     quizs[i] = quizList.get(i);
                 }
             }
-
             String choice = (String) JOptionPane.showInputDialog(null, "Select the quiz you want to proceed",
                     "Quiz selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
                     quizs[0]);
             ArrayList<String> in = new ArrayList<String>();
             in.add(Main.getCurrentCourse());
             in.add(choice.split("\\. ")[1]);
-            //System.out.println(choice);
-//        String n = JOptionPane.showInputDialog(null,
-//                "How many Question do you want to include",
-//                "Create Quiz", JOptionPane.QUESTION_MESSAGE);
-//        in.add(n);
             boolean end = false;
             while (!end) {
                 String numbOfQuestions = JOptionPane.showInputDialog(null, "Enter new amount of questions", "Edit Quiz", JOptionPane.QUESTION_MESSAGE);
@@ -297,20 +289,26 @@ public class CourseMenu extends javax.swing.JFrame {
                                     if (answerChoice == null) {
                                         this.setVisible(true);
                                         end = true;
+                                        i = Integer.MAX_VALUE;
                                         break;
                                     } else if (answerChoice.contains(";")) {
                                         JOptionPane.showMessageDialog(null, "Value cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
                                         this.setVisible(true);
                                         end = true;
+                                        i = Integer.MAX_VALUE;
                                         break;
                                     } else if (answerChoice.equals("")) {
                                         JOptionPane.showMessageDialog(null, "Value cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
                                         this.setVisible(true);
                                         end = true;
+                                        i = Integer.MAX_VALUE;
                                         break;
                                     } else {
                                         in.add(answerChoice);
                                     }
+                                }
+                                if (i > numberOfQuestions) {
+                                    break;
                                 }
                             }
                         }
@@ -333,33 +331,9 @@ public class CourseMenu extends javax.swing.JFrame {
                     }
                 }
             }
-//        for (int i = 0; i < Integer.parseInt(n); i++) { //Error handling required
-//            in.add(JOptionPane.showInputDialog(null,
-//                    "Enter the prompt for question" + (i + 1),
-//                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-//            in.add(JOptionPane.showInputDialog(null,
-//                    "Enter the first choice for question" + (i + 1),
-//                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-//            in.add(JOptionPane.showInputDialog(null,
-//                    "Enter the second choice for question" + (i + 1),
-//                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-//            in.add(JOptionPane.showInputDialog(null,
-//                    "Enter the third choice for question" + (i + 1),
-//                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-//            in.add(JOptionPane.showInputDialog(null,
-//                    "Enter the fourth choice for question" + (i + 1),
-//                    "Create Quiz", JOptionPane.QUESTION_MESSAGE));
-//        }
-//        ArrayList<String> out = Main.connect(in, 4009);
-//        if (out.get(0).equals("Success")) {
-//            JOptionPane.showMessageDialog(null, "Successfully Editing the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
-//        }
         } catch (Exception e) {
             this.setVisible(true);
         }
-
     }
 
     /**
@@ -394,7 +368,6 @@ public class CourseMenu extends javax.swing.JFrame {
         } catch (Exception e) {
             this.setVisible(true);
         }
-
     }
 
     /**
@@ -413,7 +386,6 @@ public class CourseMenu extends javax.swing.JFrame {
      * @param args Stores the command line arguments
      */
     public static void main(String args[]) {
-
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new CourseMenu().setVisible(true);

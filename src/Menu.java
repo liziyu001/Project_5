@@ -71,8 +71,6 @@ public class Menu extends javax.swing.JFrame {
      * @Param [evt] Allows the button's action to be performed
      */
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {
-//        Login l = new Login();
-//        l.setVisible(true);
         this.setVisible(false);
         try {
             String id = JOptionPane.showInputDialog(null,
