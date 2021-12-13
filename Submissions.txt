@@ -1,4 +1,2 @@
-CS180;The Second Quiz;William;true;3,3,3;1,1,1
-CS180;The Second Quiz;manas;true;4,2,3;2,22,2
-CS180;The Second Quiz;miras;false;1,2,3;0,0,0
-CS180;The first Quiz;William;false;1,1;0,0
+CS180;The first Quiz;William;true;2,2;1,1
+CS180;The Second Quiz;William;false;3,3,3;0,0,0
