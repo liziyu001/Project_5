@@ -73,42 +73,47 @@ public class Menu extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {
 //        Login l = new Login();
 //        l.setVisible(true);
-//        this.setVisible(false);
-
-        String id = JOptionPane.showInputDialog(null,
-                "Enter your Username",
-                "Username input", JOptionPane.QUESTION_MESSAGE);
-        String pwd = JOptionPane.showInputDialog(null,
-                "Enter your Password",
-                "Password input", JOptionPane.QUESTION_MESSAGE);
-        ArrayList<String> in = new ArrayList<String>();
-        in.add(id);
-        in.add(pwd);
-        if (in.get(0).contains(";") || in.get(1).contains(";")) {
-            JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            ArrayList<String> out = Main.connect(in, 4000);
-            if (!out.get(0).equals("Fail")) {
-                if (out.get(0).equals("true")) {
-                    JOptionPane.showMessageDialog(null, "Successfully login as Student " + in.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Successfully login as Teacher " + in.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
-                }
-                Main.setCurrentAccount(in.get(0));
-                if (out.get(0).equals("true")) {
-                    Main.setStudent(true);
-                    StudentMenu sm = new StudentMenu();
-                    sm.setVisible(true);
-                } else {
-                    Main.setStudent(false);
-                    TeacherMenu tm = new TeacherMenu();
-                    tm.setVisible(true);
-                }
-                this.setVisible(false);
+        this.setVisible(false);
+        try {
+            String id = JOptionPane.showInputDialog(null,
+                    "Enter your Username",
+                    "Username input", JOptionPane.QUESTION_MESSAGE);
+            String pwd = JOptionPane.showInputDialog(null,
+                    "Enter your Password",
+                    "Password input", JOptionPane.QUESTION_MESSAGE);
+            ArrayList<String> in = new ArrayList<String>();
+            in.add(id);
+            in.add(pwd);
+            if (in.get(0).contains(";") || in.get(1).contains(";")) {
+                JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                ArrayList<String> out = Main.connect(in, 4000);
+                if (!out.get(0).equals("Fail")) {
+                    if (out.get(0).equals("true")) {
+                        JOptionPane.showMessageDialog(null, "Successfully login as Student " + in.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Successfully login as Teacher " + in.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    Main.setCurrentAccount(in.get(0));
+                    if (out.get(0).equals("true")) {
+                        Main.setStudent(true);
+                        StudentMenu sm = new StudentMenu();
+                        sm.setVisible(true);
+                    } else {
+                        Main.setStudent(false);
+                        TeacherMenu tm = new TeacherMenu();
+                        tm.setVisible(true);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                    this.setVisible(true);
+                }
             }
+        } catch (Exception e) {
+            this.setVisible(true);
         }
+
     }
 
     /**
@@ -119,45 +124,52 @@ public class Menu extends javax.swing.JFrame {
     private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {
 //        Register r = new Register();
 //        r.setVisible(true);
-//        this.setVisible(false);
-        String[] roles = {"Teacher", "Student"};
-        String id = JOptionPane.showInputDialog(null,
-                "Enter your Username",
-                "Username input", JOptionPane.QUESTION_MESSAGE);
-        String pwd = JOptionPane.showInputDialog(null,
-                "Enter your Password",
-                "Password input", JOptionPane.QUESTION_MESSAGE);
-        ArrayList<String> in = new ArrayList<String>();
-        in.add(id);
-        in.add(pwd);
-        String role = (String) JOptionPane.showInputDialog(null, "What" +
-                        "Your role:",
-                "Role Choice", JOptionPane.QUESTION_MESSAGE, null, roles,
-                roles[0]);
-        in.add(role);
-        if (in.get(0).contains(";") || in.get(1).contains(";")) {
-            JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (in.get(0).isEmpty() || in.get(1).isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            ArrayList<String> out = Main.connect(in, 4001);
-            if (out.get(0).equals("Success")) {
-                Main.setCurrentAccount(in.get(0));
-                JOptionPane.showMessageDialog(null, "Success", "Success", JOptionPane.INFORMATION_MESSAGE);
-                if (role.equals("Teacher")) {
-                    Main.setStudent(false);
-                    TeacherMenu tm = new TeacherMenu();
-                    tm.setVisible(true);
-                } else {
-                    Main.setStudent(true);
-                    StudentMenu sm = new StudentMenu();
-                    sm.setVisible(true);
-                }
-                this.setVisible(false);
+        this.setVisible(false);
+        try {
+            String[] roles = {"Teacher", "Student"};
+            String id = JOptionPane.showInputDialog(null,
+                    "Enter your Username",
+                    "Username input", JOptionPane.QUESTION_MESSAGE);
+            String pwd = JOptionPane.showInputDialog(null,
+                    "Enter your Password",
+                    "Password input", JOptionPane.QUESTION_MESSAGE);
+            ArrayList<String> in = new ArrayList<String>();
+            in.add(id);
+            in.add(pwd);
+            String role = (String) JOptionPane.showInputDialog(null, "What" +
+                            "Your role:",
+                    "Role Choice", JOptionPane.QUESTION_MESSAGE, null, roles,
+                    roles[0]);
+            in.add(role);
+            if (in.get(0).contains(";") || in.get(1).contains(";")) {
+                JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(true);
+            } else if (in.get(0).isEmpty() || in.get(1).isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "this id has already been taken", "Error", JOptionPane.ERROR_MESSAGE);
+                ArrayList<String> out = Main.connect(in, 4001);
+                if (out.get(0).equals("Success")) {
+                    Main.setCurrentAccount(in.get(0));
+                    JOptionPane.showMessageDialog(null, "Success", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    if (role.equals("Teacher")) {
+                        Main.setStudent(false);
+                        TeacherMenu tm = new TeacherMenu();
+                        tm.setVisible(true);
+                    } else {
+                        Main.setStudent(true);
+                        StudentMenu sm = new StudentMenu();
+                        sm.setVisible(true);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "this id has already been taken", "Error", JOptionPane.ERROR_MESSAGE);
+                    this.setVisible(true);
+                }
             }
+        } catch (Exception e) {
+            this.setVisible(true);
         }
+
     }
 
     /**

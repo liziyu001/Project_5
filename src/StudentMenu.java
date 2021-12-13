@@ -68,7 +68,7 @@ public class StudentMenu extends javax.swing.JFrame {
         getContentPane().setLayout(new BorderLayout());
         this.setSize(600, 100);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel panel = new JPanel();
         panel.add(viewCourseButton);
         panel.add(viewGradingButton);
@@ -83,76 +83,83 @@ public class StudentMenu extends javax.swing.JFrame {
      * @Param [evt] Allows the button's action to be performed
      */
     private void viewCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        String[] options = new String[]{"1", "2", "3", "4"};
-        ArrayList<String> courseList = Main.connect(new ArrayList<>(), 4002);
-        String[] courses = new String[courseList.size()];
-        for (int i = 0; i < courseList.size(); i++) {
-            courses[i] = courseList.get(i);
-        }
-        if (courses.length == 0) {
-            JOptionPane.showMessageDialog(null, "There are currently no courses!", "Fail", JOptionPane.ERROR_MESSAGE);
-        } else {
-            String choice = (String) JOptionPane.showInputDialog(null, "Select the course to proceed",
-                    "Course selection", JOptionPane.QUESTION_MESSAGE, null, courses,
-                    courses[0]);
-            Main.setCurrentCourse(choice.split("\\. ")[1]);
-            ArrayList<String> c = new ArrayList<String>();
-            c.add(Main.getCurrentCourse());
-            ArrayList<String> quizList = Main.connect(c, 4003);
-            String[] quizs = new String[quizList.size()];
-            for (int i = 0; i < quizList.size(); i++) {
-                if (!quizList.get(i).isEmpty()) {
-                    quizs[i] = quizList.get(i);
-                }
+        this.setVisible(false);
+        try {
+            String[] options = new String[]{"1", "2", "3", "4"};
+            ArrayList<String> courseList = Main.connect(new ArrayList<>(), 4002);
+            String[] courses = new String[courseList.size()];
+            for (int i = 0; i < courseList.size(); i++) {
+                courses[i] = courseList.get(i);
             }
-            choice = (String) JOptionPane.showInputDialog(null, "Select the quiz you want to take",
-                    "Quiz selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
-                    quizs[0]);
-            ArrayList<String> in = new ArrayList<String>();
-            in.add(Main.getCurrentCourse());
-            in.add(choice.split("\\. ")[1]);
-            ArrayList<String> quizContent = Main.connect(in, 4010);
-            in.add(Main.getCurrentAccount());
-            int takeViaFile = JOptionPane.showConfirmDialog(null, "Do you want to take this quiz by file import?", "File import", JOptionPane.YES_NO_OPTION);
-            if (takeViaFile == JOptionPane.YES_OPTION) {
-                String path = JOptionPane.showInputDialog(null,
-                        "Enter the path of your file",
-                        "Path input", JOptionPane.QUESTION_MESSAGE);
-                try {
-                    File f = new File(path);
-                    FileReader fr = new FileReader(f);
-                    BufferedReader br = new BufferedReader(fr);
-                    String line = br.readLine();
-                    while (line != null) {
-                        in.add(line);
-                        line = br.readLine();
-                    }
-                    br.close();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "There was a problem accessing this file!", "Fail", JOptionPane.ERROR_MESSAGE);
-                    e.printStackTrace();
-                }
+            if (courses.length == 0) {
+                JOptionPane.showMessageDialog(null, "There are currently no courses!", "Fail", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(true);
             } else {
-                String ans = "";
-                for (int i = 0; i < ((quizContent.size() - 1) / 5); i++) {
-                    String q = "";
-                    for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
-                        q = q + "\n" + quizContent.get(j);
+                String choice = (String) JOptionPane.showInputDialog(null, "Select the course to proceed",
+                        "Course selection", JOptionPane.QUESTION_MESSAGE, null, courses,
+                        courses[0]);
+                Main.setCurrentCourse(choice.split("\\. ")[1]);
+                ArrayList<String> c = new ArrayList<String>();
+                c.add(Main.getCurrentCourse());
+                ArrayList<String> quizList = Main.connect(c, 4003);
+                String[] quizs = new String[quizList.size()];
+                for (int i = 0; i < quizList.size(); i++) {
+                    if (!quizList.get(i).isEmpty()) {
+                        quizs[i] = quizList.get(i);
                     }
-                    ans = ans + (String) JOptionPane.showInputDialog(null, "Enter the your answer to this question" + q,
-                            "Taking quiz", JOptionPane.QUESTION_MESSAGE, null, options,
-                            options[0]) + ",";
                 }
-                in.add(ans.substring(0, ans.length() - 1));
+                choice = (String) JOptionPane.showInputDialog(null, "Select the quiz you want to take",
+                        "Quiz selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
+                        quizs[0]);
+                ArrayList<String> in = new ArrayList<String>();
+                in.add(Main.getCurrentCourse());
+                in.add(choice.split("\\. ")[1]);
+                ArrayList<String> quizContent = Main.connect(in, 4010);
+                in.add(Main.getCurrentAccount());
+                int takeViaFile = JOptionPane.showConfirmDialog(null, "Do you want to take this quiz by file import?", "File import", JOptionPane.YES_NO_OPTION);
+                if (takeViaFile == JOptionPane.YES_OPTION) {
+                    String path = JOptionPane.showInputDialog(null,
+                            "Enter the path of your file",
+                            "Path input", JOptionPane.QUESTION_MESSAGE);
+                    try {
+                        File f = new File(path);
+                        FileReader fr = new FileReader(f);
+                        BufferedReader br = new BufferedReader(fr);
+                        String line = br.readLine();
+                        while (line != null) {
+                            in.add(line);
+                            line = br.readLine();
+                        }
+                        br.close();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "There was a problem accessing this file!", "Fail", JOptionPane.ERROR_MESSAGE);
+                        this.setVisible(true);
+                    }
+                } else {
+                    String ans = "";
+                    for (int i = 0; i < ((quizContent.size() - 1) / 5); i++) {
+                        String q = "";
+                        for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
+                            q = q + "\n" + quizContent.get(j);
+                        }
+                        ans = ans + (String) JOptionPane.showInputDialog(null, "Enter the your answer to this question" + q,
+                                "Taking quiz", JOptionPane.QUESTION_MESSAGE, null, options,
+                                options[0]) + ",";
+                    }
+                    in.add(ans.substring(0, ans.length() - 1));
+                }
+                ArrayList<String> out = Main.connect(in, 4013);
+                if (out.get(0).equals("Error")) {
+                    JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                    this.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Successfully submitting your answer at " + out.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
+                    this.setVisible(true);
+                }
             }
-            ArrayList<String> out = Main.connect(in, 4013);
-            if (out.get(0).equals("Error")) {
-                JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Successfully submitting your answer at " + out.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
-            }
+        } catch (Exception e) {
+            this.setVisible(true);
         }
-
     }
 
     /**
@@ -161,42 +168,50 @@ public class StudentMenu extends javax.swing.JFrame {
      * @Param [evt] Allows the button's action to be performed
      */
     private void viewGradingButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        ArrayList<String> temp = new ArrayList<String>();
-        temp.add(Main.getCurrentAccount());
-        ArrayList<String> sub = Main.connect(temp, 4016);
-        String[] submissions = new String[sub.size()];
-        for (int i = 0; i < sub.size(); i++) {
-            if (!sub.get(i).isEmpty()) {
-                submissions[i] = sub.get(i);
-            }
-        }
-        if (submissions.length == 0) {
-            JOptionPane.showMessageDialog(null, "There are currently no graded submissions!", "Fail", JOptionPane.ERROR_MESSAGE);
-        } else {
-            String choice = (String) JOptionPane.showInputDialog(null, "Select the graded submission you want to view",
-                    "Submission selection", JOptionPane.QUESTION_MESSAGE, null, submissions,
-                    submissions[0]);
-            ArrayList<String> contentRequest = new ArrayList<String>();
-            contentRequest.add(choice.split("-")[0]);
-            contentRequest.add(choice.split("-")[1]);
-            ArrayList<String> quizContent = Main.connect(contentRequest, 4010);
-            contentRequest.add(choice.split("-")[2]);
-            ArrayList<String> answers = Main.connect(contentRequest, 4017);
-            ArrayList<String> grades = Main.connect(contentRequest, 4014);
-            for (int i = 0; i < answers.get(0).split(",").length; i++) {
-                String q = "";
-                for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
-                    q = q + "\n" + quizContent.get(j);
+        this.setVisible(false);
+        try {
+            ArrayList<String> temp = new ArrayList<String>();
+            temp.add(Main.getCurrentAccount());
+            ArrayList<String> sub = Main.connect(temp, 4016);
+            String[] submissions = new String[sub.size()];
+            for (int i = 0; i < sub.size(); i++) {
+                if (!sub.get(i).isEmpty()) {
+                    submissions[i] = sub.get(i);
                 }
-                JOptionPane.showMessageDialog(null, "Question " + (i + 1) + "\n" + q + "\n\n"
-                                + "Your answer: " + answers.get(0).split(",")[i] + "\n\n" + "Grade for this answer: "
-                                + grades.get(0).split(",")[i],
-                        "View Grading", JOptionPane.INFORMATION_MESSAGE);
-
             }
-            JOptionPane.showMessageDialog(null, "Total Grade: " + grades.get(1),
-                    "View Grading", JOptionPane.INFORMATION_MESSAGE);
+            if (submissions.length == 0) {
+                JOptionPane.showMessageDialog(null, "There are currently no graded submissions!", "Fail", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(true);
+            } else {
+                String choice = (String) JOptionPane.showInputDialog(null, "Select the graded submission you want to view",
+                        "Submission selection", JOptionPane.QUESTION_MESSAGE, null, submissions,
+                        submissions[0]);
+                ArrayList<String> contentRequest = new ArrayList<String>();
+                contentRequest.add(choice.split("-")[0]);
+                contentRequest.add(choice.split("-")[1]);
+                ArrayList<String> quizContent = Main.connect(contentRequest, 4010);
+                contentRequest.add(choice.split("-")[2]);
+                ArrayList<String> answers = Main.connect(contentRequest, 4017);
+                ArrayList<String> grades = Main.connect(contentRequest, 4014);
+                for (int i = 0; i < answers.get(0).split(",").length; i++) {
+                    String q = "";
+                    for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
+                        q = q + "\n" + quizContent.get(j);
+                    }
+                    JOptionPane.showMessageDialog(null, "Question " + (i + 1) + "\n" + q + "\n\n"
+                                    + "Your answer: " + answers.get(0).split(",")[i] + "\n\n" + "Grade for this answer: "
+                                    + grades.get(0).split(",")[i],
+                            "View Grading", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+                JOptionPane.showMessageDialog(null, "Total Grade: " + grades.get(1),
+                        "View Grading", JOptionPane.INFORMATION_MESSAGE);
+            }
+            this.setVisible(true);
+        } catch (Exception e) {
+            this.setVisible(true);
         }
+
 
     }
 
@@ -206,6 +221,7 @@ public class StudentMenu extends javax.swing.JFrame {
      * @Param [evt] Allows the button's action to be performed
      */
     private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        this.setVisible(false);
         AccountSetting as = new AccountSetting();
         as.setVisible(true);
     }

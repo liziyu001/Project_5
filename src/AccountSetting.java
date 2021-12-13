@@ -77,7 +77,7 @@ public class AccountSetting extends javax.swing.JFrame {
         getContentPane().setLayout(new BorderLayout());
         this.setSize(600, 100);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel panel = new JPanel();
         panel.add(editIdButton);
         panel.add(editPwdButton);
@@ -94,23 +94,32 @@ public class AccountSetting extends javax.swing.JFrame {
      * @return void
      */
     private void editIdButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        String nID = JOptionPane.showInputDialog(null,
-                "Enter the your new User ID",
-                "Edit username", JOptionPane.QUESTION_MESSAGE);
-        ArrayList<String> in = new ArrayList<String>();
-        in.add(Main.getCurrentAccount());
-        in.add(nID);
-        if (in.get(1).contains(";")) {
-            JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            ArrayList<String> out = Main.connect(in, 4006);
-            if (out.get(0).equals("Success")) {
-                Main.setCurrentAccount(in.get(1));
-                JOptionPane.showMessageDialog(null, "Successfully editing your ID", "Success", JOptionPane.INFORMATION_MESSAGE);
+        this.setVisible(false);
+        try {
+            String nID = JOptionPane.showInputDialog(null,
+                    "Enter the your new User ID",
+                    "Edit username", JOptionPane.QUESTION_MESSAGE);
+            ArrayList<String> in = new ArrayList<String>();
+            in.add(Main.getCurrentAccount());
+            in.add(nID);
+            if (in.get(1).contains(";")) {
+                JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Your New ID has already be taken", "Fail", JOptionPane.ERROR_MESSAGE);
+                ArrayList<String> out = Main.connect(in, 4006);
+                if (out.get(0).equals("Success")) {
+                    Main.setCurrentAccount(in.get(1));
+                    JOptionPane.showMessageDialog(null, "Successfully editing your ID", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    this.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Your New ID has already be taken", "Fail", JOptionPane.ERROR_MESSAGE);
+                    this.setVisible(true);
+                }
             }
+        } catch (Exception e) {
+            this.setVisible(true);
         }
+
 
     }
 
@@ -121,22 +130,31 @@ public class AccountSetting extends javax.swing.JFrame {
      * @return void
      */
     private void editPwdButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        String pwd = JOptionPane.showInputDialog(null,
-                "Enter your new password",
-                "Edit Password", JOptionPane.QUESTION_MESSAGE);
-        ArrayList<String> in = new ArrayList<String>();
-        in.add(Main.getCurrentAccount());
-        in.add(pwd);
-        if (in.get(1).contains(";")) {
-            JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            ArrayList<String> out = Main.connect(in, 4007);
-            if (out.get(0).equals("Success")) {
-                JOptionPane.showMessageDialog(null, "Successfully editing your Password", "Success", JOptionPane.INFORMATION_MESSAGE);
+        this.setVisible(false);
+        try {
+            String pwd = JOptionPane.showInputDialog(null,
+                    "Enter your new password",
+                    "Edit Password", JOptionPane.QUESTION_MESSAGE);
+            ArrayList<String> in = new ArrayList<String>();
+            in.add(Main.getCurrentAccount());
+            in.add(pwd);
+            if (in.get(1).contains(";")) {
+                JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                ArrayList<String> out = Main.connect(in, 4007);
+                if (out.get(0).equals("Success")) {
+                    JOptionPane.showMessageDialog(null, "Successfully editing your Password", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    this.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                    this.setVisible(true);
+                }
             }
+        } catch (Exception e) {
+            this.setVisible(true);
         }
+
 
 
     }
@@ -147,16 +165,23 @@ public class AccountSetting extends javax.swing.JFrame {
      * @return void
      */
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        ArrayList<String> in = new ArrayList<String>();
-        in.add(Main.getCurrentAccount());
-        ArrayList<String> out = Main.connect(in, 4008);
-        if (out.get(0).equals("Success")) {
-            this.setVisible(false);
-            JOptionPane.showMessageDialog(null, "Successfully deleting your account, you are now logged out", "Success", JOptionPane.INFORMATION_MESSAGE);
-            new Menu().setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+        this.setVisible(false);
+        try {
+            ArrayList<String> in = new ArrayList<String>();
+            in.add(Main.getCurrentAccount());
+            ArrayList<String> out = Main.connect(in, 4008);
+            if (out.get(0).equals("Success")) {
+                this.setVisible(false);
+                JOptionPane.showMessageDialog(null, "Successfully deleting your account, you are now logged out", "Success", JOptionPane.INFORMATION_MESSAGE);
+                new Menu().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(true);
+            }
+        } catch (Exception e) {
+            this.setVisible(true);
         }
+
     }
     
     /**

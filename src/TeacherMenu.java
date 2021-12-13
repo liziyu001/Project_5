@@ -77,7 +77,7 @@ public class TeacherMenu extends javax.swing.JFrame {
         getContentPane().setLayout(new BorderLayout());
         this.setSize(600, 100);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel panel = new JPanel();
         panel.add(viewCourseButton);
         panel.add(createCourseButton);
@@ -85,6 +85,7 @@ public class TeacherMenu extends javax.swing.JFrame {
         panel.add(gradingButton);
         getContentPane().add(panel, BorderLayout.CENTER);
         pack();
+
     }
 
     /**
@@ -94,22 +95,27 @@ public class TeacherMenu extends javax.swing.JFrame {
      */
     private void viewCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
-        ArrayList<String> courseList = Main.connect(new ArrayList<>(), 4002);
-        String[] courses = new String[courseList.size()];
-        for (int i = 0; i < courseList.size(); i++) {
-            courses[i] = courseList.get(i);
-        }
-        if (courses.length == 0) {
-            JOptionPane.showMessageDialog(null, "No courses currently exist!", "Fail", JOptionPane.ERROR_MESSAGE);
-        } else {
-            String choice = (String) JOptionPane.showInputDialog(null, "Select the course you want to proceed",
-                    "Course selection", JOptionPane.QUESTION_MESSAGE, null, courses,
-                    courses[0]);
-            Main.setCurrentCourse(choice.split("\\. ")[1]);
-            CourseMenu cm = new CourseMenu();
-            cm.setVisible(true);
-        }
+        try {
+            ArrayList<String> courseList = Main.connect(new ArrayList<>(), 4002);
+            String[] courses = new String[courseList.size()];
+            for (int i = 0; i < courseList.size(); i++) {
+                courses[i] = courseList.get(i);
+            }
+            if (courses.length == 0) {
+                JOptionPane.showMessageDialog(null, "No courses currently exist!", "Fail", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(true);
+            } else {
+                String choice = (String) JOptionPane.showInputDialog(null, "Select the course you want to proceed",
+                        "Course selection", JOptionPane.QUESTION_MESSAGE, null, courses,
+                        courses[0]);
 
+                Main.setCurrentCourse(choice.split("\\. ")[1]);
+                CourseMenu cm = new CourseMenu();
+                cm.setVisible(true);
+            }
+        } catch (Exception e) {
+            this.setVisible(true);
+        }
     }
 
     /**
@@ -118,21 +124,30 @@ public class TeacherMenu extends javax.swing.JFrame {
      * @Param [evt] Allows the button's action to be performed
      */
     private void createCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        String name = JOptionPane.showInputDialog(null,
-                "Enter the name of the course you want to create",
-                "Create Course", JOptionPane.QUESTION_MESSAGE);
-        ArrayList<String> in = new ArrayList<String>();
-        in.add(name);
-        if (in.get(0).isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            ArrayList<String> out = Main.connect(in, 4004);
-            if (out.get(0).equals("Success")) {
-                JOptionPane.showMessageDialog(null, "Successfully creating the new course", "Success", JOptionPane.INFORMATION_MESSAGE);
+        this.setVisible(false);
+        try {
+            String name = JOptionPane.showInputDialog(null,
+                    "Enter the name of the course you want to create",
+                    "Create Course", JOptionPane.QUESTION_MESSAGE);
+            ArrayList<String> in = new ArrayList<String>();
+            in.add(name);
+            if (in.get(0).isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Course with same name has already been created", "Fail", JOptionPane.ERROR_MESSAGE);
+                ArrayList<String> out = Main.connect(in, 4004);
+                if (out.get(0).equals("Success")) {
+                    JOptionPane.showMessageDialog(null, "Successfully creating the new course", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    this.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Course with same name has already been created", "Fail", JOptionPane.ERROR_MESSAGE);
+                    this.setVisible(true);
+                }
             }
+        } catch (Exception e) {
+            this.setVisible(true);
         }
+
 
     }
 
@@ -153,47 +168,56 @@ public class TeacherMenu extends javax.swing.JFrame {
      * @Param [evt] Allows the button's action to be performed
      */
     private void gradingButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        ArrayList<String> sub = Main.connect(new ArrayList<String>(), 4012);
-        String[] submissions = new String[sub.size()];
-        for (int i = 0; i < sub.size(); i++) {
-            if (!sub.get(i).isEmpty()) {
-                submissions[i] = sub.get(i);
-            }
-        }
-        if (submissions.length == 0) {
-            JOptionPane.showMessageDialog(null, "There are currently no submissions!", "Fail", JOptionPane.ERROR_MESSAGE);
-        } else {
-            String choice = (String) JOptionPane.showInputDialog(null, "Select the submission you want to grade",
-                    "Submission selection", JOptionPane.QUESTION_MESSAGE, null, submissions,
-                    submissions[0]);
-            ArrayList<String> contentRequest = new ArrayList<String>();
-            contentRequest.add(choice.split("-")[0]);
-            contentRequest.add(choice.split("-")[1]);
-            ArrayList<String> quizContent = Main.connect(contentRequest, 4010);
-            contentRequest.add(choice.split("-")[2]);
-            ArrayList<String> answers = Main.connect(contentRequest, 4017);
-            ArrayList<String> in = contentRequest;
-            String grades = "";
-            for (int i = 0; i < ((quizContent.size() - 1) / 5); i++) {
-                String q = "";
-                for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
-                    q = q + "\n" + quizContent.get(j);
+        this.setVisible(false);
+        try {
+            ArrayList<String> sub = Main.connect(new ArrayList<String>(), 4012);
+            String[] submissions = new String[sub.size()];
+            for (int i = 0; i < sub.size(); i++) {
+                if (!sub.get(i).isEmpty()) {
+                    submissions[i] = sub.get(i);
                 }
-                grades = grades + JOptionPane.showInputDialog(null,
-                        "Question: " + (i + 1) + "\n" + q + "\n\n" + "The student's answer is:\n" + answers.get(0).split(",")[i] + "\n\n"
-                                + "Enter the score you want to give",
-                        "Grade submission", JOptionPane.QUESTION_MESSAGE) + ",";
-
             }
-            in.add(grades.substring(0, grades.length() - 1));
-            ArrayList<String> out = Main.connect(in, 4015);
-            if (out.get(0).equals("Success")) {
-                Main.setCurrentAccount(in.get(1));
-                JOptionPane.showMessageDialog(null, "Successfully grading this submission", "Success", JOptionPane.INFORMATION_MESSAGE);
+            if (submissions.length == 0) {
+                JOptionPane.showMessageDialog(null, "There are currently no submissions!", "Fail", JOptionPane.ERROR_MESSAGE);
+                this.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                String choice = (String) JOptionPane.showInputDialog(null, "Select the submission you want to grade",
+                        "Submission selection", JOptionPane.QUESTION_MESSAGE, null, submissions,
+                        submissions[0]);
+                ArrayList<String> contentRequest = new ArrayList<String>();
+                contentRequest.add(choice.split("-")[0]);
+                contentRequest.add(choice.split("-")[1]);
+                ArrayList<String> quizContent = Main.connect(contentRequest, 4010);
+                contentRequest.add(choice.split("-")[2]);
+                ArrayList<String> answers = Main.connect(contentRequest, 4017);
+                ArrayList<String> in = contentRequest;
+                String grades = "";
+                for (int i = 0; i < ((quizContent.size() - 1) / 5); i++) {
+                    String q = "";
+                    for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
+                        q = q + "\n" + quizContent.get(j);
+                    }
+                    grades = grades + JOptionPane.showInputDialog(null,
+                            "Question: " + (i + 1) + "\n" + q + "\n\n" + "The student's answer is:\n" + answers.get(0).split(",")[i] + "\n\n"
+                                    + "Enter the score you want to give",
+                            "Grade submission", JOptionPane.QUESTION_MESSAGE) + ",";
+
+                }
+                in.add(grades.substring(0, grades.length() - 1));
+                ArrayList<String> out = Main.connect(in, 4015);
+                if (out.get(0).equals("Success")) {
+                    Main.setCurrentAccount(in.get(1));
+                    JOptionPane.showMessageDialog(null, "Successfully grading this submission", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    this.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                    this.setVisible(true);
+                }
             }
+        } catch (Exception e) {
+            this.setVisible(true);
         }
+
 
     }
 

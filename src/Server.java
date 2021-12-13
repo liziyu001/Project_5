@@ -79,6 +79,7 @@ public class Server extends Thread {
                         server.login(server.loginService.accept());
                     }
                 } catch (Exception e) {
+
                     e.printStackTrace();
                 }
             }
@@ -604,6 +605,11 @@ public class Server extends Thread {
                     options[1] = reader.readLine();
                     options[2] = reader.readLine();
                     options[3] = reader.readLine();
+                    for (int j = 0; j < 4; j++) {
+                        if (options[j].equals("null")) {
+                            throw new Exception();
+                        }
+                    }
                     q[i] = new Question(prompt, options);
                 }
                 Quiz quiz = new Quiz(quizName, q);
