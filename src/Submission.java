@@ -29,8 +29,10 @@ public class Submission {
     private String timestamp;
 
     /**
-     * Constructs a newly allocated Submission object with the specified course name, quiz name, account id, and list of student's answers
-     * Submission object has not been graded yet with no grades put in yet, and the time stamp of the student's submission has been formatted
+     * Constructs a newly allocated Submission object with the specified course name, quiz name,
+     * account id, and list of student's answers
+     * Submission object has not been graded yet with no grades put in yet, and the time stamp
+     * of the student's submission has been formatted
      *
      * @param courseName The name of the course used for construction
      * @param quizName   The name of the quiz used for construction
@@ -56,7 +58,8 @@ public class Submission {
      * Arrays.toString(answers) = {"1","2","3","4"}
      * Arrays.toString(subGrades) = {"1","2","2","1"}
      * totalGrades = 6
-     * toString() = "Submission{, Account=1, graded=true, answers={"1","2","3","4"}, subGrades={"1","2","2","1"}, totalGrades=6}
+     * toString() = "Submission{, Account=1, graded=true, answers={"1","2","3","4"},
+     * subGrades={"1","2","2","1"}, totalGrades=6}
      *
      * @return Returns a String representation of a Submission
      */
@@ -72,7 +75,8 @@ public class Submission {
     }
 
     /**
-     * Constructs a newly allocated Submission object with the specified course name, quiz name, account id, graded status, list of answers, and list of sub grades
+     * Constructs a newly allocated Submission object with the specified course name, quiz name,
+     * account id, graded status, list of answers, and list of sub grades
      *
      * @param courseName The specified course name used for construction
      * @param quizName   The specified quiz name used for construction
@@ -208,7 +212,8 @@ public class Submission {
     }
 
     /**
-     * Updates the time stamp of when the student submitted the quiz with the specified time stamp with the format "yyyy.MM.dd.HH.mm.ss"
+     * Updates the time stamp of when the student submitted the quiz with the specified time stamp
+     * with the format "yyyy.MM.dd.HH.mm.ss"
      */
     public void setTimestamp() {
         String res;

@@ -3,7 +3,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Represents the beginning menu where you can login if you already have an account, or you can register if you haven't created an account
+ * Represents the beginning menu where you can login if you already have an account,
+ * or you can register if you haven't created an account
  *
  * @author Ram, William, Leo, Manas, Miras
  * @version December 13, 2021
@@ -48,7 +49,7 @@ public class Menu extends javax.swing.JFrame {
         //Allows action of register button to be performed when clicked
         register.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegisterActionPerformed(evt);
+                registerActionPerformed(evt);
             }
         });
 
@@ -79,19 +80,24 @@ public class Menu extends javax.swing.JFrame {
             String pwd = JOptionPane.showInputDialog(null,
                     "Enter your Password",
                     "Password input", JOptionPane.QUESTION_MESSAGE);
-            ArrayList<String> in = new ArrayList<String>();
+            ArrayList<String> in = new ArrayList<>();
             in.add(id);
             in.add(pwd);
             if (in.get(0).contains(";") || in.get(1).contains(";")) {
-                JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             } else {
                 ArrayList<String> out = Main.connect(in, 4000);
                 if (!out.get(0).equals("Fail")) {
                     if (out.get(0).equals("true")) {
-                        JOptionPane.showMessageDialog(null, "Successfully login as Student " + in.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null,
+                                "Successfully login as Student " + in.get(0),
+                                "Success", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Successfully login as Teacher " + in.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null,
+                                "Successfully login as Teacher " + in.get(0),
+                                "Success", JOptionPane.INFORMATION_MESSAGE);
                     }
                     Main.setCurrentAccount(in.get(0));
                     if (out.get(0).equals("true")) {
@@ -104,7 +110,8 @@ public class Menu extends javax.swing.JFrame {
                         tm.setVisible(true);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect username or password", "Error", JOptionPane.ERROR_MESSAGE);
                     this.setVisible(true);
                 }
             }
@@ -119,9 +126,7 @@ public class Menu extends javax.swing.JFrame {
      * @Description action when back button is pressed, represents registering an account
      * @Param [evt] Allows the button's action to be performed
      */
-    private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {
-//        Register r = new Register();
-//        r.setVisible(true);
+    private void registerActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         try {
             String[] roles = {"Teacher", "Student"};
@@ -140,16 +145,19 @@ public class Menu extends javax.swing.JFrame {
                     roles[0]);
             in.add(role);
             if (in.get(0).contains(";") || in.get(1).contains(";")) {
-                JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "No semicolons allowed",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             } else if (in.get(0).isEmpty() || in.get(1).isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please enter a valid input",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             } else {
                 ArrayList<String> out = Main.connect(in, 4001);
                 if (out.get(0).equals("Success")) {
                     Main.setCurrentAccount(in.get(0));
-                    JOptionPane.showMessageDialog(null, "Success", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Success",
+                            "Success", JOptionPane.INFORMATION_MESSAGE);
                     if (role.equals("Teacher")) {
                         Main.setStudent(false);
                         TeacherMenu tm = new TeacherMenu();
@@ -160,7 +168,8 @@ public class Menu extends javax.swing.JFrame {
                         sm.setVisible(true);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "this id has already been taken", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "this id has already been taken", "Error", JOptionPane.ERROR_MESSAGE);
                     this.setVisible(true);
                 }
             }
@@ -171,11 +180,12 @@ public class Menu extends javax.swing.JFrame {
     }
 
     /**
-     * Main method that invokes run using EDT and runs the Menu object that displays the buttons and all its functionalities
+     * Main method that invokes run using EDT and runs the Menu object that displays the
+     * buttons and all its functionalities
      *
      * @param args Stores the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new Menu().setVisible(true);

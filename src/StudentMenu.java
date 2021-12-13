@@ -27,7 +27,8 @@ public class StudentMenu extends javax.swing.JFrame {
     }
 
     /**
-     * Creates and initalizes all the buttons, and allows all the buttons to be displayed on the panels and accurately performed when clicked
+     * Creates and initalizes all the buttons, and allows all the buttons to be displayed on the
+     * panels and accurately performed when clicked
      */
     private void initComponents() {
         //Creates the viewCourseButton
@@ -92,10 +93,12 @@ public class StudentMenu extends javax.swing.JFrame {
                 courses[i] = courseList.get(i);
             }
             if (courses.length == 0) {
-                JOptionPane.showMessageDialog(null, "There are currently no courses!", "Fail", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "There are currently no courses!",
+                        "Fail", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             } else {
-                String choice = (String) JOptionPane.showInputDialog(null, "Select the course to proceed",
+                String choice = (String) JOptionPane.showInputDialog(null,
+                        "Select the course to proceed",
                         "Course selection", JOptionPane.QUESTION_MESSAGE, null, courses,
                         courses[0]);
                 Main.setCurrentCourse(choice.split("\\. ")[1]);
@@ -108,7 +111,8 @@ public class StudentMenu extends javax.swing.JFrame {
                         quizs[i] = quizList.get(i);
                     }
                 }
-                choice = (String) JOptionPane.showInputDialog(null, "Select the quiz you want to take",
+                choice = (String) JOptionPane.showInputDialog(null,
+                        "Select the quiz you want to take",
                         "Quiz selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
                         quizs[0]);
                 ArrayList<String> in = new ArrayList<String>();
@@ -116,7 +120,9 @@ public class StudentMenu extends javax.swing.JFrame {
                 in.add(choice.split("\\. ")[1]);
                 ArrayList<String> quizContent = Main.connect(in, 4010);
                 in.add(Main.getCurrentAccount());
-                int takeViaFile = JOptionPane.showConfirmDialog(null, "Do you want to take this quiz by file import?", "File import", JOptionPane.YES_NO_OPTION);
+                int takeViaFile = JOptionPane.showConfirmDialog(null,
+                        "Do you want to take this quiz by file import?", "File import",
+                        JOptionPane.YES_NO_OPTION);
                 if (takeViaFile == JOptionPane.YES_OPTION) {
                     String path = JOptionPane.showInputDialog(null,
                             "Enter the path of your file",
@@ -132,7 +138,9 @@ public class StudentMenu extends javax.swing.JFrame {
                         }
                         br.close();
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "There was a problem accessing this file!", "Fail", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null,
+                                "There was a problem accessing this file!", "Fail",
+                                JOptionPane.ERROR_MESSAGE);
                         this.setVisible(true);
                     }
                 } else {
@@ -142,7 +150,8 @@ public class StudentMenu extends javax.swing.JFrame {
                         for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
                             q = q + "\n" + quizContent.get(j);
                         }
-                        ans = ans + (String) JOptionPane.showInputDialog(null, "Enter the your answer to this question" + q,
+                        ans = ans + (String) JOptionPane.showInputDialog(null,
+                                "Enter the your answer to this question" + q,
                                 "Taking quiz", JOptionPane.QUESTION_MESSAGE, null, options,
                                 options[0]) + ",";
                     }
@@ -150,10 +159,13 @@ public class StudentMenu extends javax.swing.JFrame {
                 }
                 ArrayList<String> out = Main.connect(in, 4013);
                 if (out.get(0).equals("Error")) {
-                    JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Error",
+                            "Fail", JOptionPane.ERROR_MESSAGE);
                     this.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Successfully submitting your answer at " + out.get(0), "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Successfully submitting your answer at " + out.get(0),
+                            "Success", JOptionPane.INFORMATION_MESSAGE);
                     this.setVisible(true);
                 }
             }
@@ -180,10 +192,12 @@ public class StudentMenu extends javax.swing.JFrame {
                 }
             }
             if (submissions.length == 0) {
-                JOptionPane.showMessageDialog(null, "There are currently no graded submissions!", "Fail", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "There are currently no graded " +
+                        "submissions!", "Fail", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             } else {
-                String choice = (String) JOptionPane.showInputDialog(null, "Select the graded submission you want to view",
+                String choice = (String) JOptionPane.showInputDialog(null, "Select " +
+                                "the graded submission you want to view",
                         "Submission selection", JOptionPane.QUESTION_MESSAGE, null, submissions,
                         submissions[0]);
                 ArrayList<String> contentRequest = new ArrayList<String>();
@@ -198,8 +212,10 @@ public class StudentMenu extends javax.swing.JFrame {
                     for (int j = ((i + 1) * 5 - 4); j <= (i + 1) * 5; j++) {
                         q = q + "\n" + quizContent.get(j);
                     }
-                    JOptionPane.showMessageDialog(null, "Question " + (i + 1) + "\n" + q + "\n\n"
-                                    + "Your answer: " + answers.get(0).split(",")[i] + "\n\n" + "Grade for this answer: "
+                    JOptionPane.showMessageDialog(null, "Question " + (i + 1) +
+                                    "\n" + q + "\n\n"
+                                    + "Your answer: " + answers.get(0).split(",")[i] + "\n\n" +
+                                    "Grade for this answer: "
                                     + grades.get(0).split(",")[i],
                             "View Grading", JOptionPane.INFORMATION_MESSAGE);
 
@@ -225,11 +241,12 @@ public class StudentMenu extends javax.swing.JFrame {
     }
 
     /**
-     * Main method that invokes run using EDT and runs the StudentMenu object that displays the buttons and all its functionalities
+     * Main method that invokes run using EDT and runs the StudentMenu object that displays the buttons and all
+     * its functionalities
      *
      * @param args Stores the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

@@ -59,7 +59,8 @@ public class Manager {
     }
 
     /**
-     * Reads the submissions from the Submissions.txt file, and breaks up the parts of the submissions from that file into categories
+     * Reads the submissions from the Submissions.txt file, and breaks up the parts of the submissions
+     * from that file into categories
      * Also adds the submission objects to a list based on those categories
      *
      * @return Returns the list containing the submission objects that are based off the Submissions.txt file
@@ -91,14 +92,14 @@ public class Manager {
                 }
                 list.add(new Submission(courseName, quizName, id, graded, answers, subGrades));
             }
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            int i = 0;
         }
         return list;
     }
 
     /**
-     * Updates the submission list into the Submission.txt file by splitting each category of the submission with ; and ,
+     * Updates the submission list into the Submission.txt file by splitting each category of the submission with ; and,
      */
     public synchronized void updateSubmission() {
         try {
@@ -123,7 +124,8 @@ public class Manager {
                 pr.println(line);
             }
             pr.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -158,7 +160,8 @@ public class Manager {
             }
             pr.close();
 
-        } catch (IOException ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -166,7 +169,8 @@ public class Manager {
      * Reads the course list in the Courses.txt file
      * Returns a list containing the Course objects that were made based on what was read in the Courses.txt file
      *
-     * @return Returns a list of Course objects that was made based off the course list that was read in the Courses.txt file
+     * @return Returns a list of Course objects that was made based off the course list
+     * that was read in the Courses.txt file
      */
     public ArrayList<Course> readCourses() {
 
@@ -207,7 +211,8 @@ public class Manager {
                 courses.add(new Course(courseName, courseQuiz));
             }
             br.close();
-        } catch (IOException ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
         return courses;
     }
@@ -254,7 +259,8 @@ public class Manager {
                 line = br.readLine();
             }
             br.close();
-        } catch (IOException ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
         return accounts;
     }

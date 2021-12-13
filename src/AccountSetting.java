@@ -104,16 +104,19 @@ public class AccountSetting extends javax.swing.JFrame {
             in.add(Main.getCurrentAccount());
             in.add(nID);
             if (in.get(1).contains(";")) {
-                JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             } else {
                 ArrayList<String> out = Main.connect(in, 4006);
                 if (out.get(0).equals("Success")) {
                     Main.setCurrentAccount(in.get(1));
-                    JOptionPane.showMessageDialog(null, "Successfully editing your ID", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Successfully editing your ID", "Success", JOptionPane.INFORMATION_MESSAGE);
                     this.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Your New ID has already be taken", "Fail", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Your New ID has already be taken", "Fail", JOptionPane.ERROR_MESSAGE);
                     this.setVisible(true);
                 }
             }
@@ -138,15 +141,19 @@ public class AccountSetting extends javax.swing.JFrame {
             in.add(Main.getCurrentAccount());
             in.add(pwd);
             if (in.get(1).contains(";")) {
-                JOptionPane.showMessageDialog(null, "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "No semicolons allowed", "Error", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             } else {
                 ArrayList<String> out = Main.connect(in, 4007);
                 if (out.get(0).equals("Success")) {
-                    JOptionPane.showMessageDialog(null, "Successfully editing your Password", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Successfully editing your Password",
+                            "Success", JOptionPane.INFORMATION_MESSAGE);
                     this.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Error", "Fail", JOptionPane.ERROR_MESSAGE);
                     this.setVisible(true);
                 }
             }
@@ -163,15 +170,18 @@ public class AccountSetting extends javax.swing.JFrame {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         try {
-            ArrayList<String> in = new ArrayList<String>();
+            ArrayList<String> in = new ArrayList<>();
             in.add(Main.getCurrentAccount());
             ArrayList<String> out = Main.connect(in, 4008);
             if (out.get(0).equals("Success")) {
                 this.setVisible(false);
-                JOptionPane.showMessageDialog(null, "Successfully deleting your account, you are now logged out", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Successfully deleting your account, you are now logged out",
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
                 new Menu().setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Error", "Fail", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             }
         } catch (Exception e) {
@@ -194,11 +204,12 @@ public class AccountSetting extends javax.swing.JFrame {
     }
 
     /**
-     * Main method that invokes run using EDT and runs the AccountSetting object that displays the buttons and all its functionalities
+     * Main method that invokes run using EDT and runs the
+     * AccountSetting object that displays the buttons and all its functionalities
      *
      * @param args Stores the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new AccountSetting().setVisible(true);

@@ -78,7 +78,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.login(server.loginService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -94,7 +95,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.register(server.registerService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -110,7 +112,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getCourse(server.getCourseService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -126,7 +129,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getQuiz(server.getQuizService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -142,7 +146,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.createCourse(server.createCourseService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -158,7 +163,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.createQuiz(server.createQuizService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -174,7 +180,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.editID(server.editUsernameService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -190,7 +197,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.editPassword(server.editPasswordService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -206,7 +214,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.deleteAccount(server.deleteAccountService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -222,7 +231,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.editQuiz(server.editQuizService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -238,7 +248,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getQuizContent(server.getQuizContentService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -254,7 +265,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.deleteQuiz(server.deleteQuizService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -270,7 +282,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getSubmissionList(server.getSubmissionListService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -286,7 +299,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.takeQuiz(server.takeQuizService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -302,7 +316,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.viewGrading(server.viewGradingService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -318,7 +333,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.gradeSubmission(server.gradeSubmissionService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -334,7 +350,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getGradedSubmissionList(server.viewGradedService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -350,7 +367,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.getAnswer(server.getAnswerService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -366,7 +384,8 @@ public class Server extends Thread {
                         // start the service after receiving connection
                         server.randomizeQuiz(server.randomizeQuizService.accept());
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    int i = 0;
                 }
             }
         });
@@ -376,7 +395,8 @@ public class Server extends Thread {
 
 
     /**
-     * @param loginRequest A Socket object used to determine whether the person logged into their account correctly or not
+     * @param loginRequest A Socket object used to determine whether the person logged into
+     *                     their account correctly or not
      * @return void
      * @Description input username and password, return the result of login
      * @Date 12:27 PM 11/26/2021
@@ -407,7 +427,8 @@ public class Server extends Thread {
             }
             reader.close();
             writer.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -453,7 +474,8 @@ public class Server extends Thread {
             writer.flush();
             reader.close();
             writer.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -474,7 +496,8 @@ public class Server extends Thread {
             writer.print(course);
             writer.flush();
             writer.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -511,7 +534,8 @@ public class Server extends Thread {
             writer.flush();
             reader.close();
             writer.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -545,7 +569,8 @@ public class Server extends Thread {
             writer.flush();
             reader.close();
             writer.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -598,7 +623,8 @@ public class Server extends Thread {
             writer.flush();
             reader.close();
             writer.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -631,7 +657,8 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -672,7 +699,8 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -706,7 +734,8 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -756,7 +785,8 @@ public class Server extends Thread {
             writer.flush();
             reader.close();
             writer.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -790,7 +820,8 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -827,7 +858,8 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -850,7 +882,8 @@ public class Server extends Thread {
             writer.print(out);
             writer.flush();
             writer.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -895,14 +928,16 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
     /**
      * @param takeQuizRequest Socket object that gives access to the quiz
      * @return void
-     * @Description input submission identifiers and answers, the new submission will be recorded, newer attempt will replace older ones
+     * @Description input submission identifiers and answers, the new submission will be recorded,
+     * newer attempt will replace older ones
      * @Date 5:54 PM 12/3/2021
      */
     public void takeQuiz(Socket takeQuizRequest) {
@@ -941,7 +976,8 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -985,7 +1021,8 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -1009,14 +1046,16 @@ public class Server extends Thread {
             writer.print(out);
             writer.flush();
             writer.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
     /**
      * @param getAnswerRequest Socket object that gives access to student's answers
      * @return void
-     * @Description Uses Socket to get the course name, quiz name, and student's usernames to get access to the student's answers
+     * @Description Uses Socket to get the course name, quiz name, and student's usernames to get
+     * access to the student's answers
      */
     public void getAnswer(Socket getAnswerRequest) {
         try {
@@ -1047,7 +1086,8 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 
@@ -1083,7 +1123,8 @@ public class Server extends Thread {
             writer.flush();
             writer.close();
             reader.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 

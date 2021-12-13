@@ -67,12 +67,15 @@ public class Question {
     }
 
     /**
-     * Displays each question with the question prompt being displayed first, and then the answer choices being displayed next line by line
+     * Displays each question with the question prompt being displayed first, and then
+     * the answer choices being displayed next line by line
      */
     public void displayQuestion() {
-        JOptionPane.showMessageDialog(null, prompt, "Question Prompt", JOptionPane.QUESTION_MESSAGE);
+        JOptionPane.showMessageDialog(null, prompt, "Question Prompt",
+                JOptionPane.QUESTION_MESSAGE);
         for (int i = 0; i < 4; i++) {
-            JOptionPane.showMessageDialog(null, (i + 1) + ". " + answerChoices[i], "Answer Choices", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, (i + 1) + ". " +
+                    answerChoices[i], "Answer Choices", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

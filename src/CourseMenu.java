@@ -100,7 +100,8 @@ public class CourseMenu extends javax.swing.JFrame {
         this.setVisible(false);
         boolean end = false;
         try {
-            int choice = JOptionPane.showConfirmDialog(null, "Do you want to create by file import?", "File import", JOptionPane.YES_NO_OPTION);
+            int choice = JOptionPane.showConfirmDialog(null,
+                    "Do you want to create by file import?", "File import", JOptionPane.YES_NO_OPTION);
             ArrayList<String> in = new ArrayList<String>();
             in.add(Main.getCurrentCourse());
             if (choice == JOptionPane.YES_OPTION) {
@@ -117,10 +118,12 @@ public class CourseMenu extends javax.swing.JFrame {
                         line = br.readLine();
                     }
                     br.close();
-                    JOptionPane.showMessageDialog(null, "Successfully created the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Successfully created the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
                     ArrayList<String> out = Main.connect(in, 4005);
                     int c = JOptionPane.showConfirmDialog(null,
-                            "Do you want to randomize the order of questions and the order of potential options?",
+                            "Do you want to randomize the order of questions " +
+                                    "and the order of potential options?",
                             "Randomize", JOptionPane.YES_NO_OPTION);
                     if (c == JOptionPane.YES_OPTION) {
                         ArrayList<String> temp = new ArrayList<String>();
@@ -128,12 +131,14 @@ public class CourseMenu extends javax.swing.JFrame {
                         temp.add(in.get(1));
                         ArrayList<String> a = Main.connect(temp, 4018);
                         if (a.get(0).equals("Fail")) {
-                            JOptionPane.showMessageDialog(null, "Randomize Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null,
+                                    "Randomize Error", "Fail", JOptionPane.ERROR_MESSAGE);
                             this.setVisible(true);
                         }
                     }
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "There was a problem creating this quiz!", "Fail", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "There was a problem creating this quiz!", "Fail", JOptionPane.ERROR_MESSAGE);
                     this.setVisible(true);
                 }
             } else {
@@ -198,7 +203,8 @@ public class CourseMenu extends javax.swing.JFrame {
                     }
                     ArrayList<String> out = Main.connect(in, 4005);
                     int c = JOptionPane.showConfirmDialog(null,
-                            "Do you want to randomize the order of questions and the order of potential options?",
+                            "Do you want to randomize the order of " +
+                                    "questions and the order of potential options?",
                             "Randomize", JOptionPane.YES_NO_OPTION);
                     if (c == JOptionPane.YES_OPTION) {
                         ArrayList<String> temp = new ArrayList<String>();
@@ -206,19 +212,24 @@ public class CourseMenu extends javax.swing.JFrame {
                         temp.add(in.get(1));
                         ArrayList<String> a = Main.connect(temp, 4018);
                         if (a.get(0).equals("Fail")) {
-                            JOptionPane.showMessageDialog(null, "Randomize Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null,
+                                    "Randomize Error", "Fail", JOptionPane.ERROR_MESSAGE);
                             this.setVisible(true);
                         }
                     }
                     if (out.get(0).equals("Success")) {
-                        JOptionPane.showMessageDialog(null, "Successfully creating the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null,
+                                "Successfully creating the quiz", "Success",
+                                JOptionPane.INFORMATION_MESSAGE);
                         this.setVisible(true);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null,
+                                "Error", "Fail", JOptionPane.ERROR_MESSAGE);
                         this.setVisible(true);
                     }
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Enter a valid input", "Fail", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Enter a valid input", "Fail", JOptionPane.ERROR_MESSAGE);
                     this.setVisible(true);
                 }
 
@@ -247,7 +258,8 @@ public class CourseMenu extends javax.swing.JFrame {
                     quizs[i] = quizList.get(i);
                 }
             }
-            String choice = (String) JOptionPane.showInputDialog(null, "Select the quiz you want to proceed",
+            String choice = (String) JOptionPane.showInputDialog(null,
+                    "Select the quiz you want to proceed",
                     "Quiz selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
                     quizs[0]);
             ArrayList<String> in = new ArrayList<String>();
@@ -255,7 +267,8 @@ public class CourseMenu extends javax.swing.JFrame {
             in.add(choice.split("\\. ")[1]);
             boolean end = false;
             while (!end) {
-                String numbOfQuestions = JOptionPane.showInputDialog(null, "Enter new amount of questions", "Edit Quiz", JOptionPane.QUESTION_MESSAGE);
+                String numbOfQuestions = JOptionPane.showInputDialog(null,
+                        "Enter new amount of questions", "Edit Quiz", JOptionPane.QUESTION_MESSAGE);
                 if (numbOfQuestions == null) {
                     this.setVisible(true);
                     break;
@@ -267,38 +280,50 @@ public class CourseMenu extends javax.swing.JFrame {
                             throw new Exception();
                         }
                         for (int i = 0; i < numberOfQuestions; i++) {
-                            String questionPrompt = JOptionPane.showInputDialog(null, "Enter new question Prompt:", "Edit Quiz", JOptionPane.QUESTION_MESSAGE);
+                            String questionPrompt = JOptionPane.showInputDialog(null,
+                                    "Enter new question Prompt:", "Edit Quiz",
+                                    JOptionPane.QUESTION_MESSAGE);
                             if (questionPrompt == null) {
                                 this.setVisible(true);
                                 end = true;
                                 break;
                             } else if (questionPrompt.contains(";")) {
-                                JOptionPane.showMessageDialog(null, "Value cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null,
+                                        "Value cannot include a semicolon",
+                                        "Error", JOptionPane.ERROR_MESSAGE);
                                 this.setVisible(true);
                                 end = true;
                                 break;
                             } else if (questionPrompt.equals("")) {
-                                JOptionPane.showMessageDialog(null, "Value cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null,
+                                        "Value cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
                                 this.setVisible(true);
                                 end = true;
                                 break;
                             } else {
                                 in.add(questionPrompt);
                                 for (int j = 0; j < 4; j++) {
-                                    String answerChoice = (String) JOptionPane.showInputDialog(null, "Enter " + (j + 1) + " choice of the Question:", "Edit Questions", JOptionPane.QUESTION_MESSAGE);
+                                    String answerChoice = (String) JOptionPane.showInputDialog(
+                                            null, "Enter " + (j + 1) +
+                                                    " choice of the Question:", "Edit Questions",
+                                            JOptionPane.QUESTION_MESSAGE);
                                     if (answerChoice == null) {
                                         this.setVisible(true);
                                         end = true;
                                         i = Integer.MAX_VALUE;
                                         break;
                                     } else if (answerChoice.contains(";")) {
-                                        JOptionPane.showMessageDialog(null, "Value cannot include a semicolon", "Error", JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.showMessageDialog(null,
+                                                "Value cannot include a semicolon",
+                                                "Error", JOptionPane.ERROR_MESSAGE);
                                         this.setVisible(true);
                                         end = true;
                                         i = Integer.MAX_VALUE;
                                         break;
                                     } else if (answerChoice.equals("")) {
-                                        JOptionPane.showMessageDialog(null, "Value cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.showMessageDialog(null,
+                                                "Value cannot be empty",
+                                                "Error", JOptionPane.ERROR_MESSAGE);
                                         this.setVisible(true);
                                         end = true;
                                         i = Integer.MAX_VALUE;
@@ -317,15 +342,19 @@ public class CourseMenu extends javax.swing.JFrame {
                         }
                         ArrayList<String> out = Main.connect(in, 4009);
                         if (out.get(0).equals("Success")) {
-                            JOptionPane.showMessageDialog(null, "Successfully edited the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null,
+                                    "Successfully edited the quiz",
+                                    "Success", JOptionPane.INFORMATION_MESSAGE);
                             this.setVisible(true);
                         } else {
-                            JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null,
+                                    "Error", "Fail", JOptionPane.ERROR_MESSAGE);
                             this.setVisible(true);
                         }
                         break;
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null,
+                                "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
                         this.setVisible(true);
                         break;
                     }
@@ -351,7 +380,8 @@ public class CourseMenu extends javax.swing.JFrame {
             for (int i = 0; i < quizList.size(); i++) {
                 quizs[i] = quizList.get(i);
             }
-            String choice = (String) JOptionPane.showInputDialog(null, "Select the quiz you want to delete",
+            String choice = (String)
+                    JOptionPane.showInputDialog(null, "Select the quiz you want to delete",
                     "Course selection", JOptionPane.QUESTION_MESSAGE, null, quizs,
                     quizs[0]);
             ArrayList<String> in = new ArrayList<String>();
@@ -359,10 +389,12 @@ public class CourseMenu extends javax.swing.JFrame {
             in.add(choice.split("\\. ")[1]);
             ArrayList<String> out = Main.connect(in, 4011);
             if (out.get(0).equals("Success")) {
-                JOptionPane.showMessageDialog(null, "Successfully deleting the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Successfully deleting the quiz", "Success", JOptionPane.INFORMATION_MESSAGE);
                 this.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Error", "Fail", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             }
         } catch (Exception e) {
@@ -381,11 +413,12 @@ public class CourseMenu extends javax.swing.JFrame {
     }
 
     /**
-     * Main method that invokes run using EDT and runs the CourseMenu object that displays the buttons and all its functionalities
+     * Main method that invokes run using EDT and runs the CourseMenu
+     * object that displays the buttons and all its functionalities
      *
      * @param args Stores the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new CourseMenu().setVisible(true);

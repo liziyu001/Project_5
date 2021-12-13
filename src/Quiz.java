@@ -67,7 +67,8 @@ public class Quiz {
     }
 
     /**
-     * Prints the quiz with the name of the quiz being printed first, and then the question prompt and answer choices being displayed after
+     * Prints the quiz with the name of the quiz being printed first, and then the
+     * question prompt and answer choices being displayed after
      */
     public void printString() {
         JOptionPane.showMessageDialog(null, name, "Quiz Name", JOptionPane.PLAIN_MESSAGE);

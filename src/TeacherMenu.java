@@ -3,7 +3,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Represents a teacher's menu with the options of creating and viewing a course, grading a quiz, and accessing their settings
+ * Represents a teacher's menu with the options of creating and viewing a course, grading a quiz,
+ * and accessing their settings
  *
  * @author Ram, William, Leo, Manas, Miras
  * @version December 13, 2021
@@ -26,7 +27,8 @@ public class TeacherMenu extends javax.swing.JFrame {
     }
 
     /**
-     * Creates and initalizes all the buttons, and allows all the buttons to be displayed on the panels and accurately performed when clicked
+     * Creates and initalizes all the buttons, and allows all the buttons to be displayed on the panels
+     * and accurately performed when clicked
      */
     private void initComponents() {
         //Creates viewCourse Button
@@ -102,10 +104,12 @@ public class TeacherMenu extends javax.swing.JFrame {
                 courses[i] = courseList.get(i);
             }
             if (courses.length == 0) {
-                JOptionPane.showMessageDialog(null, "No courses currently exist!", "Fail", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "No courses currently exist!",
+                        "Fail", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             } else {
-                String choice = (String) JOptionPane.showInputDialog(null, "Select the course you want to proceed",
+                String choice = (String) JOptionPane.showInputDialog(null,
+                        "Select the course you want to proceed",
                         "Course selection", JOptionPane.QUESTION_MESSAGE, null, courses,
                         courses[0]);
 
@@ -132,15 +136,20 @@ public class TeacherMenu extends javax.swing.JFrame {
             ArrayList<String> in = new ArrayList<String>();
             in.add(name);
             if (in.get(0).isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Please enter a valid input", "Error", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             } else {
                 ArrayList<String> out = Main.connect(in, 4004);
                 if (out.get(0).equals("Success")) {
-                    JOptionPane.showMessageDialog(null, "Successfully creating the new course", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Successfully creating the new course", "Success",
+                            JOptionPane.INFORMATION_MESSAGE);
                     this.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Course with same name has already been created", "Fail", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Course with same name has already been created", "Fail",
+                            JOptionPane.ERROR_MESSAGE);
                     this.setVisible(true);
                 }
             }
@@ -176,10 +185,12 @@ public class TeacherMenu extends javax.swing.JFrame {
                 }
             }
             if (submissions.length == 0) {
-                JOptionPane.showMessageDialog(null, "There are currently no submissions!", "Fail", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "There are currently no submissions!",
+                        "Fail", JOptionPane.ERROR_MESSAGE);
                 this.setVisible(true);
             } else {
-                String choice = (String) JOptionPane.showInputDialog(null, "Select the submission you want to grade",
+                String choice = (String) JOptionPane.showInputDialog(null,
+                        "Select the submission you want to grade",
                         "Submission selection", JOptionPane.QUESTION_MESSAGE, null, submissions,
                         submissions[0]);
                 ArrayList<String> contentRequest = new ArrayList<String>();
@@ -196,7 +207,8 @@ public class TeacherMenu extends javax.swing.JFrame {
                         q = q + "\n" + quizContent.get(j);
                     }
                     grades = grades + JOptionPane.showInputDialog(null,
-                            "Question: " + (i + 1) + "\n" + q + "\n\n" + "The student's answer is:\n" + answers.get(0).split(",")[i] + "\n\n"
+                            "Question: " + (i + 1) + "\n" + q + "\n\n" + "The student's answer is:\n"
+                                    + answers.get(0).split(",")[i] + "\n\n"
                                     + "Enter the score you want to give",
                             "Grade submission", JOptionPane.QUESTION_MESSAGE) + ",";
 
@@ -205,10 +217,12 @@ public class TeacherMenu extends javax.swing.JFrame {
                 ArrayList<String> out = Main.connect(in, 4015);
                 if (out.get(0).equals("Success")) {
                     Main.setCurrentAccount(in.get(1));
-                    JOptionPane.showMessageDialog(null, "Successfully grading this submission", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Successfully grading " +
+                            "this submission", "Success", JOptionPane.INFORMATION_MESSAGE);
                     this.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error", "Fail", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Error", "Fail",
+                            JOptionPane.ERROR_MESSAGE);
                     this.setVisible(true);
                 }
             }
@@ -218,11 +232,12 @@ public class TeacherMenu extends javax.swing.JFrame {
     }
 
     /**
-     * Main method that invokes run using EDT and runs the TeacherMenu object that displays the buttons and all its functionalities
+     * Main method that invokes run using EDT and runs the TeacherMenu object that displays the buttons
+     * and all its functionalities
      *
      * @param args Stores the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new TeacherMenu().setVisible(true);

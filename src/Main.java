@@ -7,7 +7,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 /**
- * Represents a class that pops up the beginning menu, connects to a certain port with certain features/service that is currently active
+ * Represents a class that pops up the beginning menu, connects to a
+ * certain port with certain features/service that is currently active
  * And updates the current account, course, and quiz
  *
  * @author Ram, William, Leo, Manas, Miras
@@ -24,13 +25,14 @@ public class Main {
     private static String currentQuiz;
 
     /**
-     * Connects to a certain port with a given service, and reads and writes the contents that came from the port that the Socket connected to
+     * Connects to a certain port with a given service, and reads and writes
+     * the contents that came from the port that the Socket connected to
      *
      * @return Returns the list of input that was read and written from the port that the Socket connnected to
      */
     public static ArrayList<String> connect(ArrayList<String> input, int port) {
 
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
 
         try {
             //InetAddress address = InetAddress.getByName("10.186.83.236");
@@ -50,7 +52,8 @@ public class Main {
                 s1 = reader.readLine();
             }
             return result;
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
         return null;
     }
@@ -128,7 +131,8 @@ public class Main {
     }
 
     /**
-     * The main method that creates a menu with the login and register options, and is eventually connected to a certain port
+     * The main method that creates a menu with the login and register
+     * options, and is eventually connected to a certain port
      *
      * @param args Stores the command line arguments
      */
