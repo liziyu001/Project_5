@@ -6,7 +6,9 @@ Step to run the project:
   1: Compile all classes
   2: Run the server(java Server)
   3. Run the Main(java Main)
-The menu window should appear after step 3
+     1. If the server is localhost, leave the file as is
+     2. If the server is on a different computer, uncomment the specified lines and enter your ip; comment out the specified line 
+     3. The menu window should appear after step 3
 
 Format for creating quiz by uploading a file:
 
