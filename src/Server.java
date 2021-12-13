@@ -1033,7 +1033,8 @@ public class Server extends Thread {
      */
     public void getGradedSubmissionList(Socket getSubmissionListRequest) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(getSubmissionListRequest.getInputStream()));
+            BufferedReader reader =
+                    new BufferedReader(new InputStreamReader(getSubmissionListRequest.getInputStream()));
             PrintWriter writer = new PrintWriter(getSubmissionListRequest.getOutputStream());
             String id = reader.readLine();
             String out = "";

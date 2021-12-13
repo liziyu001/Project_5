@@ -235,7 +235,8 @@ public class Manager {
                 pr.println(info);
             }
             pr.close();
-        } catch (IOException ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
     }
 

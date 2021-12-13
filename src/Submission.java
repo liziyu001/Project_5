@@ -225,7 +225,8 @@ public class Submission {
             res = String.valueOf(ts);
             String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
             this.timestamp = timestamp;
-        } catch (ParseException ignored) {
+        } catch (Exception e) {
+            int i = 0;
         }
 
     }
