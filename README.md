@@ -30,7 +30,7 @@ Format for creating quiz by uploading a file:
     "<answer for question 1>,<answer for question 2>,<answer for question 3>..."(one line)
       ex. 3,2,1,4
 
-
+Test cases are documented in the TestCase.txt file
 
 Class description:
     Account: record the username and password and role of a user, used by the manager and server.
